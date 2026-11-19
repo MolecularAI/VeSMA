@@ -1,0 +1,10 @@
+template_code,retro_template,classification
+P 1,[#6:5]-[P;D4:1](=[O:2])(-[OH:3])-[OH:4]>>[#6:5]-[P:1](=[O:2])(-[O:3]CC)-[O:4]CC,Phosphonic acid from its diethyl ester (hydrolysis)
+P 2a,[c:1]-[P;D4:2](=[O:3])(-[O:4])-[O:5]>>[c:1]-Cl.[P:2](=[O:3])(-[O:4])-[O:5],"Aryl phosphonate (Hirao coupling, Cl)"
+P 2b,[c:1]-[P;D4:2](=[O:3])(-[O:4])-[O:5]>>[c:1]-Br.[P:2](=[O:3])(-[O:4])-[O:5],"Aryl phosphonate (Hirao coupling, Br)"
+P 2c,[c:1]-[P;D4:2](=[O:3])(-[O:4])-[O:5]>>[c:1]-I.[P:2](=[O:3])(-[O:4])-[O:5],"Aryl phosphonate (Hirao coupling, I)"
+P 3a,[c:1]-[P;D3:2](-[#6:3])-[#6:4]>>[c:1]-Cl.[P:2](-[#6:3])-[#6:4],"Aryl phosphine (P-arylation of a secondary phosphine, Cl)"
+P 3b,[c:1]-[P;D3:2](-[#6:3])-[#6:4]>>[c:1]-Br.[P:2](-[#6:3])-[#6:4],"Aryl phosphine (P-arylation of a secondary phosphine, Br)"
+P 3c,[c:1]-[P;D3:2](-[#6:3])-[#6:4]>>[c:1]-I.[P:2](-[#6:3])-[#6:4],"Aryl phosphine (P-arylation of a secondary phosphine, I)"
+P 4,[#6:1]-[P;D4:2](=[O:3])(-[O:4])-[O:5]>>[#6:1]-Br.[P:2](-[O:3])(-[O:4])-[O:5],Alkyl phosphonate (Michaelis-Arbuzov from a trialkyl phosphite)
+P 5,[O:1]-[P](-[O]-[CH2]-[CH2]-[C]#[N])-[N](-[CH]([CH3])[CH3])-[CH]([CH3])[CH3]>>([OH:1]).(ClP(OCCC#N)N(C(C)C)C(C)C),"Nucleoside phosphoramidite from the alcohol (2-cyanoethyl N,N-diisopropyl)"

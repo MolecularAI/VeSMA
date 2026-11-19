@@ -1,0 +1,33 @@
+v2.0
+----
+-added 130 Smarts from Kenny, P.; Montanari, C. & Prokopczyk, I. ClogPalk: a method for predicting alkane/water partition coefficient Journal of Computer-Aided Molecular Design, Springer Netherlands, 2013, 27, 389-402
+  -smarts/literature_noHs_noRec.smarts changed
+  -smarts/literature_noHs_rec.smarts changed
+-recomputed benchmark sets (substructure_search_set) from ZINC lead-like and everything as of Feb. 12th, 2011.
+  -substructure_search_set/literature_noHs_noRec.smarts.lead-like.benchmarkset changed
+  -substructure_search_set/literature_noHs_noRec.smarts.everything.benchmarkset changed
+  -substructure_search_set/literature_noHs_rec.smarts.lead-like.benchmarkset changed
+  -substructure_search_set/literature_noHs_rec.smarts.everything.benchmarkset changed
+-benchmark sets (molecule_search_set, worst-case, zinc) are of version 1.1
+
+
+v1.1:
+-----
+-corrected hann.smarts_0 ([Br,Cl,I][CX4,CH,CH2] -> [Br,Cl,I][CX4;CH,CH2])
+-corrected hann.smarts_39 (N=NC(S)N -> N=NC(=S)N)
+-corrected hann.smarts_62 ([nH1]ncoc1=O -> [nH1]1ncoc1=O)
+-corrected hann.smarts_96 ([$(NH2)!:c],$([NH1]([CX4])!:c),$([NH0]([CX4])([CX4])!:c)] -> [$([NH2]!:c),$([NH1]([CX4])!:c),$([NH0]([CX4])([CX4])!:c)])
+-corrected hann.smarts_109 ([$(C(=O)(~c)~c);!$([$(c1(=O)ccn([C,c])cc1),$(c1(=O)n([C,c])cccc1)])] -> [$(c(=O)(~c)~c);!$([$(c1(=O)ccn([C,c])cc1),$(c1(=O)n([C,c])cccc1)])])
+-corrected daylight_examples.smarts_211 ([$([$(*-[NX2-]-[NX2+]#[NX1]),$(*-[NX2]=[NX2+]=[NX1-])]),$([$([NX1-]=[NX2+]=[NX1-]),$( -> [$([$(*-[NX2-]-[NX2+]#[NX1]),$(*-[NX2]=[NX2+]=[NX1-])]),$([$([NX1-]=[NX2+]=[NX1-]),$([NX1]#[NX2+]-[NX1-2])])])
+-removed daylight_examples.smarts_44 (parsing error)
+-added daylight_examples.smarts_264 (smarts: 'c')
+-added daylight_examples.smarts_265 (smarts: '[2H]')
+-added literature references
+-benchmark sets (molecule_search_set, substructure_search_set, worst-case, zinc) are of version 1.0
+
+v1.0:
+-----
+smarts and benchmarksets as described in:
+
+Ehrlich, H.-C. & Rarey, M. Systematic benchmark of substructure search in molecular graphs - From Ullmann to VF2. J Cheminform, Center for Bioinformatics, University of Hamburg, Bundestraße 43, 20146 Hamburg, Germany. rarey@zbh.uni-hamburg.de., 2012, 4, 13
+

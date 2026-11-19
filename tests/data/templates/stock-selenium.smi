@@ -1,0 +1,32 @@
+C[Se]C	dimethyl selenide	Sigma 41572
+C[Se][Se]C	dimethyl diselenide	Sigma 328502 / TCI D3290
+CC[Se][Se]CC	diethyl diselenide	TCI D4715
+c1ccc([Se]c2ccccc2)cc1	diphenyl selenide	Sigma 498262
+c1ccc([Se][Se]c2ccccc2)cc1	diphenyl diselenide	Sigma 180629 / TCI D2186
+C(c1ccccc1)[Se][Se]Cc1ccccc1	dibenzyl diselenide	TCI D2717
+c1cc[se]c1	selenophene	Sigma 367141
+NC(=[Se])N	selenourea	Sigma 230499
+CN(C)C(N)=[Se]	1,1-dimethyl-2-selenourea	Sigma 278882
+N#C[Se]c1ccccc1	phenyl selenocyanate	Sigma 498254
+N#C[Se]c1ccccc1[N+](=O)[O-]	2-nitrophenyl selenocyanate	Sigma 365246
+O[Se](=O)c1ccccc1	benzeneseleninic acid	Sigma 213004
+C[Se](O)=O	methaneseleninic acid	Sigma 541281
+Cl[Se]c1ccccc1	phenylselenyl chloride	Sigma 183342
+Br[Se]c1ccccc1	phenylselenyl bromide	Sigma 243965
+O=C1N([Se]c2ccccc2)C(=O)c2ccccc12	N-(phenylseleno)phthalimide	Sigma 254614
+N[C@@H](C[Se][Se]C[C@H](N)C(O)=O)C(O)=O	seleno-L-cystine	Sigma 545996
+NC(C[Se][Se]CC(N)C(O)=O)C(O)=O	seleno-DL-cystine	Sigma S1650
+Cl.Cl.NCC[Se][Se]CCN	selenocystamine dihydrochloride	Sigma S0520
+C[Se]CCC(N)C(O)=O	seleno-DL-methionine	Sigma S3875
+COc1ccc(C[Se]C[C@H](NC(=O)OCC2c3ccccc3-c3ccccc32)C(O)=O)cc1	Fmoc-Sec(pMeOBzl)-OH	Sigma 8.52346
+O=[Se]=O	selenium dioxide	Sigma 325473
+[Se]=P(c1ccccc1)(c1ccccc1)c1ccccc1	triphenylphosphine selenide	TCI T1819
+CCCCCCCCP(=[Se])(CCCCCCCC)CCCCCCCC	trioctylphosphine selenide	TCI T4171
+[SeH2]	hydrogen selenide	in situ from Se powder + NaBH4; Se powder itself is Sigma 229865
+[Na+].[SeH-]	sodium hydroselenide	in situ from Se powder + NaBH4; Se powder itself is Sigma 229865
+[Se]1[Se][Se][Se][Se][Se][Se][Se]1	selenium (Se8, elemental)	Sigma 229865
+[SeH]c1ccccc1	benzeneselenol	Sigma BL3H97A47114 (AldrichCPR, availability not guaranteed); also in situ from diphenyl diselenide + NaBH4, Sigma 180629
+C[SeH]	methaneselenol	in situ from dimethyl diselenide + NaBH4; the diselenide is Sigma 328502 / TCI D3290
+CC[SeH]	ethaneselenol	in situ from diethyl diselenide + NaBH4; the diselenide is TCI D4715
+[SeH]Cc1ccccc1	benzyl selenol	in situ from dibenzyl diselenide + NaBH4; the diselenide is TCI D2717
+O=C1c2ccccc2[Se]N1c1ccccc1	ebselen	Sigma 324483 / E3520

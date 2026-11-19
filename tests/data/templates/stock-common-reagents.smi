@@ -1,0 +1,148 @@
+CO	methanol	commodity reagent
+CCO	ethanol	commodity reagent
+CC(C)O	propan-2-ol	commodity reagent
+CCCO	propan-1-ol	commodity reagent
+OCCO	ethane-1,2-diol	commodity reagent
+OCc1ccccc1	benzyl alcohol	commodity reagent
+CI	iodomethane	commodity reagent
+CBr	bromomethane	commodity reagent
+CCl	chloromethane	commodity reagent
+COS(=O)(=O)OC	dimethyl sulfate	commodity reagent
+CCI	iodoethane	commodity reagent
+CCBr	bromoethane	commodity reagent
+BrCc1ccccc1	benzyl bromide	commodity reagent
+ClCc1ccccc1	benzyl chloride	commodity reagent
+C=CCBr	3-bromoprop-1-ene	commodity reagent
+C#CCBr	3-bromoprop-1-yne	commodity reagent
+BrCCBr	1,2-dibromoethane	commodity reagent
+N	ammonia	commodity reagent
+CN	methylamine	commodity reagent
+CNC	dimethylamine	commodity reagent
+CCN	ethylamine	commodity reagent
+CC(C)N	propan-2-amine	commodity reagent
+NCCN	ethane-1,2-diamine	commodity reagent
+NC1CC1	cyclopropanamine	commodity reagent
+NCc1ccccc1	benzylamine	commodity reagent
+NN	hydrazine	commodity reagent
+CNN	methylhydrazine	commodity reagent
+NO	hydroxylamine	commodity reagent
+C=O	formaldehyde	commodity reagent
+CC=O	acetaldehyde	commodity reagent
+CCC=O	propanal	commodity reagent
+CC(C)=O	propan-2-one	commodity reagent
+O=Cc1ccccc1	benzaldehyde	commodity reagent
+OC=O	formic acid	commodity reagent
+CC(=O)O	acetic acid	commodity reagent
+CC(=O)Cl	acetyl chloride	commodity reagent
+CC(=O)OC(C)=O	acetic anhydride	commodity reagent
+OC(=O)c1ccccc1	benzoic acid	commodity reagent
+CC#N	acetonitrile	commodity reagent
+CS	methanethiol	commodity reagent
+CCS	ethanethiol	commodity reagent
+SCc1ccccc1	phenylmethanethiol	commodity reagent
+CS(C)=O	dimethyl sulfoxide	commodity reagent
+CS(C)(=O)=O	dimethyl sulfone	commodity reagent
+CS(=O)(=O)O	methanesulfonic acid	commodity reagent
+CS(=O)(=O)Cl	methanesulfonyl chloride	commodity reagent
+Cc1ccc(S(=O)(=O)O)cc1	4-methylbenzenesulfonic acid	commodity reagent
+Cc1ccc(S(=O)(=O)Cl)cc1	4-methylbenzenesulfonyl chloride	commodity reagent
+C[N+](=O)[O-]	nitromethane	commodity reagent
+NC(N)=O	urea	commodity reagent
+C1CO1	oxirane	commodity reagent
+CC1CO1	2-methyloxirane	commodity reagent
+CC(C)(C)OC(=O)OC(=O)OC(C)(C)C	di-tert-butyl dicarbonate	commodity reagent
+O=C(Cl)OCc1ccccc1	benzyl chloroformate	commodity reagent
+CC(C)(C)[Si](C)(C)Cl	tert-butyldimethylsilyl chloride	commodity reagent
+COC(C)(C)OC	2,2-dimethoxypropane	commodity reagent
+COCCl	chloro(methoxy)methane	commodity reagent
+C1=COCCC1	3,4-dihydro-2H-pyran	commodity reagent
+C[Si](C)(C)C#N	trimethylsilyl cyanide	commodity reagent
+OC[C@H]1O[C@@H](O)[C@H](O)[C@@H](O)[C@H]1O	D-galactose	commodity building block
+OC[C@H]1O[C@@H](O)[C@H](O)[C@@H](O)[C@@H]1O	D-glucose	commodity building block
+OC[C@H]1O[C@@H](O)[C@@H](O)[C@@H](O)[C@@H]1O	D-mannose	commodity building block
+O[C@@H]1CO[C@@H](O)[C@H](O)[C@H]1O	D-xylose	commodity building block
+OC[C@H]1O[C@@H](O)[C@H](O)[C@H]1O	D-ribose	commodity building block
+CC(=O)N[C@H]1[C@@H](O)O[C@H](CO)[C@@H](O)[C@@H]1O	N-acetyl-D-glucosamine	commodity building block
+CC1(C)O[C@@H]2[C@@H](O1)[C@H]1OC(C)(C)O[C@H]1[C@H](CO)O2	1,2:3,4-di-O-isopropylidene-alpha-D-galactopyranose	commodity building block
+CC1(C)O[C@@H]2O[C@H]([C@@H]3OC(C)(C)OC3)[C@@H](O)[C@@H]2O1	1,2:5,6-di-O-isopropylidene-alpha-D-glucofuranose	commodity building block
+[SH2]	hydrogen sulfide	commodity reagent, Sigma 295442
+[Na+].[SH-]	sodium hydrosulfide (catalogued as the hydrate)	commodity reagent, Sigma 161527
+NC(N)=S	thiourea	commodity reagent, Sigma T8656
+[K+].[S-]C#N	potassium thiocyanate	commodity reagent, Sigma P3011
+[Na+].[O-]N=O	sodium nitrite	commodity reagent, Sigma 237213 / S2252
+ON=O	nitrous acid	in situ from sodium nitrite + acid; the nitrite is Sigma 237213
+O=C1CCC(=O)N1Br	N-bromosuccinimide	commodity reagent
+O=C1CCC(=O)N1I	N-iodosuccinimide	commodity reagent
+O=C1CCC(=O)N1Cl	N-chlorosuccinimide	commodity reagent
+BrBr	bromine	commodity reagent
+II	iodine	commodity reagent; with triphenylphosphine the Appel iodinating pair for FGI 1c and 4c
+ClCl	chlorine	commodity reagent
+O=S(Cl)Cl	thionyl chloride	commodity reagent; the chlorinating agent FGI 1a, FGI 2a, FGI 4a and MC 16 name, shedding SO2 and HCl
+O=P(Cl)(Cl)Cl	phosphoryl chloride	commodity reagent
+O=C(Cl)C(Cl)=O	oxalyl chloride	commodity reagent
+O=[N+]([O-])O	nitric acid	commodity reagent
+OS(=O)(=O)O	sulfuric acid	commodity reagent
+O=C(OO)c1cccc(Cl)c1	meta-chloroperoxybenzoic acid	commodity reagent
+OO	hydrogen peroxide	commodity reagent
+CN(C)C=O	N,N-dimethylformamide	commodity reagent
+O	water	commodity reagent
+[Na+].[N-]=[N+]=[N-]	sodium azide	commodity reagent
+[N-]=[N+]=[N-]	azide	in situ from sodium azide; the azide salt is the bottled reagent
+[Na+].[C-]#N	sodium cyanide	commodity reagent
+C#N	hydrogen cyanide	in situ from sodium cyanide + acid; the cyanide salt is the bottled reagent
+CC(C)(C)[Si](Cl)(c1ccccc1)c1ccccc1	tert-butyldiphenylsilyl chloride	commodity reagent
+BrC(Br)(Br)Br	carbon tetrabromide	commodity reagent; with triphenylphosphine the Appel brominating pair for FGI 1b, 2b and 4b, shedding CHBr3 -- PBr3 is 1:3 and a template cannot say that
+Br	hydrogen bromide	commodity reagent
+Cl	hydrogen chloride	commodity reagent
+I	hydrogen iodide	commodity reagent
+BrP(Br)Br	phosphorus tribromide	commodity reagent
+O=S(=O)(Cl)Cl	sulfuryl chloride	commodity reagent
+O=C(OC(Cl)(Cl)Cl)OC(Cl)(Cl)Cl	triphosgene	commodity reagent
+O=[Os](=O)(=O)=O	osmium tetroxide	commodity reagent
+N#C[Cu]	copper(I) cyanide	commodity reagent
+CCOC(OCC)OCC	triethyl orthoformate	commodity reagent
+COC(OC)N(C)C	N,N-dimethylformamide dimethyl acetal	commodity reagent
+CC(C)OB(OC(C)C)OC(C)C	triisopropyl borate	commodity reagent
+C[Mg]Br	methylmagnesium bromide	commodity reagent
+CC[Mg]Br	ethylmagnesium bromide	commodity reagent
+CCOC(=O)CBr	ethyl bromoacetate	commodity reagent
+CCOC(=O)CC(C)=O	ethyl acetoacetate	commodity reagent
+c1ccc(P(c2ccccc2)c2ccccc2)cc1	triphenylphosphine	commodity reagent; also takes the alcohol's oxygen in a Mitsunobu, which is why Hartenfeller 34-36 shed phosphine oxide rather than water
+COc1ccc(C(Cl)(c2ccc(OC)cc2)c2ccccc2)cc1	4,4'-dimethoxytrityl chloride	commodity reagent
+CC1(C)OB(B2OC(C)(C)C(C)(C)O2)OC1(C)C	bis(pinacolato)diboron	commodity reagent; the boron source MC 55a/b assume
+OB(O)B(O)O	tetrahydroxydiboron	commodity reagent; the boron source MC 18a-c assume
+CNOC	N,O-dimethylhydroxylamine	commodity reagent (catalogued as the hydrochloride); the Weinreb amine FWD H 47w needs
+C#C[Si](C)(C)C	(trimethylsilyl)acetylene	commodity reagent; the Sonogashira partner FWD H 46 could not reach before widening
+O=C(n1ccnc1)n1ccnc1	1,1'-carbonyldiimidazole	commodity reagent
+ClC(c1ccccc1)(c1ccccc1)c1ccccc1	trityl chloride	commodity reagent; PG 8 installs this group
+O=C(OC(=O)C(F)(F)F)C(F)(F)F	trifluoroacetic anhydride	commodity reagent; PG 17/18 install this group
+CC1(C)OBOC1(C)C	pinacolborane	commodity reagent
+O=S(=O)(Cl)c1ccccc1	benzenesulfonyl chloride	commodity reagent; TsCl's unsubstituted sibling
+COc1ccc(cc1)P1(=S)SP(=S)(c2ccc(OC)cc2)S1	Lawesson's reagent	commodity reagent; MC 51 names it in its classification
+[Na+].[BH4-]	sodium borohydride	commodity reagent; the reductant MC 5 and MC 6 assume -- borohydride is selective for an aldehyde or ketone over an ester, which is the distinction the scope column encodes
+[Li+].[AlH4-]	lithium aluminium hydride	commodity reagent; the reductant MC 85a/b, MC 86 and MC 87 assume -- it reduces an ester, amide and nitrile where borohydride does not
+B	borane	commodity reagent (catalogued as the THF or dimethyl sulfide complex)
+[C-]#[O+]	carbon monoxide	commodity reagent; the carbonyl source MC 37a-c assume
+[K+].[O-][Mn](=O)(=O)=O	potassium permanganate	commodity reagent; the oxidant MC 36 assumes
+Cl[Sn]Cl	tin(II) chloride	commodity reagent; a nitro reductant that is a molecule rather than a bare metal, which the engine declares no configuration for
+[BH4-]	borohydride	commodity reagent, bottled as the sodium salt; named as the anion because a salt on a template's right-hand side fragments into its ions
+[AlH4-]	aluminium hydride	commodity reagent, bottled as the lithium salt; named as the anion
+[C-]#N	cyanide	commodity reagent, bottled as the sodium or potassium salt; named as the anion
+[O-]N=O	nitrite	commodity reagent, bottled as the sodium salt; named as the anion because a salt on a template's right-hand side fragments into its ions
+[O-][Mn](=O)(=O)=O	permanganate	commodity reagent, bottled as the potassium salt; named as the anion
+CCOP(OCC)OCC	triethyl phosphite	commodity reagent; the phosphorus source MC 68 assumes
+C[Si](C)(C)Cl	chlorotrimethylsilane (TMSCl)	commodity reagent; the silylating agent PG 5 hands back for a TMS ether
+CC(C)[Si](Cl)(C(C)C)C(C)C	chlorotriisopropylsilane (TIPSCl)	commodity reagent; PG 5 reaches it now that the silyl group rides a star
+O=S(=O)(Cl)C(F)(F)F	trifluoromethanesulfonyl chloride (TfCl)	commodity reagent; the triflating agent MC 73a hands back
+C[Sn](C)(C)[Sn](C)(C)C	hexamethylditin	commodity reagent; the stannyl source MC 19a-c assume, as the diboron is for MC 18a-c
+ClC(=O)OCC1c2ccccc2-c2ccccc21	fluorenylmethyl chloroformate (Fmoc-Cl)	commodity reagent; PG 3
+O=C1OC(=O)c2ccccc21	phthalic anhydride	commodity reagent; PG 4
+C1CCCCC1N=C=NC1CCCCC1	N,N'-dicyclohexylcarbodiimide	commodity reagent; the condensing agent Cpl 1 needs, and the only by-product the amide coupling really sheds -- the urea, not water
+CC(C)OC(=O)N=NC(=O)OC(C)C	diisopropyl azodicarboxylate	commodity reagent; the Mitsunobu's proton acceptor, reduced to the hydrazine dicarboxylate
+[Zn]	zinc	commodity reagent; the metal a Negishi consumes forming its organozinc, leaving the dihalide Hartenfeller 33a-l now declare
+[F-]	fluoride	commodity reagent; the ion a silyl ether needs removing, PG 5r -- the counter-ion is whichever tetraalkylammonium the bench happens to use and is not modelled
+O=P(Br)(Br)Br	phosphoryl bromide	commodity reagent
+[O-]Cl	hypochlorite	commodity reagent, bottled as the sodium salt (bleach); named as the anion, and the oxidant MC 38 and MC 39 assume
+[Mg]	magnesium	commodity reagent; the metal a Grignard is made from, named the way `[Zn]` is for the Negishi rows -- H 44 and H 45 assume it
+O=O	dioxygen	commodity reagent; air's oxidant, nameable as a molecule -- what stops the aerobic rows naming it is the 2:1 ratio, not the spelling
+N#N	dinitrogen	commodity reagent; air's bulk, and the by-product a Staudinger reduction releases from the azide

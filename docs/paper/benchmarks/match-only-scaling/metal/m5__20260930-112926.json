@@ -1,0 +1,407 @@
+{
+    "machine_info": {
+        "node": "sef0627my2v3DD",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 22.1.3 ",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.14.7",
+        "python_version": "3.14.7",
+        "python_build": [
+            "main",
+            "Aug 25 2026 13:50:14"
+        ],
+        "release": "25.6.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.14.7.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 10,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M5"
+        },
+        "cpu_detail": {
+            "model": "Apple M5",
+            "physical_cores": 10,
+            "logical_cores": 10,
+            "usable_cores": 10,
+            "core_breakdown": "4 Super and 6 Efficiency",
+            "label": "Apple M5, 10 CPU cores",
+            "total_ram_bytes": 17179869184
+        },
+        "cuda": {
+            "available": false
+        },
+        "metal": {
+            "available": true,
+            "backend_type": "Metal",
+            "device_name": "Apple M5",
+            "vendor": "Apple",
+            "description": "max_threads_per_threadgroup=1024",
+            "gpu_core_count": 8,
+            "label": "Apple M5, 8 GPU cores"
+        },
+        "software": {
+            "vesma": "0.1.0",
+            "numpy": "2.5.0",
+            "pytest": "9.1.1",
+            "pytest_benchmark": "5.2.3",
+            "rdkit": {
+                "available": true,
+                "version": "2025.09.3",
+                "rdkit_version": "2025.09.3"
+            }
+        },
+        "host_type": "m5"
+    },
+    "commit_info": {
+        "id": "64232d9a928ea4efbdd4e7b2f9c842e9d3553b2f",
+        "time": "2026-09-30T12:46:23+02:00",
+        "author_time": "2026-09-30T12:46:23+02:00",
+        "dirty": false,
+        "project": "vesma",
+        "branch": "main",
+        "clean_scope": "src,tests"
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_match_only_scaling[1-metal]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[1-metal]",
+            "params": {
+                "size": 1,
+                "match_only_backend": "metal"
+            },
+            "param": "1-metal",
+            "extra_info": {
+                "matches": 146,
+                "molecules": 1,
+                "rules": 42554,
+                "pairs": 42554,
+                "path": "Vesma Metal folded-fingerprint prefiltered match-only",
+                "prefilter_diagnostics": {
+                    "dense_pair_count": 42554,
+                    "candidate_pair_count": 4431,
+                    "pruned_pair_count": 38123,
+                    "prune_ratio": 0.8958734784039103,
+                    "fingerprint_seconds": 0.18303854309488088,
+                    "inner_match_seconds": 0.0766855418914929,
+                    "pattern_fingerprint_seconds": 0.17837158404290676,
+                    "molecule_fingerprint_seconds": 0.0018747500143945217,
+                    "prefilter_compare_seconds": 0.002792209037579596,
+                    "pair_materialization_seconds": 1.8292106688022614e-05
+                },
+                "experiment": "match-only",
+                "backend": "metal",
+                "size": 1,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.2597851250320673,
+                "max": 0.3166849169647321,
+                "mean": 0.286758180668888,
+                "stddev": 0.02856465915378221,
+                "rounds": 3,
+                "median": 0.28380450000986457,
+                "iqr": 0.04267484394949861,
+                "q1": 0.2657899687765166,
+                "q3": 0.3084648127260152,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.2597851250320673,
+                "hd15iqr": 0.3166849169647321,
+                "ops": 3.487258838326476,
+                "total": 0.860274542006664,
+                "data": [
+                    0.3166849169647321,
+                    0.28380450000986457,
+                    0.2597851250320673
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[10-metal]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[10-metal]",
+            "params": {
+                "size": 10,
+                "match_only_backend": "metal"
+            },
+            "param": "10-metal",
+            "extra_info": {
+                "matches": 1282,
+                "molecules": 10,
+                "rules": 42554,
+                "pairs": 425540,
+                "path": "Vesma Metal folded-fingerprint prefiltered match-only",
+                "prefilter_diagnostics": {
+                    "dense_pair_count": 425540,
+                    "candidate_pair_count": 34641,
+                    "pruned_pair_count": 390899,
+                    "prune_ratio": 0.9185951966912629,
+                    "fingerprint_seconds": 0.17813275090884417,
+                    "inner_match_seconds": 0.08203479193616658,
+                    "pattern_fingerprint_seconds": 0.17141370894387364,
+                    "molecule_fingerprint_seconds": 0.004605749971233308,
+                    "prefilter_compare_seconds": 0.0021132919937372208,
+                    "pair_materialization_seconds": 3.450002986937761e-05
+                },
+                "experiment": "match-only",
+                "backend": "metal",
+                "size": 10,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.2603467919398099,
+                "max": 0.28332741698250175,
+                "mean": 0.26875280565582216,
+                "stddev": 0.01267146318307191,
+                "rounds": 3,
+                "median": 0.2625842080451548,
+                "iqr": 0.01723546878201887,
+                "q1": 0.26090614596614614,
+                "q3": 0.278141614748165,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.2603467919398099,
+                "hd15iqr": 0.28332741698250175,
+                "ops": 3.72089138775596,
+                "total": 0.8062584169674665,
+                "data": [
+                    0.28332741698250175,
+                    0.2625842080451548,
+                    0.2603467919398099
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[100-metal]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[100-metal]",
+            "params": {
+                "size": 100,
+                "match_only_backend": "metal"
+            },
+            "param": "100-metal",
+            "extra_info": {
+                "matches": 21264,
+                "molecules": 100,
+                "rules": 42554,
+                "pairs": 4255400,
+                "path": "Vesma Metal folded-fingerprint prefiltered match-only",
+                "prefilter_diagnostics": {
+                    "dense_pair_count": 4255400,
+                    "candidate_pair_count": 521628,
+                    "pruned_pair_count": 3733772,
+                    "prune_ratio": 0.8774197490247685,
+                    "fingerprint_seconds": 0.1812126669101417,
+                    "inner_match_seconds": 0.26300791709218174,
+                    "pattern_fingerprint_seconds": 0.1700927090132609,
+                    "molecule_fingerprint_seconds": 0.0050851249834522605,
+                    "prefilter_compare_seconds": 0.006034832913428545,
+                    "pair_materialization_seconds": 0.0003320839023217559
+                },
+                "experiment": "match-only",
+                "backend": "metal",
+                "size": 100,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.44641637499444187,
+                "max": 0.523143749916926,
+                "mean": 0.4738583469685788,
+                "stddev": 0.04277410575532445,
+                "rounds": 3,
+                "median": 0.4520149159943685,
+                "iqr": 0.05754553119186312,
+                "q1": 0.4478160102444235,
+                "q3": 0.5053615414362866,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.44641637499444187,
+                "hd15iqr": 0.523143749916926,
+                "ops": 2.1103353067373725,
+                "total": 1.4215750409057364,
+                "data": [
+                    0.523143749916926,
+                    0.4520149159943685,
+                    0.44641637499444187
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[1000-metal]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[1000-metal]",
+            "params": {
+                "size": 1000,
+                "match_only_backend": "metal"
+            },
+            "param": "1000-metal",
+            "extra_info": {
+                "matches": 261543,
+                "molecules": 1000,
+                "rules": 42554,
+                "pairs": 42554000,
+                "path": "Vesma Metal folded-fingerprint prefiltered match-only",
+                "prefilter_diagnostics": {
+                    "dense_pair_count": 42554000,
+                    "candidate_pair_count": 6407948,
+                    "pruned_pair_count": 36146052,
+                    "prune_ratio": 0.8494160830944212,
+                    "fingerprint_seconds": 0.24560733302496374,
+                    "inner_match_seconds": 2.6475689579965547,
+                    "pattern_fingerprint_seconds": 0.17567899997811764,
+                    "molecule_fingerprint_seconds": 0.023798624984920025,
+                    "prefilter_compare_seconds": 0.04612970806192607,
+                    "pair_materialization_seconds": 0.0040380420396104455
+                },
+                "experiment": "match-only",
+                "backend": "metal",
+                "size": 1000,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 2.919974875054322,
+                "max": 3.088355708983727,
+                "mean": 3.003634319679501,
+                "stddev": 0.08419543992144973,
+                "rounds": 3,
+                "median": 3.0025723750004545,
+                "iqr": 0.12628562544705346,
+                "q1": 2.9406242500408553,
+                "q3": 3.0669098754879087,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 2.919974875054322,
+                "hd15iqr": 3.088355708983727,
+                "ops": 0.33293000863923533,
+                "total": 9.010902959038503,
+                "data": [
+                    3.088355708983727,
+                    3.0025723750004545,
+                    2.919974875054322
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[2881-metal]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[2881-metal]",
+            "params": {
+                "size": 2881,
+                "match_only_backend": "metal"
+            },
+            "param": "2881-metal",
+            "extra_info": {
+                "matches": 768122,
+                "molecules": 2881,
+                "rules": 42554,
+                "pairs": 122598074,
+                "path": "Vesma Metal folded-fingerprint prefiltered match-only",
+                "prefilter_diagnostics": {
+                    "dense_pair_count": 122598074,
+                    "candidate_pair_count": 18684216,
+                    "pruned_pair_count": 103913858,
+                    "prune_ratio": 0.8475978015772091,
+                    "fingerprint_seconds": 0.6182108339853585,
+                    "inner_match_seconds": 7.939874749979936,
+                    "pattern_fingerprint_seconds": 0.3291558340424672,
+                    "molecule_fingerprint_seconds": 0.07197916693985462,
+                    "prefilter_compare_seconds": 0.21707583300303668,
+                    "pair_materialization_seconds": 0.01643862493801862
+                },
+                "experiment": "match-only",
+                "backend": "metal",
+                "size": 2881,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 8.329642499913462,
+                "max": 8.728311874903738,
+                "mean": 8.576653513591737,
+                "stddev": 0.21576240143673553,
+                "rounds": 3,
+                "median": 8.67200616595801,
+                "iqr": 0.29900203124270774,
+                "q1": 8.415233416424599,
+                "q3": 8.714235447667306,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 8.329642499913462,
+                "hd15iqr": 8.728311874903738,
+                "ops": 0.1165955927233464,
+                "total": 25.72996054077521,
+                "data": [
+                    8.329642499913462,
+                    8.728311874903738,
+                    8.67200616595801
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2026-09-30T11:30:55.242411+00:00",
+    "version": "5.2.3"
+}

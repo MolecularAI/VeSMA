@@ -1,0 +1,1109 @@
+---
+libname: "VeSMA"
+title: "Additional file 1: VeSMA validation and benchmark details"
+subtitle: "Supplement to VeSMA: GPU-native library for retrosynthetic expansion and beyond"
+authors:
+  - name: Alexey Voronov
+    affiliation:
+      - Molecular AI, Discovery Sciences, BioPharmaceuticals R&D, AstraZeneca, Gothenburg, Sweden
+    roles:
+      - conceptualization
+      - methodology
+      - software
+      - validation
+      - visualization
+      - writing
+    corresponding: true
+    orcid: 0000-0003-0709-4954
+    email: alexey.voronov1@astrazeneca.com
+  - name: Anna Reymer
+    affiliation: University Grenoble Alpes, Inserm 1209, CNRS 5309, Institute for Advanced Biosciences, Grenoble, France
+    roles:
+      - methodology
+      - writing
+    corresponding: false
+    orcid: 0000-0001-8458-7918
+    email: anna.reymer@inserm.fr
+---
+
+```{python}
+#| include: false
+from pathlib import Path
+import json
+import pandas as pd
+
+from paperlib import paper_tables as pt
+
+BENCH = Path.cwd().parent / "benchmarks"
+pd.set_option("display.max_colwidth", None)
+
+
+def format_cuda_version(value: object) -> str:
+    if pd.isna(value) or value == "":
+        return ""
+    code = int(value)
+    if float(value) != code:
+        raise ValueError(f"CUDA version code must be integral, got {value!r}")
+    return f"{code // 1000}.{(code % 1000) // 10}"
+```
+
+```{=typst}
+#show table.cell: set align(left)
+#show table.cell: set text(size: 7.5pt)
+```
+
+# Evaluation scope
+
+This Additional file is a guide to the validation and benchmark evidence behind the main article. It first defines the supported reaction semantics and precursor-property model, then moves from template acceptance through molecular identity and route-level validation to the complete reaction-application diagnostics and supporting performance measurements. The closing sections preserve the full route-recovery matrix and the provenance needed to trace or repeat the reported measurements.
+
+## Datasets
+
+```{python}
+#| output: asis
+validation_scope = pt.load_benchmarks(BENCH / "paper-validation")
+compat_scope = validation_scope[
+    validation_scope["validation"] == "template-compatibility"
+]
+compat_record = pt.require_agreeing_records(
+    compat_scope,
+    ["template_sources"],
+    context="template-compatibility scope",
+    ignore_nested_keys=frozenset({"path"}),
+)
+template_sources = pd.json_normalize(compat_record["template_sources"])
+
+replay_scope = pt.load_benchmarks(BENCH / "route-replay")
+topology_scope = replay_scope[replay_scope["mode"] == "topology"]
+route_counts = {int(value) for value in topology_scope["routes"]}
+if len(route_counts) != 1:
+    raise ValueError(f"Topology replay records disagree on route count: {route_counts}")
+n1_routes = route_counts.pop()
+
+scaling_scope = pt.load_application(BENCH / "reaction-application")
+n1_d2_targets = int(scaling_scope["molecules"].max())
+
+datasets = pd.DataFrame(
+    [
+        {
+            "Short name": "n1",
+            "Contents in retained records": (
+                f"{n1_routes:,} PaRoutes reference routes sampled one per patent"
+            ),
+            "Role": "Primary template-guided replay corpus",
+        },
+        {
+            "Short name": "n5",
+            "Contents in retained records": (
+                "Targets, intermediates, leaves, and stock molecules from the PaRoutes "
+                "five-routes-per-patent sample"
+            ),
+            "Role": "Additional molecular-key coverage",
+        },
+        {
+            "Short name": "n1-d2",
+            "Contents in retained records": (
+                f"{n1_d2_targets:,} distinct n1 targets whose reference longest branch "
+                "contains two reactions"
+            ),
+            "Role": "Complete application and fixed-depth recovery workload",
+        },
+    ]
+)
+print(pt.qtable(
+    datasets,
+    caption="Molecule and route datasets represented in the retained benchmark records. Rule-collection sizes and acceptance are reported separately in the template-compatibility table.",
+    table_id="tbl-supp-datasets",
+    colwidths=[15, 50, 35],
+))
+```
+
+## Evaluation families
+
+| Evaluation family | Inputs | Role in this study | Interpretation |
+|---|---|---|---|
+| Template compatibility | Unique templates from the named USPTO and PaRoutes collections | Measures parsing and compilation coverage | Language coverage under the declared semantics; rule quality and application are evaluated separately |
+| Positive-pair reaction application | Confirmed molecule--template pairs | Exercises assignment enumeration, graph editing, precursor construction, perception, and raw output generation | Isolates complete application from negative-pair filtering and search |
+| Template-guided route replay | PaRoutes `n1`; reference template identifier at each reaction node | Tests whether generated precursors remain usable along known multistep routes | Isolates successive reaction application from rule selection and frontier growth |
+| Route recovery | Every rule in the stated collection for each encountered non-stock molecule, to the recorded depth | Tests integrated full-library expansion and reference-route recovery | An aligned integration test; feasibility, route quality, and independent-library generalization remain separate questions |
+| Recovery-layer fanout instrumentation | Layers from the full `used14k` recovery run | Records the concrete work generated by the main recovery workload | A configuration-specific stress measurement |
+
+: Evaluation families and their interpretation. {#tbl-supp-evaluation-scope}
+
+# Supported SMARTS and reaction semantics
+
+## Supported, ignored, and rejected behavior
+
+The Daylight SMARTS specification provides the reference vocabulary for the comparison below [@daylight_smarts]. **Supported** constructs affect matching or construction as written. **Ignored** constructs are accepted but do not constrain the current backend. **Rejected** constructs fail during parsing or compilation so that their meaning is not silently broadened.
+
+```{=typst}
+#[
+  #show figure: set block(breakable: true)
+```
+
+| Construct | Representative syntax | CPU | CUDA and Metal | Current behavior |
+|---|---|---|---|---|
+| Elements, atomic number, and wildcard | `C`, `#6`, `*` | Supported | Supported | Exact element masks and unrestricted wildcard |
+| Aromatic and aliphatic atoms | `c`, `a`, `A` | Supported | Supported | Used during matching; precursor aromaticity is reconstructed after editing |
+| Formal charge | `+`, `-`, `+2` | Supported | Supported | Represented by fixed-width charge masks |
+| Degree and connectivity | `D`, `X` | Supported | Supported | Heavy-atom degree and total connectivity |
+| Total and implicit hydrogen | `H`, `h` | Supported | Supported | Query constraints; an explicit total hydrogen on the precursor side can change molecular state |
+| Valence | `v` | Supported | Supported | Represented by a fixed-width mask |
+| Ring connectivity | `x` | Supported | Supported | Exact count of incident non-bridge bonds |
+| Ring membership and smallest ring | `R`, `r` | Supported | Supported | Counts and minimum lengths of relevant cycles; recalculated on generated precursors |
+| Isotope | `[13C]` | Supported | Supported | Exact isotope matching and label preservation during reaction construction |
+| Tetrahedral and bond stereochemistry | `@`, `@@`, `/`, `\\` | Ignored (future work) | Ignored (future work) | Does not affect matching, construction, or default identity; directional bonds retain ordinary connectivity |
+| Principal bond queries | `-`, `=`, `#`, `:`, `~`, omitted | Supported | Supported | Single, double, triple, delocalized, any, and default single-or-delocalized queries |
+| Ring and chain bonds | `@`, `!@` | Supported | Supported | Exact for every ring size through non-bridge detection |
+| Logical atom expressions | `!`, `&`, `;`, `,` | Supported | Supported | Independent constraints use masks; remaining Boolean relationships use atom predicates |
+| Correlated cross-property alternatives | `[#7&+1,#8&-1]` | Supported | Supported | Element and charge alternatives retain their association in a Boolean predicate |
+| Recursive SMARTS | `$()`, `!$()` | Supported | Supported | Rooted subgraph queries, including nested and negated queries |
+| Branches and ring closures | `C(C)C`, `C1CC1` | Supported | Supported | Ordinary graph syntax |
+| Disconnected fragments and component grouping | `A.B`, `(A).(B)`, `(A.B)` | Supported | Supported | Grouping can require fragments to match in the same or different connected components; nested grouping is rejected |
+| Reaction syntax and atom maps | `[C:1]>>[C:1]` | Supported | Supported | Three reaction fields, unique positive atom maps, and unmapped atoms are supported |
+| Non-concrete added atoms or edited bonds | Ambiguous precursor-side element or bond | Rejected | Rejected | Added atoms and edited bonds must resolve to one molecular state |
+
+: Support for Daylight SMARTS atom and bond constructs. {#tbl-supp-smarts-support}
+
+
+```{=typst}
+]
+```
+
+Count-like masks use buckets from zero through seven, with the final bucket also representing larger values. Formal charges at or below −3 and at or above +4 likewise share boundary buckets. Query compilation reports when a requested value is folded into a boundary bucket.
+
+Logical atom expressions are compiled into independent property masks wherever possible, with the remaining Boolean clauses retained as predicates. This preserves correlations such as nitrogen with charge +1 or oxygen with charge -1, rather than accepting either element with either charge. A recursive `$()` body holds at an atom when an embedding places the body's first atom there. Nested bodies are evaluated from the innermost level outward; their root sets then participate in the enclosing Boolean expression. On the GPUs, these sets are represented by atom bitsets. An unresolved recursive search raises an error rather than treating an unknown result as false, which is especially important under negation. Normalization can expand at most 4,096 terms in one disjunction; exceeding this bound is reported during compilation.
+
+Ring and chain bond queries require only the distinction between bridge and non-bridge edges. Every backend identifies ring bonds exactly as the non-bridge edges, and `x` counts the incident ring bonds before numeric bucketing. This requires neither a cycle-basis choice nor a limit on cycle length.
+
+For `R`, the perceived ring set is the *relevant cycles*, defined as the union of all minimum cycle bases [@vismara1997]. A cycle is relevant if its binary edge vector is not in the GF(2) span of strictly shorter cycles. The implementation constructs Horton-style candidates from two shortest paths sharing only their root and the edge joining their endpoints [@horton1987]. All tied shortest paths are considered. Candidates are deduplicated and processed by increasing length; every candidate in a length tier is tested against the basis of shorter cycles before that tier extends the basis. Gaussian elimination uses exclusive-or on edge bitsets. This retains equally short alternatives and removes dependence on atom numbering. For example, cubane contributes all six square faces although its cycle-space rank is five, giving `R=3` and `r=4` at every atom.
+
+`R` counts the retained relevant cycles through each atom. `r` is the length of the smallest cycle through that atom, obtained as the minimum length among the same relevant cycles; acyclic atoms receive zero for both descriptors. A connected ring system consisting of one simple cycle is handled directly. CPU, CUDA, and Metal implement the same definition, including after reaction construction. This ring perception is separate from the three-to-eight-atom cycle search used for automatic aromaticity and molecular-key normalization. Numeric buckets and GPU workspace bounds remain applicable.
+
+Component grouping is evaluated as a relationship among dot-separated fragments. Atoms in separate outer groups must map to separate connected components, while atoms in the same outer group must map within one component. On the precursor side, grouping is checked after graph editing and component separation. A reaction application that does not produce the stated component arrangement is rejected.
+
+## Backend data behavior and capacities
+
+| Property | CPU reference | CUDA | Metal |
+|---|---|---|---|
+| `ReactionMatcher.match` output | Raw `CMol` sequence and an indexing `HitArray` | Raw packed device graph batch and an indexing `HitArray` | Raw packed host batch and an indexing `HitArray` |
+| Optional short-ring WL key | Separate CPU keyer | Separate device keyer returns host key values | Separate device keyer returns host key values |
+| Current deduplication decision | Host/caller | Host-controlled; the optional keyed path may retain unique graphs on device | Host/caller |
+| Input graph atom cap | Not fixed by packed GPU representation | 64 | 64 |
+| Constructed precursor atom cap | Optional caller limit | 64 | 64 |
+| Edited intermediate atom cap | Optional caller limit | 128 | 256 |
+| Assignment/output limits | Caller-selected where used | Per-chunk buffers retry up to 1,000,000 assignments and 250,000 precursors before reporting incomplete/overflow status | `max_assignments=256` per pair by default, reserved in two passes: every pair is first given eight slots, and only pairs that fill them are replayed at the full limit; at most six precursor components per assignment |
+| Outcome when a capacity fires | Edited-atom cap or precursor atom cap refuses the whole application and counts it; a partial precursor set is never returned | As the CPU reference | As the CPU reference, plus the same outcome when an assignment splits into more than six components |
+
+: Backend result, residency, and capacity behavior. {#tbl-supp-backend-data}
+
+GPU atom and edge limits are compile-time representation limits. Assignment and output settings govern bounded temporary buffers and are surfaced through errors or diagnostics. Relevant-cycle perception on CUDA and Metal has workspace for 128 ring edges, 128 distinct candidates in one length tier, and 64 basis vectors, with a budget of $2^{20}$ shortest-path enumeration steps per precursor component. If a bound is exceeded, `R` and `r` remain unknown (wildcard masks) instead of receiving approximate counts. Ring-bond topology and `x` remain available. The CPU cycle calculation has no corresponding fixed workspace bounds.
+
+# Precursor property perception details
+
+The main article describes why hydrogen reconstruction and aromaticity perception are required before a generated precursor can be reused. This section records the exact decision rules, limits, diagnostics, and observed divergence.
+
+## Hydrogen-count rules {#sec-supp-hydrogen}
+
+Hydrogen perception, aromaticity perception, reaction editing, and molecular identity share one table of closed-shell atomic configurations. Each configuration is keyed by element and charge and records three quantities: its sigma capacity, its graph valence, and whether it can contribute zero, one, or two electrons to a delocalized circuit. Main-group configurations are generated from standard valence and valence-electron count. Expanded-valence rows are declared for P, S, As, Se, and I; expanded states cannot join a delocalized circuit. Li, Na, K, Mg, Zn, Cu, Sn, Mn, and Os have explicit configurations covering the organometallic and inorganic fragments present in the reaction corpus. Metal configurations carry no hydrogen and do not participate in aromatic circuits.
+
+An authored total-hydrogen count has highest authority and is preserved exactly. When an atom has no authored count and no matched atom from which to inherit a configuration, the implementation considers the declared configurations consistent with the written local graph. For concrete bonding, a configuration is consistent when
+
+$$
+\begin{aligned}
+\text{sigma capacity} &= \text{heavy-atom degree} + H,\\
+\text{graph valence} &= \text{concrete bond-order sum} + H.
+\end{aligned}
+$$
+
+For an orderless-delocalized atom, the second equation is unavailable by design; the sigma-capacity equation is used and only configurations capable of joining a circuit are considered. The configuration requiring the fewest non-negative hydrogens is selected. No candidate, or several candidates at the same minimum, produces a typed refusal rather than an arbitrary valence choice. This is the only inference used for an unwritten molecule atom or a new atom introduced by a reaction rule.
+
+A surviving mapped atom follows a different rule because its pre-edit configuration is known. An explicit right-hand-side `H` count sets the new total. Otherwise, an atom whose charge and incident bond-kind histogram are unchanged copies its total hydrogen exactly. If bonding changed while charge did not, the original configuration is retained and the new hydrogen count is the unique value that completes that configuration under the edited bonding. A charge change with `H` omitted is refused because the old configuration cannot determine the new charge state. Every reaction-built atom therefore has a fixed total before aromaticity perception begins; perception never silently revises it.
+
+This three-way rule---set, copy, or complete---is also the context-hydrogen conservation law. Separating connected components changes no incident bond and therefore cannot change a context atom's hydrogen. Deleting a neighbour can expose one valence and add one hydrogen when that is what the copied configuration requires. Completion is reported as neutral application telemetry, while a negative, ambiguous, incompatible, or undeclared completion is a typed refusal.
+
+## Aromaticity rules and limits {#sec-supp-aromaticity}
+
+{{< meta libname >}} uses one bounded simple-cycle enumerator for two separate consumers: automatic aromaticity perception and short-ring molecular-key normalization. It enumerates every simple cycle of size 3--8 exactly once. Aromaticity first removes cycles containing an atom whose configuration cannot join a circuit, then joins the remaining cycles when they share an edge. Ring atoms with declared circuit configurations include B, C, N, O, P, S, As, Se, and Te; whether a particular charge and sigma frame is eligible is decided by the configuration table rather than by element alone.
+
+The circuit selector is deliberately blind to concrete ring bond orders. Once configurations that cannot participate are excluded, every `(element, charge, sigma frame)` in the table has one unique contribution; localized bond orders are unnecessary for this decision. Concrete bond orders remain part of ordinary configuration validation, where they distinguish, for example, sulfide, sulfoxide, and sulfone states.
+
+For each atom in a candidate circuit, the contribution classifier returns zero, one, two, or invalid:
+
+| Case | Contribution |
+|---|---:|
+| Configuration with one π electron and no concrete multiple bond leaving the eligible fused system | 1 |
+| The same one-electron configuration with a concrete multiple bond leaving the eligible fused system | 0 |
+| Supported lone pair in the perpendicular orbital | 2 |
+| Empty perpendicular orbital | 0 |
+| Unsupported or undeclared state, over-coordination, two π bonds, expanded valence, or a single radical electron | invalid |
+
+The exocyclic test is topological rather than electronegativity-based. A concrete double bond drawn inside the eligible fused system is a possible Kekulé spelling and does not control the count; a double bond leaving that system is authored chemistry and engages the atom's perpendicular orbital elsewhere. Tropone therefore contributes six electrons around its ring, whereas fulvene contributes four. A candidate is accepted only when no atom is invalid and the summed contribution is at least two and congruent to two modulo four.
+
+Each eligible 3--8 cycle is tested on its own. Cycles sharing an edge are also tested as a fused system when the individual cycles do not all pass. Individually accepted cycles contribute all their edges, including a shared edge belonging to two accepted circuits. A system accepted only as a whole contributes the boundary of its elementary chordless faces, leaving interior fusion bonds concrete. This is why naphthalene has eleven delocalized bonds while azulene has ten around its perimeter and a concrete interior bond.
+
+The size bound applies to automatic discovery. A connected run of asserted orderless-delocalized edges in which every atom has two asserted neighbours identifies a simple circuit directly, so it can be checked at any represented size without enumerating possible large cycles. Its electron count must pass the same rule. An asserted delocalized edge outside an accepted circuit is refused rather than silently converted to a single bond, because an orderless bond supplies no concrete order to recover.
+
+For example, a generated [18]annulene written as one complete delocalized circuit is evaluated at its full size. If accepted, it retains delocalized bonds and can match an aromatic query in the next expansion layer. The same connectivity written only with alternating localized bonds lies outside automatic three-to-eight-atom discovery and is refused with `requires_delocalized_annotation`; it is not returned as an aliphatic precursor. Lowercase atom notation alone does not override incompatible or incomplete bond annotation.
+
+Localized large rings require one further spelling-invariance check. The subgraph containing only atoms capable of delocalization has cycle-space dimension $E-V+C$. The already examined circuits are represented as binary edge vectors. Gaussian elimination over GF(2)---the two-element field in which values are zero or one and addition is exclusive-or---then measures the dimension of their span. If that span is smaller than the eligible cycle space, at least one independent circuit was not examined. {{< meta libname >}} then requests an explicit delocalized annotation instead of returning an aliphatic answer that would depend on whether the input used localized or delocalized notation. In this aromaticity check, GF(2) certifies coverage; the aromatic circuits themselves are identified by the bounded search and explicit-delocalization rules above.
+
+The remaining limits are explicit. The model is graph-topological and does not represent planarity, orbital orientation, ring current, or partial aromatic character. States absent from the configuration table are refused, and stereochemistry is not involved. These semantics are narrower than RDKit's chemistry model; agreement is evaluated empirically rather than assumed. Backend-specific atom, assignment, component, and output capacities are listed separately in @tbl-supp-backend-data.
+
+### Worked aromaticity divergence {#sec-supp-aromaticity-divergence}
+
+{{< meta libname >}} and RDKit can assign different bond classes to the same ring, and a worked example makes the boundary concrete. The enamine pattern `[NX3][CX3]=[CX3]` matches the levamisole core `S1C2=N[C@H](c3ccccc3)CN2C=C1` under RDKit but not under {{< meta libname >}}. RDKit keeps the thiazoline ring aliphatic, so the localized `C=C` remains and the fragment `N-C=C` matches. {{< meta libname >}} asks instead what each atom contributes to that five-membered circuit. Sulfur and the bridgehead amine nitrogen each contribute a lone pair, the two atoms of the endocyclic `C=C` contribute one electron each, and the carbon whose `C=N` bond leaves the eligible ring system contributes zero. The total is six, so the circuit is represented by orderless-delocalized bonds and the pattern's concrete `=` no longer matches (@fig-aromaticity-divergence). No electronegativity comparison or Kekulé localization enters this count.
+
+```{python}
+#| label: fig-aromaticity-divergence
+#| echo: false
+#| fig-cap: "The enamine SMARTS `[NX3][CX3]=[CX3]` on the levamisole core. Left: RDKit's Kekulé structure keeps a localized C=C in the thiazoline ring, so the N--C=C enamine (green) matches. Right: {{< meta libname >}} perceives the whole five-membered ring B (orange) as aromatic, so there is no localized double bond and the pattern does not match. The two panels are the same molecule under the two aromaticity models; the match atoms and ring are located live during rendering."
+import io
+import matplotlib.pyplot as plt
+from PIL import Image
+from rdkit import Chem
+from rdkit.Chem.Draw import rdMolDraw2D
+
+lev = Chem.MolFromSmiles("S1C2=N[C@H](c3ccccc3)CN2C=C1")
+match = lev.GetSubstructMatch(Chem.MolFromSmarts("[NX3][CX3]=[CX3]"))
+ring_b = next(
+    r for r in lev.GetRingInfo().AtomRings()
+    if len(r) == 5 and any(lev.GetAtomWithIdx(a).GetSymbol() == "S" for a in r)
+)
+
+def _bonds(atoms):
+    s = set(atoms)
+    return [
+        b.GetIdx() for b in lev.GetBonds()
+        if b.GetBeginAtomIdx() in s and b.GetEndAtomIdx() in s
+    ]
+
+def _draw(atoms, color, size=(300, 240)):
+    d = rdMolDraw2D.MolDraw2DCairo(*size)
+    d.drawOptions().padding = 0.12
+    bonds = _bonds(atoms)
+    rdMolDraw2D.PrepareAndDrawMolecule(
+        d, lev,
+        highlightAtoms=list(atoms), highlightBonds=bonds,
+        highlightAtomColors={a: color for a in atoms},
+        highlightBondColors={b: color for b in bonds},
+    )
+    d.FinishDrawing()
+    return Image.open(io.BytesIO(d.GetDrawingText()))
+
+fig, axes = plt.subplots(1, 2, figsize=(5.6, 2.5))
+axes[0].imshow(_draw(match, (0.35, 0.70, 0.35)))
+axes[0].set_title("RDKit (Kekule): localized\nN-C=C enamine matches", fontsize=8)
+axes[1].imshow(_draw(ring_b, (0.90, 0.55, 0.20)))
+axes[1].set_title("VeSMA (delocalized): ring B\naromatic, no match", fontsize=8)
+for ax in axes:
+    ax.axis("off")
+plt.show()
+```
+
+The two descriptions are internally consistent graph models: one retains a localized ring double bond, while the other assigns a delocalized aromatic bond class to the same atom and hydrogen graph. The same {{< meta libname >}} rule also aromatizes the uracil and tetrazolone nitrogens that RDKit aromatizes, so changing it locally would lose accepted cases. The pair remains pinned in the focused RDKit-implication regression test; the central divergence overview records its role without turning a small test suite into a corpus-level frequency estimate.
+
+# Template compatibility
+
+```{python}
+#| output: asis
+pt.require_columns(
+    template_sources,
+    [
+        "name",
+        "source_rows",
+        "unique_templates",
+        "accepted_templates",
+        "rejected_templates",
+    ],
+    context="template-compatibility collections",
+)
+compatibility_table = template_sources[
+    [
+        "name",
+        "source_rows",
+        "unique_templates",
+        "accepted_templates",
+        "rejected_templates",
+    ]
+].rename(
+    columns={
+        "name": "Rule collection",
+        "source_rows": "Source rows",
+        "unique_templates": "Unique templates",
+        "accepted_templates": "Accepted",
+        "rejected_templates": "Rejected",
+    }
+)
+for column in ["Source rows", "Unique templates", "Accepted", "Rejected"]:
+    compatibility_table[column] = compatibility_table[column].map(
+        lambda value: f"{int(value):,}"
+    )
+print(pt.qtable(
+    compatibility_table,
+    caption="Rule-collection size and template acceptance from the retained compatibility audit.",
+    table_id="tbl-supp-template-compatibility",
+))
+```
+
+`uspto42k-compat` is the output of a parse-and-representation filter that keeps only rows whose reaction SMARTS parse with both RDKit and {{< meta libname >}} and whose {{< meta libname >}}-parsed left-hand side fits the GPU molecule representation. In the retained audit it is identical in accepted templates to `uspto42k`, so it acts as a safety net should a future template require an unsupported feature. The main article reports `uspto42k` alone.
+
+# Molecular-key audit
+
+The molecular-key audit traverses PaRoutes n1 and n5 targets, intermediates, leaves, and stock molecules. It evaluates the short-ring WL key used for VeRTSY search and by the CPU, CUDA, and Metal reaction-application backends. The reference groups are normalized RDKit canonical SMILES with stereochemistry and atom maps removed, matching the stated deduplication policy. The aromaticity-aware WL codec is a separate optional CPU keyer and is not evaluated here.
+
+```{python}
+#| output: asis
+validation = validation_scope
+identity = validation[validation["validation"] == "identity-agreement"]
+audit_metadata_columns = {
+    "source_path",
+    "experiment",
+    "backend",
+    "validation",
+}
+identity_result_columns = [
+    column
+    for column in identity.columns
+    if column not in audit_metadata_columns
+    and not column.startswith(("machine.", "stats."))
+    and not column.endswith(".path")
+    and not identity[column].isna().all()
+]
+r = pt.require_agreeing_records(
+    identity,
+    identity_result_columns,
+    context="molecular-key identity audit",
+)
+category_columns = sorted(column for column in identity.columns if column.startswith("category_counts."))
+if not category_columns:
+    raise ValueError("Identity record requires category_counts fields")
+required = [
+    "molecules_seen",
+    "molecules_encoded",
+    "encoding_failures",
+    "unique_rdkit_identities",
+    "unique_wl_keys",
+    "wl_false_merge_groups",
+    "rdkit_false_split_groups",
+]
+pt.require_columns(identity, required, context="identity agreement record")
+table = pd.DataFrame(
+    [
+        {
+            "Measure": f"{column.removeprefix('category_counts.').capitalize()} strings",
+            "Count": int(r[column]),
+        }
+        for column in category_columns
+    ]
+    + [
+        {
+            "Measure": "Route-role entries",
+            "Count": sum(int(r[column]) for column in category_columns),
+        },
+        {"Measure": "Distinct input strings", "Count": int(r["molecules_seen"])},
+        {"Measure": "Successfully encoded", "Count": int(r["molecules_encoded"])},
+        {"Measure": "Encoding failures", "Count": int(r["encoding_failures"])},
+        {
+            "Measure": "Unique RDKit reference groups",
+            "Count": int(r["unique_rdkit_identities"]),
+        },
+        {
+            "Measure": "Unique short-ring WL keys",
+            "Count": int(r["unique_wl_keys"]),
+        },
+        {"Measure": "False-merge groups", "Count": int(r["wl_false_merge_groups"])},
+        {"Measure": "False-split groups", "Count": int(r["rdkit_false_split_groups"])},
+    ]
+)
+table["Count"] = table["Count"].map(lambda value: f"{value:,}")
+print(
+    pt.qtable(
+        table,
+        caption="Molecular-key audit coverage and results.",
+        table_id="tbl-supp-identity-audit",
+    )
+)
+```
+
+Route-role categories overlap, so their counts sum to more than the number of distinct input strings. The audit found no encoding failures, false merges, or false splits. This is corpus-level evidence rather than a canonical-isomorphism proof; deployments for which collisions or representation splits would be consequential should repeat the audit on their own molecular distribution.
+
+# Template-guided route replay
+
+Template-guided route replay applies the reference template identifier at each reaction node and asks whether the generated precursor set contains the next molecule in the known route. This is the experiment named `topology` mode in the retained records. It directly tests successive reaction application while holding template selection and route topology fixed.
+
+```{python}
+#| output: asis
+replay = pt.load_benchmarks(BENCH / "route-replay")
+replay = replay[replay["mode"] == "topology"].copy()
+pt.require_columns(
+    replay,
+    [
+        "backend",
+        "machine.host_type",
+        "source_path",
+        "strict_reference_missing_indices",
+        "loose_reference_missing_indices",
+        "library_reference_missing_indices",
+    ],
+    context="template-guided route replay",
+)
+route_counts = {int(value) for value in replay["routes"]}
+if len(route_counts) != 1:
+    raise ValueError(f"Topology replay records disagree on route count: {route_counts}")
+route_count = route_counts.pop()
+comparators = (
+    ("strict", "Complete route"),
+    ("loose", "Template and stock"),
+    ("library", "Template only"),
+)
+backend_groups = (
+    ("VeSMA CUDA and Metal", replay["backend"].str.startswith(("cuda", "metal"))),
+    ("RDKit", replay["backend"] == "rdkit"),
+)
+rows = []
+for backend_group, selector in backend_groups:
+    group = replay[selector].copy()
+    if group.empty:
+        raise ValueError(f"No replay records found for {backend_group}")
+    for comparator, label in comparators:
+        column = f"{comparator}_reference_missing_indices"
+        records = [
+            {
+                "backend": row["backend"],
+                "machine": row["machine.host_type"],
+                "source": row["source_path"],
+                "indices": tuple(int(value) for value in row[column]),
+            }
+            for _, row in group.sort_values(
+                ["backend", "machine.host_type", "source_path"]
+            ).iterrows()
+        ]
+        reference = records[0]
+        for record in records[1:]:
+            if record["indices"] != reference["indices"]:
+                symmetric_difference = sorted(
+                    set(reference["indices"]) ^ set(record["indices"])
+                )
+                raise ValueError(
+                    f"{backend_group} replay disagreement for {label}: "
+                    f"{reference['backend']} on {reference['machine']} "
+                    f"({reference['source']}) differs from "
+                    f"{record['backend']} on {record['machine']} "
+                    f"({record['source']}); symmetric-difference indices "
+                    f"{symmetric_difference}"
+                )
+        rows.append(
+            {
+                "Backend": backend_group,
+                "Comparator": label,
+                "Recovered": route_count - len(reference["indices"]),
+                "Missing": len(reference["indices"]),
+            }
+        )
+table = pd.DataFrame(rows).set_index(["Backend", "Comparator"])
+print(pt.qtable_mi(
+    table,
+    caption=f"Template-guided recovery across {route_count:,} PaRoutes n1 routes. Full disagreement indices remain in the retained benchmark records.",
+    table_id="tbl-supp-route-replay-summary",
+    colwidths=[34, 24, 21, 21],
+))
+```
+
+CUDA and Metal are shown together only after checking their full disagreement-index arrays for exact agreement; repeated RDKit records receive the same check.
+
+# Complete reaction-application comparison
+
+## Scaling with workload size
+
+Each cell reports the mean of timed invocation rounds after one warmup round for the stated number of `n1-d2` products (dpeth-2 routes of n1 PaRoutes set). The `streamed-unkeyed-host-v1` workload includes matching, graph editing, precursor separation, hydrogen reconstruction, aromaticity and ring perception, and usable host output. Batches are released after consumption. Input parsing, compilation, molecular keys, and deduplication are excluded. RDKit uses native reaction application and product sanitization without canonical SMILES generation. The serial and parallel RDKit rows use the same chemistry and output contract. The RTX 4090 and RTX 5090 systems use different host CPUs; their timings compare complete systems rather than isolated GPU generations.
+
+```{=typst}
+#show <tbl-supp-expansion-scaling>: it => {
+  set block(breakable: true)
+  show figure.caption: set block(sticky: true)
+  it
+}
+```
+
+```{python}
+#| label: tbl-supp-expansion-scaling
+#| output: asis
+scaling = pt.load_application(BENCH / "reaction-application")
+sizes = scaling["molecules"]
+print(pt.qtable(
+    pt.scaling_table(scaling),
+    caption=(
+        f"Complete reaction-application measurements on confirmed positive pairs for "
+        f"{sizes.nunique()} workload sizes, from {sizes.min():,} to {sizes.max():,} products, "
+        "for every backend and machine measured under streamed unkeyed host delivery. "
+        "The CPU serial sweep stops at 100 products. Each cell gives mean wall time on the first line and "
+        "positive-pair throughput on the second."
+    ),
+    table_id="tbl-supp-expansion-scaling",
+    colwidths=[25, 15, 15, 15, 15, 15],
+))
+```
+
+## Exact cross-tool outcome agreement
+
+The comparison uses every confirmed positive molecule--template pair for the target molecules in the `n1-d2` dataset. Each backend's output for one pair is reduced to a set of precursor sets under the same stereo-stripped, isotope-preserving canonical SMILES key. Equality therefore means exact agreement after removing multiplicity and stereochemical labels; it does not equate different isotopes or constitutional outcomes. The all-pairs rate retains incomplete results in its denominator. The comparable-pairs rate excludes pairs for which either backend could not provide a complete outcome set because of sanitization, serialization, or execution failure.
+
+```{python}
+#| label: tbl-supp-precursor-audit-agreement
+#| output: asis
+print(pt.qtable(
+    pt.precursor_audit_agreement_table(),
+    caption="Pairwise exact agreement of precursor outcome sets in the complete CPU chemistry audit. The all-pairs column prevents sanitization or exchange failures from inflating agreement.",
+    table_id="tbl-supp-precursor-audit-agreement",
+    colwidths=[34, 33, 33],
+))
+```
+
+## Major cross-tool divergence classes
+
+The exact rates are best understood through the semantics that produce them rather than as a ranking. @tbl-supp-precursor-audit-classes distinguishes valid graph-model choices, deliberately scoped refusals, neutral construction telemetry, and exchange-boundary failures. A large count therefore does not automatically describe a chemistry error. Denominators differ deliberately: topology and stereochemistry are properties of a molecule--template pair, whereas one pair can produce several attempted applications or outcomes.
+
+```{python}
+#| label: tbl-supp-precursor-audit-classes
+#| output: asis
+print(pt.qtable(
+    pt.precursor_audit_class_table(),
+    caption="Major cross-tool divergence classes. Frequencies use the natural denominator shown in each cell and are not additive; they describe operational differences, not error rates.",
+    table_id="tbl-supp-precursor-audit-classes",
+    colwidths=[24, 21, 55],
+))
+```
+
+This table is an overview, not a substitute for the chemistry. The circuit-relative example remains with the aromaticity model in @sec-supp-aromaticity-divergence, hydrogen completion is specified in @sec-supp-hydrogen, and @sec-supp-ring-disconnection works through the dominant graph-construction class. Typed refusals are intentional outcomes of {{< meta libname >}}'s declared closed-shell and categorical-delocalization contract; derived-property and component records are neutral telemetry. These conditional frequencies estimate what a user may encounter with this corpus, template collection, identity key, and toolkit versions. They are not universal error rates or a designation of any toolkit as chemical ground truth.
+
+## Precursor-count divergence {#sec-supp-ring-disconnection}
+
+The main-article reaction-application table shows a higher raw precursor count for RDKit than for {{< meta libname >}} on the same positive pairs used in the audit. The CPU, Metal, and CUDA backends agree on the {{< meta libname >}} count. These are raw precursor multisets: the timed pipeline generates no molecular keys and performs no deduplication. The reported difference therefore reflects precursor construction rather than the collapse of duplicate results.
+
+The difference is exposed by a disconnection template -- one whose right-hand side has two or more components -- when the matched bond lies on a ring. Both backends receive the reaction SMARTS unchanged. A dot "." in a reaction SMARTS right-hand side can either declare two separate product-molecule templates or declare no bond between the two adjacent atoms. The two atoms to the left and right of the dot either can belong to different molecules, or can be considered to belong to the same molecule if joined by "ring closure" syntax elsewhere. RDKit represents an intramolecular outcome only when the components are wrapped in parenthesis as `([A].[B])` [@rdkit_book]. RDKit's `RunReactants` therefore builds one molecule per right-hand-side component and copies each mapped anchor atom's surrounding fragment into its product; when the two anchors are also joined through the rest of a ring, the shared ring atoms are copied into *both* products. {{< meta libname >}} instead applies the bond edit directly to the product graph and returns its connected components. In the ungrouped precursor pattern used here, dot-separated fragments do not require separate output molecules, so breaking one ring bond opens the ring and returns one connected precursor. When a template uses outer component groups, {{< meta libname >}} checks the requested component relationship after graph editing.
+
+@fig-precursor-divergence applies the benchmark template `[C:2]-[CH2;D2;+0:1]-[CH2;D2;+0:3]-[C:4]>>Br-[CH2;D2;+0:1]-[C:2].Br-[CH2;D2;+0:3]-[C:4]` to cyclohexane. RDKit returns two 1-bromobutane molecules -- eight carbons from a six-carbon ring, because the two ring carbons outside the matched path are duplicated into both products -- while {{< meta libname >}} returns one 1,6-dibromohexane, conserving all six carbons. On an acyclic match the two agree exactly: the amide disconnection `[C:1](=[O:2])-[NH1:3]-[C:4]>>[C:1](=[O:2])-[OH].[NH2:3]-[C:4]` on `CCCC(=O)NCc1ccccc1` yields `CCCC(=O)O` and `NCc1ccccc1` under both backends.
+
+```{python}
+#| label: fig-precursor-divergence
+#| echo: false
+#| fig-cap: "The benchmark disconnection template applied to cyclohexane. RDKit builds one molecule per right-hand-side component and duplicates the two ring carbons outside the matched path, returning two 1-bromobutane molecules (eight carbons from six). {{< meta libname >}} applies the bond edit to the graph and returns the single ring-opened precursor 1,6-dibromohexane, conserving all six carbons. Both precursor sets are generated live by their backends during rendering."
+import io
+import matplotlib.pyplot as plt
+from PIL import Image
+from rdkit import Chem
+from rdkit.Chem import rdChemReactions
+from rdkit.Chem.Draw import rdMolDraw2D
+
+from vesma import keyer
+from vesma import cmol_from_smarts
+from vesma.cpu_matcher import CpuReactionMatcher
+from vesma.reaction import parse_reaction_smarts
+
+TPL = "[C:2]-[CH2;D2;+0:1]-[CH2;D2;+0:3]-[C:4]>>Br-[CH2;D2;+0:1]-[C:2].Br-[CH2;D2;+0:3]-[C:4]"
+TARGET = "C1CCCCC1"
+outcome = rdChemReactions.ReactionFromSmarts(TPL).RunReactants((Chem.MolFromSmiles(TARGET),))[0]
+rd_frags = [f for product in outcome for f in Chem.GetMolFrags(product, asMols=True, sanitizeFrags=True)]
+cmol, _ = cmol_from_smarts(TARGET)
+precursors, _ = CpuReactionMatcher([parse_reaction_smarts(TPL)]).match([cmol], [(0, 0)], n_jobs=1)
+ve_mol = Chem.MolFromSmiles(keyer.rdkit_canonical_smiles(precursors[0]))
+
+def _draw(mols, panel=(240, 190)):
+    prepared = [rdMolDraw2D.PrepareMolForDrawing(m) for m in mols]
+    d = rdMolDraw2D.MolDraw2DCairo(panel[0] * len(prepared), panel[1], panel[0], panel[1])
+    d.drawOptions().padding = 0.12
+    d.DrawMolecules(prepared)
+    d.FinishDrawing()
+    return Image.open(io.BytesIO(d.GetDrawingText()))
+
+fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.3), gridspec_kw={"width_ratios": [1, 1.7, 1.2]})
+axes[0].imshow(_draw([Chem.MolFromSmiles(TARGET)]))
+axes[0].set_title("Product: cyclohexane (C6H12)", fontsize=8)
+axes[1].imshow(_draw(rd_frags))
+axes[1].set_title("RDKit: two molecules, 2 x C4H9Br\n(8 C: 2 ring carbons duplicated)", fontsize=8)
+axes[2].imshow(_draw([ve_mol]))
+axes[2].set_title("VeSMA: one molecule, C6H12Br2\n(6 C conserved, ring opened)", fontsize=8)
+for ax in axes:
+    ax.axis("off")
+plt.show()
+```
+
+The ring match lies outside the intermolecular chemistry encoded by the extracted template: forming the bond in the forward direction would instead be an intramolecular cyclization. {{< meta libname >}} performs the atom-conserving ring opening, whereas RDKit realizes the declared two-component topology and duplicates the shared ring atoms. RDChiral addresses the same RDKit behavior by identifying duplicated atom maps and stitching the components into one molecule [@coley2019rdchiral].
+
+RDKit is used here as a widely available chemistry reference, with the operational difference reported explicitly. A smaller effect runs in the opposite direction because the RDKit backend drops an outcome when any product fails sanitization (`split_outcome` returns nothing for that outcome). The net few-percent difference therefore means that the throughput measurements cover slightly different raw precursor multisets.
+
+```{=typst}
+#pagebreak(weak: true)
+```
+
+# Match-only measurements
+
+Match-only measurements are gathered by "short-circuiting" the pipeline after boolean subgraph search. They expose lower-level subgraph isomorphism solver scaling, while the replicated streamed reaction-application measurements in the main article support the complete pipeline performance claims.
+
+```{=typst}
+#[
+  #show figure: set block(breakable: true)
+```
+
+```{python}
+#| output: asis
+match_only = pt.load_benchmarks(BENCH / "match-only-scaling")
+pt.require_columns(match_only, ["molecules", "pairs", "matches", "stats.mean"], context="match only")
+pt.require_unique_records(
+    match_only,
+    ["backend", "machine.host_type", "molecules"],
+    context="match-only scaling",
+)
+match_only["order"] = match_only["backend"].map(pt.backend_order)
+match_only["Backend"] = match_only["backend"].map(pt.backend_label)
+# Match-only `metal` and `cuda` records use the prefiltered paths.
+# Other benchmark families retain their historical internal identifiers.
+match_only_labels = {
+    "metal": "Metal w/ prefilter",
+    "cuda": "CUDA w/ prefilter",
+}
+match_only["Backend"] = match_only.apply(
+    lambda row: match_only_labels.get(row["backend"], row["Backend"]),
+    axis=1,
+)
+backend_order = (
+    match_only[["Backend", "order"]]
+    .drop_duplicates()
+    .sort_values(["order", "Backend"])["Backend"]
+)
+match_only["Backend"] = pd.Categorical(
+    match_only["Backend"],
+    categories=backend_order,
+    ordered=True,
+)
+match_only["Machine"] = match_only["machine.host_type"]
+match_only["cell"] = match_only.apply(
+    lambda row: (
+        f"{pt.format_duration(float(row['stats.mean']))}\\\n"
+        f"({pt.format_throughput(row['pairs'] / row['stats.mean'], 'M', 'pairs/s')})"
+    ),
+    axis=1,
+)
+table = match_only.pivot(
+    index=["Backend", "Machine"],
+    columns="molecules",
+    values="cell",
+)
+table.columns = [f"{int(column):,}" for column in table.columns]
+table = pt.compact_multiindex_rows(table, index_name="Backend and machine")
+print(pt.qtable(
+    table,
+    caption="Match-only scaling by backend and workload size.",
+    table_id="tbl-supp-match-only",
+    colwidths=[25, 15, 15, 15, 15, 15],
+))
+```
+
+```{=typst}
+]
+```
+
+Each cell gives wall time on the first line and pair throughput on the second.
+
+# Full-library route-recovery records
+
+Route recovery considers every rule in the named collection for each encountered non-stock molecule, subject to the necessary-only prefilter and the recorded depth. Expansion proceeds layer by layer, and route metrics are calculated over the resulting graph. These are validation workloads: aligned collections measure integrated recovery of known PaRoutes references, while the broader collections show how the same expansion behaves with different rule inventories.
+
+Repeated configurations on the same machine report mean layer-expansion and benchmark times. The solved count must agree across those measurements.
+
+```{python}
+#| output: asis
+recovery = pt.load_benchmarks(BENCH / "route-recovery")
+pt.require_columns(recovery, ["backend", "rule_set", "num_targets", "max_depth", "total_search_seconds", "stats.mean"], context="route recovery")
+recovery["order"] = recovery["backend"].map(pt.backend_order)
+matrix_keys = [
+    "backend",
+    "machine.host_type",
+    "rule_set",
+    "num_targets",
+    "max_depth",
+]
+grouped = recovery.groupby(matrix_keys, sort=False, dropna=False)
+solved_counts = grouped["any_solved_recoveries"].nunique(dropna=False)
+if not (solved_counts == 1).all():
+    disagreements = solved_counts[solved_counts != 1].index.tolist()
+    raise ValueError(
+        "Repeated route-recovery records disagree on any-solved count: "
+        f"{disagreements}"
+    )
+recovery_matrix = grouped.agg(
+    {
+        "any_solved_recoveries": "first",
+        "total_search_seconds": "mean",
+        "stats.mean": "mean",
+        "order": "first",
+    }
+).reset_index()
+recovery_backend_labels = {
+    "metal": "Metal raw",
+    "metal-prefilter": "Metal w/ prefilter",
+    "cuda-device": "CUDA device raw",
+    "cuda-device-prefilter": "CUDA device w/ prefilter",
+    "cuda-host": "CUDA host raw",
+    "cuda-host-prefilter": "CUDA host w/ prefilter",
+}
+recovery_matrix["Backend"] = recovery_matrix["backend"].map(
+    lambda backend: recovery_backend_labels.get(
+        backend,
+        pt.backend_label(backend),
+    )
+)
+recovery_matrix["Machine"] = recovery_matrix["machine.host_type"].replace(
+    {
+        "m5-pro": "M5 Pro",
+        "epyc-9534+rtx-5090": "EPYC 9534 + RTX 5090",
+    }
+)
+rule_order = ["used14k", "uspto42k", "raw68k"]
+unexpected_rules = sorted(set(recovery_matrix["rule_set"]) - set(rule_order))
+if unexpected_rules:
+    raise ValueError(
+        f"Unexpected route-recovery rule collections: {unexpected_rules}"
+    )
+backend_labels = (
+    recovery_matrix[["Backend", "order"]]
+    .drop_duplicates()
+    .sort_values(["order", "Backend"])["Backend"]
+    .tolist()
+)
+recovery_matrix["Backend"] = pd.Categorical(
+    recovery_matrix["Backend"],
+    categories=backend_labels,
+    ordered=True,
+)
+recovery_matrix["rule_set"] = pd.Categorical(
+    recovery_matrix["rule_set"],
+    categories=rule_order,
+    ordered=True,
+)
+recovery_matrix = recovery_matrix.sort_values(
+    ["Backend", "Machine", "rule_set", "num_targets", "max_depth"]
+)
+table = recovery_matrix.rename(
+    columns={
+        "rule_set": "Rule collection",
+        "num_targets": "Targets",
+        "max_depth": "Depth",
+        "any_solved_recoveries": "Any solved",
+        "total_search_seconds": "Layer expansion",
+        "stats.mean": "Benchmark time",
+    }
+)
+table["Targets"] = table["Targets"].map(int)
+table["Depth"] = table["Depth"].map(int)
+table["Any solved"] = table["Any solved"].map(int)
+table["Layer expansion"] = table["Layer expansion"].map(
+    lambda value: pt.format_duration(float(value))
+)
+table["Benchmark time"] = table["Benchmark time"].map(
+    lambda value: pt.format_duration(float(value))
+)
+table = table.set_index(["Backend", "Machine"])[
+    [
+        "Rule collection",
+        "Targets",
+        "Depth",
+        "Any solved",
+        "Layer expansion",
+        "Benchmark time",
+    ]
+]
+table = pt.compact_multiindex_rows(
+    table,
+    index_name="Backend and machine",
+)
+outline_column = "Backend and machine"
+table.loc[
+    table[outline_column].eq(table[outline_column].shift()),
+    outline_column,
+] = ""
+print(pt.qtable(
+    table,
+    caption="Fixed-depth route recovery by backend and rule collection.",
+    table_id="tbl-supp-recovery-matrix",
+    colwidths=[28, 12, 8, 8, 10, 17, 17],
+))
+```
+
+Per-target comparator vectors, solved-route counts, minimum depths, layer timings, frontier sizes, application counts, precursor counts, caps, and GPU memory observations remain in each route-recovery record. The main article interprets the largest aligned `used14k` result.
+
+```{python}
+#| output: asis
+full_candidates = recovery[
+    (recovery["backend"] == "cuda-device-prefilter")
+    & (recovery["rule_set"] == "used14k")
+]
+full_target_count = int(full_candidates["num_targets"].max())
+full = full_candidates[full_candidates["num_targets"] == full_target_count]
+r = pt.require_one_record(full, context="full used14k route-recovery record")
+layer_rows = [
+    {
+        "Depth": int(layer["depth"]),
+        "Frontier": int(layer["frontier_size"]),
+        "Pairs": int(layer["pairs"]),
+        "Applications": int(layer["applications"]),
+        "Precursors": int(layer["precursors"]),
+        "Next frontier": int(layer["next_frontier_size"]),
+        "Step duration": float(layer["step_seconds"]),
+    }
+    for target in r["targets"]
+    for layer in target["layers"]
+]
+layers = pd.DataFrame(layer_rows).groupby("Depth", as_index=False).sum()
+frontier_zero = int(layers.loc[layers["Depth"] == 0, "Frontier"].iloc[0])
+depth_zero_solved = int(r["num_targets"]) - frontier_zero
+for column in ["Frontier", "Pairs", "Applications", "Precursors", "Next frontier"]:
+    layers[column] = layers[column].map(lambda value: f"{int(value):,}")
+layers["Step duration"] = layers["Step duration"].map(
+    lambda value: f"{value:.1f} s"
+)
+layer_backend = recovery_backend_labels[r["backend"]]
+layer_machine = {
+    "m5-pro": "M5 Pro",
+    "epyc-9534+rtx-5090": "EPYC 9534 + RTX 5090",
+}.get(r["machine.host_type"], r["machine.host_type"])
+print(pt.qtable(
+    layers,
+    caption=(
+        f"Per-layer workload in the {int(r['num_targets']):,}-target "
+        "route-recovery run "
+        f"({layer_backend}; {layer_machine})."
+    ),
+    table_id="tbl-supp-recovery-layers",
+    aligns="r,r,r,r,r,r,r",
+))
+print()
+print(
+    f"The counts are summed over the depth-{int(r['max_depth'])} `used14k` "
+    f"recovery integration test. Of {int(r['num_targets']):,} targets, "
+    f"{depth_zero_solved:,} are solved by stock lookup before reaction "
+    f"application and do not enter expansion frontier 0; its first row therefore "
+    f"contains {frontier_zero:,} molecules. This table describes route recovery, "
+    "not template-guided replay."
+)
+```
+
+# Benchmark provenance and reproducibility
+
+Benchmark runs produce machine-readable records on each measurement system. The selected records are collected in the source snapshot and used directly to generate the reported tables and figures. During rendering, the document checks that required records and fields are present. This provides a traceable path from measurements to publication output and reduces manual transcription, while the detail below makes clear what is needed to repeat the measurements on comparable systems.
+
+## Timing measurements and boundaries
+
+```{python}
+#| output: asis
+timing_boundaries = {
+    "match-only-scaling": "One benchmark invocation of the backend's match-only operation",
+    "reaction-application": "Streamed reaction application and usable host output, including perception; parsing, compilation, keys, and deduplication excluded",
+    "route-replay": "One complete constrained template-guided route-replay invocation for the recorded route set",
+    "route-recovery": "One complete depth-limited graph-expansion and route-metric invocation",
+}
+families = list(timing_boundaries.keys())
+rows = []
+for family in families:
+    frame = pt.load_benchmarks(BENCH / family)
+    pt.require_columns(frame, ["stats.rounds", "stats.iterations"], context=f"{family} repetitions")
+    rounds = sorted({int(value) for value in frame["stats.rounds"]})
+    iterations = {int(value) for value in frame["stats.iterations"]}
+    if iterations != {1}:
+        raise ValueError(
+            f"{family} contains records with other than one invocation per timed repeat"
+        )
+    rows.append({
+        "Benchmark family": family,
+        "Timed repeats per record": ", ".join(str(value) for value in rounds),
+        "Timed boundary": timing_boundaries[family],
+    })
+print(pt.qtable(
+    pd.DataFrame(rows),
+    caption="Timed repeats and measurement boundaries.",
+    table_id="tbl-supp-repetitions",
+    colwidths=[20, 18, 62],
+))
+```
+
+Each timed repeat contains one invocation of the stated operation. Family-specific internal timers, including route-expansion and CUDA stage timers, are reported separately where used. Warm-up settings, workload sizes, backend options, and other parameters are defined by the corresponding Make targets and benchmark harness; individual samples remain in the records.
+
+Route replay and route recovery are validation workloads. Their single retained timings are indicative wall-clock observations and are not used for backend performance evaluation. The main performance evaluation is supported by the replicated streamed reaction-application measurements.
+
+## Hardware
+
+```{python}
+#| output: asis
+families = ["reaction-application", "match-only-scaling", "route-replay", "route-recovery", "fanout-depth"]
+family_rows = []
+for family in families:
+    frame = pt.load_benchmarks(BENCH / family)
+    for host in sorted(set(frame["machine.host_type"])):
+        family_rows.append({"Host label": host, "Benchmark family": family})
+family_coverage = pd.DataFrame(family_rows)
+
+performance_families = ["reaction-application", "match-only-scaling"]
+hardware_rows = []
+for priority, family in enumerate(performance_families):
+    frame = pt.load_benchmarks(BENCH / family)
+    pt.require_columns(
+        frame,
+        ["machine.host_type", "machine.python_version", "source_path"],
+        context=f"{family} hardware metadata",
+    )
+    for _, row in frame.iterrows():
+        cpu = row.get("machine.cpu_detail.model", "")
+        if pd.isna(cpu) or cpu == "":
+            cpu = row.get("machine.cpu.brand_raw", "")
+        hardware_rows.append({
+            "Benchmark family": family,
+            "Host label": row["machine.host_type"],
+            "CPU": cpu,
+            "Visible logical CPUs": row.get(
+                "machine.cpu_detail.usable_cores",
+                "",
+            ),
+            "CUDA device": row.get("machine.cuda.device_name", ""),
+            "Metal device": row.get("machine.metal.device_name", ""),
+            "Python": row["machine.python_version"],
+            "Source record": row["source_path"],
+            "Metadata priority": priority,
+        })
+raw_hardware = pd.DataFrame(hardware_rows).fillna("").drop_duplicates()
+missing_hosts = sorted(
+    set(family_coverage["Host label"]) - set(raw_hardware["Host label"])
+)
+if missing_hosts:
+    raise ValueError(
+        "No central performance record is available for displayed hardware: "
+        f"{missing_hosts}"
+    )
+
+rows = []
+for host, coverage in family_coverage.groupby("Host label", sort=True):
+    group = raw_hardware[raw_hardware["Host label"] == host]
+    record = {
+        "Host label": host.replace("+", " + "),
+        "Benchmark family": "; ".join(sorted(set(coverage["Benchmark family"]))),
+    }
+    for column in [
+        "CPU",
+        "Visible logical CPUs",
+        "CUDA device",
+        "Metal device",
+        "Python",
+    ]:
+        record[column] = ""
+        for priority in sorted(set(group["Metadata priority"])):
+            candidates = group[group["Metadata priority"] == priority]
+            values = sorted(
+                {
+                    str(value)
+                    for value in candidates[column]
+                    if str(value) and str(value).lower() != "nan"
+                }
+            )
+            if len(values) > 1:
+                sources = candidates[
+                    ["Benchmark family", "Source record", column]
+                ].drop_duplicates().to_dict("records")
+                raise ValueError(
+                    f"Central performance records disagree for {host} "
+                    f"{column}: {sources}"
+                )
+            if values:
+                record[column] = values[0]
+                break
+    rows.append(record)
+hardware = pd.DataFrame(rows)[
+    [
+        "Host label",
+        "Benchmark family",
+        "CPU",
+        "Visible logical CPUs",
+        "CUDA device",
+        "Metal device",
+        "Python",
+    ]
+]
+print(pt.qtable(
+    hardware,
+    caption="Hardware used by the retained benchmark records.",
+    table_id="tbl-supp-hardware",
+))
+```
+
+Benchmark-family coverage is collected from every retained family. Displayed physical hardware and Python descriptions come from the central performance records, with current reaction-application metadata preferred and earlier performance metadata used when a field is absent. Visible logical CPU counts describe host visibility rather than container CPU quotas. A host can report more logical CPUs than the benchmark-usable cgoup limit set by the allocation scheduler. The raw host-memory total likewise describes the physical host. This keeps host descriptions distinct from execution allocations.
+
+## Software versions
+
+```{python}
+#| output: asis
+runtime_rows = []
+for family in families:
+    frame = pt.load_benchmarks(BENCH / family)
+    for _, row in frame.iterrows():
+        runtime_rows.append({
+            "Host label": row["machine.host_type"],
+            "System": f"{row.get('machine.system', '')} {row.get('machine.release', '')}".strip(),
+            "Python": row.get("machine.python_version", ""),
+            "Compiler": row.get("machine.python_compiler", ""),
+            "CuPy": row.get("machine.cuda.cupy_version", ""),
+            "CUDA runtime": format_cuda_version(
+                row.get("machine.cuda.runtime_version", "")
+            ),
+            "CUDA driver": format_cuda_version(
+                row.get("machine.cuda.driver_version", "")
+            ),
+        })
+raw_runtime = pd.DataFrame(runtime_rows).fillna("").drop_duplicates()
+rows = []
+for host, group in raw_runtime.groupby("Host label", sort=True):
+    record = {"Host label": host.replace("+", " + ")}
+    for column in raw_runtime.columns[1:]:
+        values = sorted({str(value) for value in group[column] if str(value)})
+        record[column] = "; ".join(values)
+    rows.append(record)
+print(pt.qtable(
+    pd.DataFrame(rows),
+    caption="Software versions in the retained benchmark records.",
+    table_id="tbl-supp-software-runtime",
+    colwidths=[15, 14, 10, 24, 9, 14, 14],
+))
+```
+
+CUDA runtime and driver versions are decoded from the integer codes reported by CuPy. Blank cells mean that the runtime was absent or the field was not recorded on that host.
+
+Input-artifact byte sizes and SHA-256 checksums are embedded in the relevant benchmark records. Archive-relative data locations and regeneration targets are documented in the repository.
+
+## Reproduction commands
+
+Create the project environment and run the ordinary test suite on the current host:
+
+```bash
+uv sync --extra dev
+make test
+```
+
+Render both documents from the retained publication records:
+
+```bash
+make paper-render paper-si-render
+```
+
+Run the rules-and-keys audit and the core CPU and RDKit benchmarks on any supported host, followed by the accelerator target appropriate to the available hardware:
+
+```bash
+make bench-audit-rules-keys
+make bench-application-rdkit bench-application-cpu
+make bench-application-metal  # Apple Metal
+make bench-application-cuda   # NVIDIA CUDA
+```
+
+The audit recomputes template-compatibility and molecular-key agreement results. Repeated audit records are accepted during rendering when their scientific results agree; rendering reports the differing fields and source records when they do not.
+
+Route replay, route recovery, and fanout measurements use the corresponding `bench-route-replay-*`, `bench-route-recovery-*`, and `bench-fanout-depth-*` targets. The complete publication matrix spans multiple machines and workload sizes, so running the compatible targets on one host produces new current-host records rather than reproducing every publication measurement on a single system. Workload sizes, rule collections, repeat counts, and warm-up settings are explicit Make variables; the resulting timing samples and machine metadata are retained in JSON.
+
+## Retained benchmark records
+
+The source snapshot and Zenodo release include the machine-readable JSON files under `docs/paper/benchmarks/`, separate from this PDF. Tables are regenerated directly from those records during Quarto rendering.

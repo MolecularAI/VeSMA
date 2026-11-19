@@ -1,0 +1,4 @@
+# The ~116 MB raw template library is downloaded on demand, never committed.
+# Everything tests read lives in processed/ and stays committed.
+/raw/uspto_raw_template_library.csv
+/raw/uspto_raw_template_library.csv.gz

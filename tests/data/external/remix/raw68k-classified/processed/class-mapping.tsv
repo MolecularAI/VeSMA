@@ -1,0 +1,71 @@
+rc_class	ri_name	purity	templates
+1.1	Heteroatom Alkylation and Arylation	0.967	1031
+1.2	Heteroatom Alkylation and Arylation	0.9267	614
+1.3	Heteroatom Alkylation and Arylation	0.9663	2223
+1.4	Heteroatom Alkylation and Arylation	0.9818	495
+1.5	Heteroatom Alkylation and Arylation	0.9368	253
+1.6	Heteroatom Alkylation and Arylation	0.9379	1063
+1.7	Heteroatom Alkylation and Arylation	0.9316	2104
+1.8	Heteroatom Alkylation and Arylation	0.8612	641
+1.9	Miscellaneous	1.0	2
+10.1	Reduction	1.0	1
+2.1	Acylation	0.9444	3311
+2.10	C-C Coupling	1.0	1
+2.12	Acylation	0.6667	3
+2.2	Acylation	0.6912	489
+2.3	Acylation	0.8212	794
+2.4	Protection	0.8015	665
+2.5	Heteroatom Alkylation and Arylation	0.8773	220
+2.6	Acylation	0.5241	477
+2.7	Acylation	0.6942	121
+2.8	Miscellaneous	0.4821	112
+3.1	C-C Coupling	0.9802	1814
+3.10	C-C Coupling	0.7634	131
+3.11	C-C Coupling	0.8676	1586
+3.2	C-C Coupling	0.9175	97
+3.3	C-C Coupling	0.9869	229
+3.4	C-C Coupling	0.9598	224
+3.5	C-C Coupling	0.7556	266
+3.6	C-C Coupling	0.8961	154
+3.7	C-C Coupling	0.9658	351
+3.8	C-C Coupling	0.9827	289
+3.9	C-C Coupling	0.8799	533
+3.Other	C-C Coupling	1.0	15
+4.1	Aromatic Heterocycle Formation	0.734	2248
+4.2	Heteroatom Alkylation and Arylation	0.4974	195
+4.3	Aromatic Heterocycle Formation	0.7447	47
+4.4	Aromatic Heterocycle Formation	1.0	1
+4.6	Heteroatom Alkylation and Arylation	1.0	1
+5.1	Reduction	0.5458	1790
+5.2	Reduction	0.5	2
+5.8	Oxidation	1.0	1
+6.1	Reduction	0.9086	186
+6.2	Reduction	0.8725	102
+6.3	Reduction	0.8881	134
+6.4	Reduction	0.995	199
+6.5	Reduction	0.9697	198
+6.6	Reduction	0.9519	395
+6.7	Reduction	0.9423	52
+6.8	Reduction	0.9216	51
+6.9	Reduction	0.6575	584
+6.Other	Reduction	0.75	4
+7.1	Oxidation	0.9324	148
+7.2	Oxidation	0.9464	168
+7.3	Heteroatom Alkylation and Arylation	0.5882	17
+7.4	Miscellaneous	0.7547	53
+7.5	Heteroatom Alkylation and Arylation	0.881	42
+7.6	Heteroatom Alkylation and Arylation	0.4107	56
+7.7	Heteroatom Alkylation and Arylation	0.9756	82
+7.8	Acylation	0.3225	276
+8.1	Functional Group Interconversion	0.9329	343
+8.2	Functional Group Interconversion	0.9891	92
+8.3	Functional Group Interconversion	0.9796	98
+8.4	Acylation	0.9636	55
+8.5	Functional Group Interconversion	0.535	157
+8.6	Heteroatom Alkylation and Arylation	0.8917	471
+8.7	Miscellaneous	0.3636	682
+9.1	Functional Group Interconversion	0.8838	654
+9.2	Functional Group Addition	0.9111	90
+9.3	Heteroatom Alkylation and Arylation	0.5789	19
+9.4	Heteroatom Alkylation and Arylation	0.4918	61
+9.7	Protection	0.3	10

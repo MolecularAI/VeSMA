@@ -1,0 +1,722 @@
+{
+    "machine_info": {
+        "node": "Annas-BigMac.local",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 22.1.3 ",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.14.5",
+        "python_version": "3.14.5",
+        "python_build": [
+            "main",
+            "May 10 2026 19:20:57"
+        ],
+        "release": "25.4.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.14.5.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 18,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M5 Pro"
+        },
+        "cpu_detail": {
+            "model": "Apple M5 Pro",
+            "physical_cores": 18,
+            "logical_cores": 18,
+            "usable_cores": 18,
+            "core_breakdown": "6 Super and 12 Performance",
+            "label": "Apple M5 Pro, 18 CPU cores",
+            "total_ram_bytes": 68719476736
+        },
+        "cuda": {
+            "available": false
+        },
+        "metal": {
+            "available": true,
+            "backend_type": "Metal",
+            "device_name": "Apple M5 Pro",
+            "vendor": "Apple",
+            "description": "max_threads_per_threadgroup=1024",
+            "gpu_core_count": 20,
+            "label": "Apple M5 Pro, 20 GPU cores"
+        },
+        "software": {
+            "vesma": "0.1.0",
+            "numpy": "2.5.0",
+            "pytest": "9.1.1",
+            "pytest_benchmark": "5.2.3",
+            "rdkit": {
+                "available": true,
+                "version": "2025.09.3",
+                "rdkit_version": "2025.09.3"
+            }
+        },
+        "host_type": "m5-pro"
+    },
+    "commit_info": {
+        "id": "aec0c81367e9e7cb3633e60685421183b931a081",
+        "time": "2026-11-09T19:13:08+01:00",
+        "author_time": "2026-11-09T19:13:08+01:00",
+        "dirty": true,
+        "project": "vesma",
+        "branch": "search-batched-precursors",
+        "clean_scope": "src,tests"
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_bench_route_recovery_n1_d2[metal-prefilter-used14k-1]",
+            "fullname": "tests/vertsy/bench_route_recovery.py::test_bench_route_recovery_n1_d2[metal-prefilter-used14k-1]",
+            "params": {
+                "route_recovery_backend": "metal-prefilter",
+                "rule_set": "used14k",
+                "num_targets": 1
+            },
+            "param": "metal-prefilter-used14k-1",
+            "extra_info": {
+                "experiment": "route-recovery",
+                "backend": "metal-prefilter",
+                "rule_set": "used14k",
+                "reaction_comparators_feasible": true,
+                "num_targets": 1,
+                "route_set": "paroutes-n1-d2-f0",
+                "template_source": "used14k-reactions",
+                "stock_policy": "paroutes-n1-stock",
+                "rules": 13978,
+                "stock_size": 13325,
+                "max_depth": 2,
+                "compile_seconds": 0.8383252918720245,
+                "targets": [
+                    {
+                        "target_index": 0,
+                        "target_smiles": "BrCc1ccc(-c2nc3ccccc3s2)nc1",
+                        "comparators": [
+                            1,
+                            1,
+                            1
+                        ],
+                        "strict": 1,
+                        "loose": 1,
+                        "library": 1,
+                        "any_solved": 1,
+                        "starting_materials_recovered": 1,
+                        "precursors_recovered": 1,
+                        "solved_route_count_depth_bounded_capped": 16,
+                        "precursor_route_count_depth_bounded_capped": 6,
+                        "starting_material_route_count_depth_bounded_capped": 3,
+                        "solved_route_count_cap": 100000,
+                        "min_route_depth": 2,
+                        "search_seconds": 0.21044249995611608,
+                        "metric_seconds": 0.05270799994468689,
+                        "full_solve_seconds": 0.26524699991568923,
+                        "cuda_memory": {},
+                        "layers": [
+                            {
+                                "depth": 0,
+                                "frontier_size": 1,
+                                "pairs": 13978,
+                                "applications": 181,
+                                "precursors": 94,
+                                "precursor_atoms_mean": 17.01063829787234,
+                                "precursor_atoms_median": 18.0,
+                                "precursor_atoms_max": 24,
+                                "next_frontier_size": 82,
+                                "match_split_seconds": 0.015067666070535779,
+                                "step_seconds": 0.015581291867420077,
+                                "cuda_memory": {},
+                                "metal_retro": {
+                                    "match_seconds": 0.0021041661966592073,
+                                    "assignment_collect_seconds": 0.00014587491750717163,
+                                    "retro_seconds": 0.0025805418845266104,
+                                    "retro_construct_kernel_seconds": 0.0021322916727513075,
+                                    "wl_kernel_seconds": 0.0,
+                                    "precursor_gather_seconds": 0.00013787508942186832,
+                                    "precursor_concat_seconds": 0.0,
+                                    "consumer_seconds": 0.0011441670358181,
+                                    "total_seconds": 0.005059832939878106,
+                                    "candidate_pairs": 1888,
+                                    "prefilter_seconds": 0.008822083007544279
+                                }
+                            },
+                            {
+                                "depth": 1,
+                                "frontier_size": 82,
+                                "pairs": 1146196,
+                                "applications": 15959,
+                                "precursors": 3669,
+                                "precursor_atoms_mean": 20.234941400926683,
+                                "precursor_atoms_median": 20.0,
+                                "precursor_atoms_max": 39,
+                                "next_frontier_size": 3464,
+                                "match_split_seconds": 0.16979716601781547,
+                                "step_seconds": 0.1864651250652969,
+                                "cuda_memory": {},
+                                "metal_retro": {
+                                    "match_seconds": 0.06850283313542604,
+                                    "assignment_collect_seconds": 0.006048958050087094,
+                                    "retro_seconds": 0.045215917052701116,
+                                    "retro_construct_kernel_seconds": 0.035492083290591836,
+                                    "wl_kernel_seconds": 0.0,
+                                    "precursor_gather_seconds": 0.00939679122529924,
+                                    "precursor_concat_seconds": 0.0,
+                                    "consumer_seconds": 0.032125084195286036,
+                                    "total_seconds": 0.13028116594068706,
+                                    "candidate_pairs": 181902,
+                                    "prefilter_seconds": 0.006597291911020875
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "comparator_results_per_target": [
+                    [
+                        1,
+                        1,
+                        1
+                    ]
+                ],
+                "strict_per_target": [
+                    1
+                ],
+                "loose_per_target": [
+                    1
+                ],
+                "library_per_target": [
+                    1
+                ],
+                "any_solved_per_target": [
+                    1
+                ],
+                "starting_materials_recovered_per_target": [
+                    1
+                ],
+                "precursors_recovered_per_target": [
+                    1
+                ],
+                "solved_route_count_depth_bounded_capped_per_target": [
+                    16
+                ],
+                "precursor_route_count_depth_bounded_capped_per_target": [
+                    6
+                ],
+                "starting_material_route_count_depth_bounded_capped_per_target": [
+                    3
+                ],
+                "solved_route_count_cap": 100000,
+                "min_route_depth_per_target": [
+                    2
+                ],
+                "total_search_seconds": 0.21044249995611608,
+                "total_metric_seconds": 0.05270799994468689,
+                "total_full_solve_seconds": 0.26524699991568923,
+                "strict_reference_recoveries": 1,
+                "loose_reference_recoveries": 1,
+                "library_reference_recoveries": 1,
+                "any_solved_recoveries": 1,
+                "starting_materials_recoveries": 1,
+                "precursors_recoveries": 1,
+                "cuda_memory": {},
+                "peak_process_rss_bytes": 3269951488,
+                "precursor_delivery": "folded",
+                "source_artifacts": {
+                    "targets": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/n1-d2-f0.smi.gz",
+                        "exists": true,
+                        "bytes": 31613,
+                        "sha256": "799397eb181ec33609a92d32ec335c9d5fdce0b4aa20f687e722680d32e322bf"
+                    },
+                    "stock": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/n1-stock.smi.gz",
+                        "exists": true,
+                        "bytes": 109311,
+                        "sha256": "58655653b4a602606c75cf55e231fbf9bce4f7be0ea3c568ae5179a3602b0f7e"
+                    },
+                    "templates": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/used14k-reactions.tsv.gz",
+                        "exists": true,
+                        "bytes": 2370888,
+                        "sha256": "70d4bd7830de33c70a6f619f08cd61ee3a225c2e7ef682dd6c7504c417e74579"
+                    },
+                    "routes": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/n1-routes.json.gz",
+                        "exists": true,
+                        "bytes": 7136458,
+                        "sha256": "afad172cfaeada074fe7abd24d4319d36ff634c11b5e6048a23002f42f4e8452"
+                    }
+                }
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.5522876251488924,
+                "max": 0.5522876251488924,
+                "mean": 0.5522876251488924,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 0.5522876251488924,
+                "iqr": 0.0,
+                "q1": 0.5522876251488924,
+                "q3": 0.5522876251488924,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 0.5522876251488924,
+                "hd15iqr": 0.5522876251488924,
+                "ops": 1.8106507451265232,
+                "total": 0.5522876251488924,
+                "data": [
+                    0.5522876251488924
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_bench_route_recovery_n1_d2[metal-prefilter-raw68k-1]",
+            "fullname": "tests/vertsy/bench_route_recovery.py::test_bench_route_recovery_n1_d2[metal-prefilter-raw68k-1]",
+            "params": {
+                "route_recovery_backend": "metal-prefilter",
+                "rule_set": "raw68k",
+                "num_targets": 1
+            },
+            "param": "metal-prefilter-raw68k-1",
+            "extra_info": {
+                "experiment": "route-recovery",
+                "backend": "metal-prefilter",
+                "rule_set": "raw68k",
+                "reaction_comparators_feasible": true,
+                "num_targets": 1,
+                "route_set": "paroutes-n1-d2-f0",
+                "template_source": "raw68k-templates",
+                "stock_policy": "paroutes-n1-stock",
+                "rules": 67557,
+                "stock_size": 13325,
+                "max_depth": 2,
+                "compile_seconds": 3.99262912501581,
+                "targets": [
+                    {
+                        "target_index": 0,
+                        "target_smiles": "BrCc1ccc(-c2nc3ccccc3s2)nc1",
+                        "comparators": [
+                            1,
+                            1,
+                            1
+                        ],
+                        "strict": 1,
+                        "loose": 1,
+                        "library": 1,
+                        "any_solved": 1,
+                        "starting_materials_recovered": 1,
+                        "precursors_recovered": 1,
+                        "solved_route_count_depth_bounded_capped": 192,
+                        "precursor_route_count_depth_bounded_capped": 79,
+                        "starting_material_route_count_depth_bounded_capped": 70,
+                        "solved_route_count_cap": 100000,
+                        "min_route_depth": 2,
+                        "search_seconds": 2.249056417029351,
+                        "metric_seconds": 0.3704471669625491,
+                        "full_solve_seconds": 2.6215316250454634,
+                        "cuda_memory": {},
+                        "layers": [
+                            {
+                                "depth": 0,
+                                "frontier_size": 1,
+                                "pairs": 67557,
+                                "applications": 581,
+                                "precursors": 271,
+                                "precursor_atoms_mean": 18.30627306273063,
+                                "precursor_atoms_median": 19.0,
+                                "precursor_atoms_max": 27,
+                                "next_frontier_size": 253,
+                                "match_split_seconds": 0.06195487501099706,
+                                "step_seconds": 0.06314495811238885,
+                                "cuda_memory": {},
+                                "metal_retro": {
+                                    "match_seconds": 0.018715291982516646,
+                                    "assignment_collect_seconds": 0.00026754080317914486,
+                                    "retro_seconds": 0.028146959142759442,
+                                    "retro_construct_kernel_seconds": 0.002179875038564205,
+                                    "wl_kernel_seconds": 0.0,
+                                    "precursor_gather_seconds": 0.00036116689443588257,
+                                    "precursor_concat_seconds": 0.0,
+                                    "consumer_seconds": 0.0015313338954001665,
+                                    "total_seconds": 0.04760708217509091,
+                                    "candidate_pairs": 6899,
+                                    "prefilter_seconds": 0.012756999814882874
+                                }
+                            },
+                            {
+                                "depth": 1,
+                                "frontier_size": 253,
+                                "pairs": 17091921,
+                                "applications": 149681,
+                                "precursors": 29876,
+                                "precursor_atoms_mean": 21.94882179675994,
+                                "precursor_atoms_median": 22.0,
+                                "precursor_atoms_max": 46,
+                                "next_frontier_size": 29328,
+                                "match_split_seconds": 1.8383585829287767,
+                                "step_seconds": 2.0824399169068784,
+                                "cuda_memory": {},
+                                "metal_retro": {
+                                    "match_seconds": 0.6607082081027329,
+                                    "assignment_collect_seconds": 0.07727058394812047,
+                                    "retro_seconds": 0.46494870679453015,
+                                    "retro_construct_kernel_seconds": 0.3590938749257475,
+                                    "wl_kernel_seconds": 0.0,
+                                    "precursor_gather_seconds": 0.15536629687994719,
+                                    "precursor_concat_seconds": 0.0,
+                                    "consumer_seconds": 0.43579903920181096,
+                                    "total_seconds": 1.369926794897765,
+                                    "candidate_pairs": 2040963,
+                                    "prefilter_seconds": 0.020967416930943727
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "comparator_results_per_target": [
+                    [
+                        1,
+                        1,
+                        1
+                    ]
+                ],
+                "strict_per_target": [
+                    1
+                ],
+                "loose_per_target": [
+                    1
+                ],
+                "library_per_target": [
+                    1
+                ],
+                "any_solved_per_target": [
+                    1
+                ],
+                "starting_materials_recovered_per_target": [
+                    1
+                ],
+                "precursors_recovered_per_target": [
+                    1
+                ],
+                "solved_route_count_depth_bounded_capped_per_target": [
+                    192
+                ],
+                "precursor_route_count_depth_bounded_capped_per_target": [
+                    79
+                ],
+                "starting_material_route_count_depth_bounded_capped_per_target": [
+                    70
+                ],
+                "solved_route_count_cap": 100000,
+                "min_route_depth_per_target": [
+                    2
+                ],
+                "total_search_seconds": 2.249056417029351,
+                "total_metric_seconds": 0.3704471669625491,
+                "total_full_solve_seconds": 2.6215316250454634,
+                "strict_reference_recoveries": 1,
+                "loose_reference_recoveries": 1,
+                "library_reference_recoveries": 1,
+                "any_solved_recoveries": 1,
+                "starting_materials_recoveries": 1,
+                "precursors_recoveries": 1,
+                "cuda_memory": {},
+                "peak_process_rss_bytes": 13578747904,
+                "precursor_delivery": "folded",
+                "source_artifacts": {
+                    "targets": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/n1-d2-f0.smi.gz",
+                        "exists": true,
+                        "bytes": 31613,
+                        "sha256": "799397eb181ec33609a92d32ec335c9d5fdce0b4aa20f687e722680d32e322bf"
+                    },
+                    "stock": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/n1-stock.smi.gz",
+                        "exists": true,
+                        "bytes": 109311,
+                        "sha256": "58655653b4a602606c75cf55e231fbf9bce4f7be0ea3c568ae5179a3602b0f7e"
+                    },
+                    "templates": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/raw68k-templates.tsv.gz",
+                        "exists": true,
+                        "bytes": 3486207,
+                        "sha256": "31ae3c3096863d227071618b368a9b0f9d81623fce958dc0882d13a02054fee0"
+                    },
+                    "routes": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/n1-routes.json.gz",
+                        "exists": true,
+                        "bytes": 7136458,
+                        "sha256": "afad172cfaeada074fe7abd24d4319d36ff634c11b5e6048a23002f42f4e8452"
+                    },
+                    "reference_reactions": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/used14k-reactions.tsv.gz",
+                        "exists": true,
+                        "bytes": 2370888,
+                        "sha256": "70d4bd7830de33c70a6f619f08cd61ee3a225c2e7ef682dd6c7504c417e74579"
+                    }
+                }
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.639603291871026,
+                "max": 3.639603291871026,
+                "mean": 3.639603291871026,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 3.639603291871026,
+                "iqr": 0.0,
+                "q1": 3.639603291871026,
+                "q3": 3.639603291871026,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 3.639603291871026,
+                "hd15iqr": 3.639603291871026,
+                "ops": 0.27475521912882045,
+                "total": 3.639603291871026,
+                "data": [
+                    3.639603291871026
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_bench_route_recovery_n1_d2[metal-prefilter-uspto42k-1]",
+            "fullname": "tests/vertsy/bench_route_recovery.py::test_bench_route_recovery_n1_d2[metal-prefilter-uspto42k-1]",
+            "params": {
+                "route_recovery_backend": "metal-prefilter",
+                "rule_set": "uspto42k",
+                "num_targets": 1
+            },
+            "param": "metal-prefilter-uspto42k-1",
+            "extra_info": {
+                "experiment": "route-recovery",
+                "backend": "metal-prefilter",
+                "rule_set": "uspto42k",
+                "reaction_comparators_feasible": false,
+                "num_targets": 1,
+                "route_set": "paroutes-n1-d2-f0",
+                "template_source": "uspto42k",
+                "stock_policy": "paroutes-n1-stock",
+                "rules": 42554,
+                "stock_size": 13325,
+                "max_depth": 2,
+                "compile_seconds": 2.591148874955252,
+                "targets": [
+                    {
+                        "target_index": 0,
+                        "target_smiles": "BrCc1ccc(-c2nc3ccccc3s2)nc1",
+                        "comparators": [
+                            null,
+                            null,
+                            null
+                        ],
+                        "strict": null,
+                        "loose": null,
+                        "library": null,
+                        "any_solved": 1,
+                        "starting_materials_recovered": 1,
+                        "precursors_recovered": 1,
+                        "solved_route_count_depth_bounded_capped": 130,
+                        "precursor_route_count_depth_bounded_capped": 79,
+                        "starting_material_route_count_depth_bounded_capped": 70,
+                        "solved_route_count_cap": 100000,
+                        "min_route_depth": 2,
+                        "search_seconds": 1.7972727499436587,
+                        "metric_seconds": 0.37017608317546546,
+                        "full_solve_seconds": 2.16979620908387,
+                        "cuda_memory": {},
+                        "layers": [
+                            {
+                                "depth": 0,
+                                "frontier_size": 1,
+                                "pairs": 42554,
+                                "applications": 538,
+                                "precursors": 271,
+                                "precursor_atoms_mean": 18.30627306273063,
+                                "precursor_atoms_median": 19.0,
+                                "precursor_atoms_max": 27,
+                                "next_frontier_size": 253,
+                                "match_split_seconds": 0.05296470900066197,
+                                "step_seconds": 0.0539407089818269,
+                                "cuda_memory": {},
+                                "metal_retro": {
+                                    "match_seconds": 0.014825957827270031,
+                                    "assignment_collect_seconds": 0.0003212501760572195,
+                                    "retro_seconds": 0.02349287481047213,
+                                    "retro_construct_kernel_seconds": 0.0037017499562352896,
+                                    "wl_kernel_seconds": 0.0,
+                                    "precursor_gather_seconds": 0.0003227922134101391,
+                                    "precursor_concat_seconds": 0.0,
+                                    "consumer_seconds": 0.0017163329757750034,
+                                    "total_seconds": 0.03907504212111235,
+                                    "candidate_pairs": 4431,
+                                    "prefilter_seconds": 0.012117166072130203
+                                }
+                            },
+                            {
+                                "depth": 1,
+                                "frontier_size": 253,
+                                "pairs": 10766162,
+                                "applications": 134293,
+                                "precursors": 29636,
+                                "precursor_atoms_mean": 21.927925496018357,
+                                "precursor_atoms_median": 22.0,
+                                "precursor_atoms_max": 46,
+                                "next_frontier_size": 29095,
+                                "match_split_seconds": 1.42210229113698,
+                                "step_seconds": 1.6548993340693414,
+                                "cuda_memory": {},
+                                "metal_retro": {
+                                    "match_seconds": 0.4594794565346092,
+                                    "assignment_collect_seconds": 0.05487908353097737,
+                                    "retro_seconds": 0.40963362576439977,
+                                    "retro_construct_kernel_seconds": 0.32256050081923604,
+                                    "wl_kernel_seconds": 0.0,
+                                    "precursor_gather_seconds": 0.11457416764460504,
+                                    "precursor_concat_seconds": 0.0,
+                                    "consumer_seconds": 0.3484841729514301,
+                                    "total_seconds": 1.0466272849589586,
+                                    "candidate_pairs": 1319465,
+                                    "prefilter_seconds": 0.01636079209856689
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "comparator_results_per_target": [
+                    [
+                        null,
+                        null,
+                        null
+                    ]
+                ],
+                "strict_per_target": [
+                    null
+                ],
+                "loose_per_target": [
+                    null
+                ],
+                "library_per_target": [
+                    null
+                ],
+                "any_solved_per_target": [
+                    1
+                ],
+                "starting_materials_recovered_per_target": [
+                    1
+                ],
+                "precursors_recovered_per_target": [
+                    1
+                ],
+                "solved_route_count_depth_bounded_capped_per_target": [
+                    130
+                ],
+                "precursor_route_count_depth_bounded_capped_per_target": [
+                    79
+                ],
+                "starting_material_route_count_depth_bounded_capped_per_target": [
+                    70
+                ],
+                "solved_route_count_cap": 100000,
+                "min_route_depth_per_target": [
+                    2
+                ],
+                "total_search_seconds": 1.7972727499436587,
+                "total_metric_seconds": 0.37017608317546546,
+                "total_full_solve_seconds": 2.16979620908387,
+                "strict_reference_recoveries": null,
+                "loose_reference_recoveries": null,
+                "library_reference_recoveries": null,
+                "any_solved_recoveries": 1,
+                "starting_materials_recoveries": 1,
+                "precursors_recoveries": 1,
+                "cuda_memory": {},
+                "peak_process_rss_bytes": 13578747904,
+                "precursor_delivery": "folded",
+                "source_artifacts": {
+                    "targets": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/n1-d2-f0.smi.gz",
+                        "exists": true,
+                        "bytes": 31613,
+                        "sha256": "799397eb181ec33609a92d32ec335c9d5fdce0b4aa20f687e722680d32e322bf"
+                    },
+                    "stock": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/n1-stock.smi.gz",
+                        "exists": true,
+                        "bytes": 109311,
+                        "sha256": "58655653b4a602606c75cf55e231fbf9bce4f7be0ea3c568ae5179a3602b0f7e"
+                    },
+                    "templates": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/uspto_unique_templates.csv.gz",
+                        "exists": true,
+                        "bytes": 3313598,
+                        "sha256": "a4f1945e90cfa195538320833d68aed38f14e2fcc2f8afb5d958bc920edcafbe"
+                    },
+                    "routes": {
+                        "path": "/Users/alex/code/vesma/tests/data/external/paroutes/processed/n1-routes.json.gz",
+                        "exists": true,
+                        "bytes": 7136458,
+                        "sha256": "afad172cfaeada074fe7abd24d4319d36ff634c11b5e6048a23002f42f4e8452"
+                    }
+                }
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 2.888462790986523,
+                "max": 2.888462790986523,
+                "mean": 2.888462790986523,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 2.888462790986523,
+                "iqr": 0.0,
+                "q1": 2.888462790986523,
+                "q3": 2.888462790986523,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 2.888462790986523,
+                "hd15iqr": 2.888462790986523,
+                "ops": 0.34620490979510277,
+                "total": 2.888462790986523,
+                "data": [
+                    2.888462790986523
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2026-11-09T18:39:28.088075+00:00",
+    "version": "5.2.3"
+}

@@ -1,0 +1,150 @@
+{
+    "machine_info": {
+        "node": "Annas-BigMac.local",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 22.1.3 ",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.14.5",
+        "python_version": "3.14.5",
+        "python_build": [
+            "main",
+            "May 10 2026 19:20:57"
+        ],
+        "release": "25.4.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.14.5.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 18,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M5 Pro"
+        },
+        "cpu_detail": {
+            "model": "Apple M5 Pro",
+            "physical_cores": 18,
+            "logical_cores": 18,
+            "usable_cores": 18,
+            "core_breakdown": "6 Super and 12 Performance",
+            "label": "Apple M5 Pro, 18 CPU cores",
+            "total_ram_bytes": 68719476736
+        },
+        "cuda": {
+            "available": false
+        },
+        "metal": {
+            "available": null,
+            "probe_skipped": true,
+            "device_name": "Apple M5 Pro",
+            "gpu_core_count": 20,
+            "label": "Apple M5 Pro, 20 GPU cores"
+        },
+        "software": {
+            "vesma": "0.1.0",
+            "numpy": "2.5.0",
+            "pytest": "9.1.1",
+            "pytest_benchmark": "5.2.3",
+            "rdkit": {
+                "available": true,
+                "version": "2025.09.3",
+                "rdkit_version": "2025.09.3"
+            }
+        },
+        "host_type": "m5-pro"
+    },
+    "commit_info": {
+        "id": "4bf2b335f94ee9121e46321283ebc6094f2ebb5a",
+        "time": "2026-11-14T17:52:32+01:00",
+        "author_time": "2026-11-14T17:52:32+01:00",
+        "dirty": false,
+        "project": "vesma",
+        "branch": "fix/cuda-chemistry-parity",
+        "clean_scope": "src,tests"
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_reaction_application[1-rdkit-serial]",
+            "fullname": "tests/vesma/bench_reaction_application.py::test_reaction_application[1-rdkit-serial]",
+            "params": {
+                "size": 1,
+                "backend": "rdkit-serial"
+            },
+            "param": "1-rdkit-serial",
+            "extra_info": {
+                "experiment": "reaction-application",
+                "contract": "streamed-unkeyed-host-v1",
+                "backend": "rdkit-serial",
+                "size": 1,
+                "molecules": 1,
+                "rules": 42554,
+                "positive_pairs": 146,
+                "pair_sha256": "0160b0baf3acc86a2dd8d26f4d833944d54e7796c83e6b962ceea05fb536e5e4",
+                "smiles_sha256": "38791bdc925ae5910b554445d71e50dd5891e7dee500fa2caef22dcae52bd8b9",
+                "templates_sha256": "93bf26de03cb6220139a498a9d45e6b35a4329de322f08b55311bbadb03af4ed",
+                "precursor_identity": "none",
+                "delivery": "host-batches-released",
+                "compile_seconds": 0.9230938749969937,
+                "pairs_per_batch": 4096,
+                "workers": 1,
+                "worker_lifetime": "matcher",
+                "precursor_atom_cap": null,
+                "reaction_processing": "rdkit-sanitize-fragments",
+                "diagnostics": {
+                    "rules_total": 42554,
+                    "pairs_evaluated": 146,
+                    "outcomes_total": 548,
+                    "outcomes_unsanitizable": 0,
+                    "discarded": []
+                },
+                "peak_parent_rss_bytes": 3632709632,
+                "rss_scope": "parent-process-high-water-including-setup; excludes-worker-and-device-memory",
+                "precursors": 611,
+                "hits": 611,
+                "batches": 1,
+                "max_batch_precursors": 611
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.025246374993002973,
+                "max": 0.025401958992006257,
+                "mean": 0.025338777995784767,
+                "stddev": 8.180488638841356e-05,
+                "rounds": 3,
+                "median": 0.02536800000234507,
+                "iqr": 0.00011668799925246276,
+                "q1": 0.025276781245338498,
+                "q3": 0.02539346924459096,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.025246374993002973,
+                "hd15iqr": 0.025401958992006257,
+                "ops": 39.46520231426926,
+                "total": 0.0760163339873543,
+                "data": [
+                    0.025401958992006257,
+                    0.02536800000234507,
+                    0.025246374993002973
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2026-11-14T16:55:38.097218+00:00",
+    "version": "5.2.3"
+}

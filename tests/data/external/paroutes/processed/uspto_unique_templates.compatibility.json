@@ -1,0 +1,9 @@
+{
+  "file": "uspto_unique_templates.csv.gz",
+  "template_rows": 42554,
+  "recursive_free_rows": 42554,
+  "vesma_parseable_rows": 42413,
+  "vesma_incompatible_rows": 141,
+  "compatibility_definition": "recursive_free_rows counts rows without '$('; vesma_parseable_rows additionally requires vesma.reaction.parse_reaction_smarts to succeed.",
+  "computed_on": "2026-05-19"
+}

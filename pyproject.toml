@@ -1,0 +1,141 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vesma"
+version = "0.1.0"
+description = "CPU- and GPU-native reaction-template application for retrosynthetic expansion"
+authors = [
+  {name = "Alexey Voronov", email = "alexey.voronov1@astrazeneca.com"},
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.14"
+dependencies = [
+    "immutables>=0.21",
+    "joblib",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "polars>=1.0",
+    "pyparsing>=3.1",
+    "tqdm>=4.66",
+    "xxhash>=3.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0",
+    "pytest-datadir>=1.5.0",
+    "pytest-benchmark",
+    "pytest-timeout",
+    "pytest-xdist",
+    "black",
+    "ruff",
+    "ty>=0.0.23",
+    "pyinstrument>=5.1.2",
+    "pyperf>=2.10.0",
+    # Current RSS, which `resource.getrusage` cannot give (it reports the peak, which only ever
+    # rises). The delivery benches need the live set to show a footprint coming back down between
+    # rounds, so this is a real dependency of `bench-metal-precursor-streaming` rather than an
+    # incidental import -- pytest-benchmark happens to install it on some platforms, which is why
+    # it went unnoticed.
+    "psutil>=5.9",
+    "vesma[rdkit]",
+    "vesma[rdchiral]",
+    "vesma[paper]",
+]
+paper = [
+    "ipykernel",
+    "matplotlib>=3.10",
+    "nbclient",
+    "nbformat",
+    "pyyaml",
+    "jinja2",  # Pandas renderer
+]
+rdkit = ["rdkit>=2025.9.1"]
+# rdchiral declares no dependencies at all even though it imports rdkit at module load,
+# so the extra names rdkit itself.
+rdchiral = ["rdchiral>=1.1.0", "vesma[rdkit]"]
+cuda = [
+  "cupy-cuda12x>=14,<15; sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+
+[tool.black]
+target-version = ["py314"]
+
+[tool.ruff.lint]
+# E4/E7/E9 + F is ruff's default; the rest add import sorting (I), pyupgrade (UP),
+# comprehension (C4), and flake8-bugbear (B) / flake8-pie (PIE) correctness lints.
+select = ["E4", "E7", "E9", "F", "I", "UP", "B", "C4", "PIE"]
+ignore = [
+    "B008",  # function-call-in-default: intentional frozen dataclass/config defaults here
+    "B905",  # zip-without-strict: callers pass equal-length sequences; strict= rejected as defensive
+    # The domain vocabulary (M, K) is one shared, explicit module-level TypeVar set imported by
+    # both packages, and generics use it via Generic[...] -- so a bound is written once, not
+    # repeated per scope. These PEP 695 rules would push that back to per-scope inline params.
+    "UP040",  # non-pep695-type-alias: generic aliases (Match, RouteMetric) stay plain assignments
+    "UP046",  # non-pep695-generic-class: classes use Generic[K] with the shared TypeVar
+    "UP047",  # non-pep695-generic-function: functions use free module TypeVars
+]
+
+[tool.ruff.format]
+# Defaults (Black-compatible). ruff format is the canonical formatter; black is run in CI
+# as a cross-check that the two agree on every file (see .github/workflows/ci.yml).
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["vesma*", "vertsy*"]
+
+[tool.uv]
+environments = [
+  "sys_platform == 'darwin' and platform_machine == 'x86_64'",
+  "sys_platform == 'darwin' and platform_machine == 'arm64'",
+  "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+
+required-environments = [
+  "sys_platform == 'darwin' and platform_machine == 'x86_64'",
+  "sys_platform == 'darwin' and platform_machine == 'arm64'",
+  "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+
+[tool.ty.environment]
+python-version = "3.14"
+
+[tool.ty.rules]
+# cupy is an optional extra, so `import cupy` resolves on a CUDA box and does not resolve
+# anywhere else. The suppression it needs is therefore used on one machine and unused on
+# the other, and no single comment is correct on both -- reporting the unused case turns a
+# green check on the CUDA host into a red one on CI. Silenced project-wide so the import
+# sites can carry the one code that is actually about them.
+unused-ignore-comment = "ignore"
+
+[tool.ty.src]
+include = [
+    "src/vesma/*.py",
+    "src/vesma/**/*.py",
+    "src/vertsy/*.py",
+    "src/vertsy/**/*.py",
+    "tests/typecheck_contracts.py",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Keep the default suite fast: skip perf, paper_benchmark and slow tests unless explicitly selected.
+# Opt back in with a later -m, e.g. `pytest -m perf` (the bench recipes in the Makefile do this).
+addopts = ["-m", "not perf and not slow and not paper_benchmark"]
+markers = [
+    "slow: marks tests that iterate larger SMARTS corpora",
+    "gpu: marks tests that require an optional GPU backend",
+    "metal: marks tests that require the optional Metal backend",
+    "cuda: marks tests that require the optional CUDA/CuPy backend",
+    "perf: marks perf and microbenchmark tests that run only when explicitly selected",
+    "paper_benchmark: marks benchmarks used for paper tables and figures",
+    "external_data: marks benchmarks that require non-default external datasets",
+    "very_slow: marks tests or benchmarks expected to take many minutes",
+    "hours: marks tests or benchmarks expected to take hours",
+]

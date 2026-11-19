@@ -1,0 +1,17 @@
+# Regeneration-only inputs, fetched by `make raw68k-classified-download`, never committed.
+# The build reads vendored/ instead, so a fresh checkout needs none of this.
+#
+# The 106 MB PaRoutes raw library supplies the reactions the classifiers read; the 211 MB
+# published corpus is the source of vendored/zenodo-labels.tsv.gz, which is the only part
+# of it this dataset needs.
+/raw/uspto_raw_template_library.csv.gz
+/raw/reaction_db_public.parquet
+
+# Pure projections of the committed raw68k-classified.tsv.gz, rebuilt by
+# `make raw68k-curated` in about a second. Tracking them would mean tracking a function of a
+# tracked file, and re-checksumming them on every change to the verdict rule.
+/processed/raw68k-agree.tsv.gz
+/processed/raw68k-curated.tsv.gz
+/processed/raw68k-unconfirmed.tsv.gz
+/processed/raw68k-mapping-conflict.tsv.gz
+/processed/raw68k-zenodo-conflict.tsv.gz

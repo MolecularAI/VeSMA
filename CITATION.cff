@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use Vesma, please cite the software and accompanying article."
+title: "VeSMA: GPU-native library for retrosynthetic expansion and beyond"
+type: article
+version: 0.1.0
+date-released: 2026-11-17
+authors:
+  - family-names: Voronov
+    given-names: Alexey
+    orcid: "https://orcid.org/0000-0003-0709-4954"
+  - family-names: Reymer
+    given-names: Anna
+    orcid: "https://orcid.org/0000-0001-8458-7918"
+repository-code: PROJECT_URL_PENDING_AZ
+license: MIT
+identifiers:
+  - type: doi
+    value: ZENODO_DOI_PENDING_RELEASE
+abstract: >-
+  CPU- and GPU-native reaction-template application for retrosynthetic expansion,
+  including matching, bond edits, precursor construction, and WL deduplication keys.
+keywords:
+  - cheminformatics
+  - retrosynthesis
+  - reaction SMARTS
+  - GPU computing

@@ -1,0 +1,27 @@
+#Recore2007
+#P. Maas, T. Schulz-Gasch, M. Stahl, and M. Rarey. Recore: A Fast and Versatile
+#Method for Scaffold Hopping Based on Small Molecule Crystal Structure
+#Conformations. J. Chem. Inf. Model., 47:390–399, 2007
+#SMARTS as rules for shredding molecules into fragments
+# SMARTS are used for specifying the bonds which can be broken
+# comment: in paper there are some mistakes in SMARTS, these are corrected
+#SMARTS: 18
+#not daylight conform 0
+[C;X4;!D4]-;!@[C;X4;!D4;!R]   maas_recore.smarts_0
+[C;X4;!D4]-;!@[c;$(c[n&H0,cH,S,O])]   maas_recore.smarts_1
+[c;$(c[n&H0,cH,S,O])]-;!@[c;$(c[n&H0,cH,S,O])]   maas_recore.smarts_2
+[C;X4;!D4]-;!@[C;D3]   maas_recore.smarts_3
+[c;H1;$(c([cH])([cH,n&H0,O]))][H]   maas_recore.smarts_4
+[C;H3;$(Cc([cH])([cH,n&H0,O]))][H]   maas_recore.smarts_5
+[C;H2;$([CH2]([CH2])[CH2])][H]   maas_recore.smarts_6
+[c;$(c([cH])([cH,n&H0,O]))][F,Cl,Br,I]   maas_recore.smarts_7
+[C;$(C(=O))]-;!@[N;!$(N(C=O)(C=O));!$(N[N,O,S])]   maas_recore.smarts_8
+[C;X4;!D4]-;!@[N;X3;!D3]   maas_recore.smarts_9
+[c;$(c([n&H0,cH,S,O]))]-;!@[N;X3;!$(N[N,O,S])]   maas_recore.smarts_10
+[S;X4;$(S(=O)(=O))]-;!@[N;X3;!$(N[N,O,S])]   maas_recore.smarts_11
+[c;$(c[n&H0,cH,S,O])]-;!@[n]   maas_recore.smarts_12
+[C;X4;!D4]-;!@[n]   maas_recore.smarts_13
+[C;$(C(=O))]-;!@[n]   maas_recore.smarts_14
+[C;X4;!D4]-;!@[O;D2;$(O[C,c]);!$(OCO);!$(OC=*)]   maas_recore.smarts_15
+[P,S]-;!@[O;D2;$(O[C,c]);!$(OCO);!$(OC=*)]   maas_recore.smarts_16
+[C;$(C(=O))]-;!@[O;D2;$(O[C,c]);!$(OCO);!$(OC=*)]   maas_recore.smarts_17

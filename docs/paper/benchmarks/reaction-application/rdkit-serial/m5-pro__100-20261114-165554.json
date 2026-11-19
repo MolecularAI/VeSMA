@@ -1,0 +1,2329 @@
+{
+    "machine_info": {
+        "node": "Annas-BigMac.local",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 22.1.3 ",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.14.5",
+        "python_version": "3.14.5",
+        "python_build": [
+            "main",
+            "May 10 2026 19:20:57"
+        ],
+        "release": "25.4.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.14.5.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 18,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M5 Pro"
+        },
+        "cpu_detail": {
+            "model": "Apple M5 Pro",
+            "physical_cores": 18,
+            "logical_cores": 18,
+            "usable_cores": 18,
+            "core_breakdown": "6 Super and 12 Performance",
+            "label": "Apple M5 Pro, 18 CPU cores",
+            "total_ram_bytes": 68719476736
+        },
+        "cuda": {
+            "available": false
+        },
+        "metal": {
+            "available": null,
+            "probe_skipped": true,
+            "device_name": "Apple M5 Pro",
+            "gpu_core_count": 20,
+            "label": "Apple M5 Pro, 20 GPU cores"
+        },
+        "software": {
+            "vesma": "0.1.0",
+            "numpy": "2.5.0",
+            "pytest": "9.1.1",
+            "pytest_benchmark": "5.2.3",
+            "rdkit": {
+                "available": true,
+                "version": "2025.09.3",
+                "rdkit_version": "2025.09.3"
+            }
+        },
+        "host_type": "m5-pro"
+    },
+    "commit_info": {
+        "id": "4bf2b335f94ee9121e46321283ebc6094f2ebb5a",
+        "time": "2026-11-14T17:52:32+01:00",
+        "author_time": "2026-11-14T17:52:32+01:00",
+        "dirty": false,
+        "project": "vesma",
+        "branch": "fix/cuda-chemistry-parity",
+        "clean_scope": "src,tests"
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_reaction_application[100-rdkit-serial]",
+            "fullname": "tests/vesma/bench_reaction_application.py::test_reaction_application[100-rdkit-serial]",
+            "params": {
+                "size": 100,
+                "backend": "rdkit-serial"
+            },
+            "param": "100-rdkit-serial",
+            "extra_info": {
+                "experiment": "reaction-application",
+                "contract": "streamed-unkeyed-host-v1",
+                "backend": "rdkit-serial",
+                "size": 100,
+                "molecules": 100,
+                "rules": 42554,
+                "positive_pairs": 21264,
+                "pair_sha256": "8e1ca00acbd0aa4eca85d94fd935c6f09023d0a82499c0ec8d3ca40eb23845dd",
+                "smiles_sha256": "e2e96a78ff7d49ffd6d0c47d3d47516050a52a18e2299af86ad6efb7f5944fa2",
+                "templates_sha256": "93bf26de03cb6220139a498a9d45e6b35a4329de322f08b55311bbadb03af4ed",
+                "precursor_identity": "none",
+                "delivery": "host-batches-released",
+                "compile_seconds": 0.9248050829919521,
+                "pairs_per_batch": 4096,
+                "workers": 1,
+                "worker_lifetime": "matcher",
+                "precursor_atom_cap": null,
+                "reaction_processing": "rdkit-sanitize-fragments",
+                "diagnostics": {
+                    "rules_total": 42554,
+                    "pairs_evaluated": 21264,
+                    "outcomes_total": 69086,
+                    "outcomes_unsanitizable": 363,
+                    "discarded": [
+                        [
+                            1,
+                            937,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            2050,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            2050,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            2050,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            2050,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            2084,
+                            0,
+                            "AtomKekulizeException: non-ring atom 10 marked aromatic"
+                        ],
+                        [
+                            1,
+                            2084,
+                            1,
+                            "AtomKekulizeException: non-ring atom 10 marked aromatic"
+                        ],
+                        [
+                            1,
+                            2084,
+                            2,
+                            "AtomKekulizeException: non-ring atom 10 marked aromatic"
+                        ],
+                        [
+                            1,
+                            2084,
+                            3,
+                            "AtomKekulizeException: non-ring atom 10 marked aromatic"
+                        ],
+                        [
+                            1,
+                            4399,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            4399,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            4399,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            4399,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            5540,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6297,
+                            0,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6297,
+                            1,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6297,
+                            2,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6297,
+                            3,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6439,
+                            0,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6439,
+                            1,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6646,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6646,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6646,
+                            2,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6646,
+                            3,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6982,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6982,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6982,
+                            2,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            6982,
+                            3,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            7774,
+                            0,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            1,
+                            7774,
+                            1,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            1,
+                            8358,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            8358,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            8358,
+                            2,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            8358,
+                            3,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            8911,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            8911,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            8911,
+                            2,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            8911,
+                            3,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            10841,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            10841,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            10841,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            10841,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            11639,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            11639,
+                            1,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            12649,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            12649,
+                            1,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            13106,
+                            0,
+                            "AtomKekulizeException: non-ring atom 12 marked aromatic"
+                        ],
+                        [
+                            1,
+                            13106,
+                            1,
+                            "AtomKekulizeException: non-ring atom 12 marked aromatic"
+                        ],
+                        [
+                            1,
+                            13106,
+                            2,
+                            "AtomKekulizeException: non-ring atom 12 marked aromatic"
+                        ],
+                        [
+                            1,
+                            13106,
+                            3,
+                            "AtomKekulizeException: non-ring atom 12 marked aromatic"
+                        ],
+                        [
+                            1,
+                            13554,
+                            0,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            1,
+                            13554,
+                            1,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            1,
+                            14501,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            14501,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            14501,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            14501,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            15621,
+                            0,
+                            "AtomKekulizeException: non-ring atom 26 marked aromatic"
+                        ],
+                        [
+                            1,
+                            16613,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            16613,
+                            1,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            17009,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            17057,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            17517,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            17517,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            17517,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            17517,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            18844,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            19067,
+                            0,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            1,
+                            22006,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            22006,
+                            1,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            23987,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            23987,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            23987,
+                            2,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            23987,
+                            3,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24260,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24324,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24324,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24324,
+                            2,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24324,
+                            3,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24607,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24607,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24607,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24607,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24624,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24624,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24624,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            24624,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            25743,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            25743,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            25743,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            25743,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            27220,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            27220,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            27220,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            27220,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            27841,
+                            0,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            1,
+                            27841,
+                            1,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            1,
+                            28575,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            28575,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            28575,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            28575,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            29731,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            29731,
+                            1,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            32224,
+                            0,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            1,
+                            32224,
+                            1,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            1,
+                            32224,
+                            2,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            1,
+                            32224,
+                            3,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            1,
+                            33035,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            33035,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            33035,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            33035,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            33040,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            33040,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            33040,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            33040,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            34558,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            34558,
+                            1,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            1,
+                            40106,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            40106,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            40106,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            40106,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            40345,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            40345,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            40345,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            40345,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            40346,
+                            0,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            1,
+                            41922,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            41922,
+                            1,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            41922,
+                            2,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            1,
+                            41922,
+                            3,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            6,
+                            34203,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            6,
+                            35058,
+                            0,
+                            "AtomKekulizeException: non-ring atom 2 marked aromatic"
+                        ],
+                        [
+                            14,
+                            1729,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            14,
+                            2061,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            14,
+                            4956,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            14,
+                            7179,
+                            0,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            14,
+                            12810,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            14,
+                            20702,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            14,
+                            33956,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            14,
+                            35913,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            14,
+                            36390,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            14,
+                            41436,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            39,
+                            9626,
+                            1,
+                            "KekulizeException: Can't kekulize mol.  Unkekulized atoms: 2 4"
+                        ],
+                        [
+                            39,
+                            31373,
+                            1,
+                            "KekulizeException: Can't kekulize mol.  Unkekulized atoms: 2 4"
+                        ],
+                        [
+                            42,
+                            12735,
+                            0,
+                            "AtomKekulizeException: non-ring atom 5 marked aromatic"
+                        ],
+                        [
+                            42,
+                            12735,
+                            1,
+                            "AtomKekulizeException: non-ring atom 21 marked aromatic"
+                        ],
+                        [
+                            42,
+                            18541,
+                            0,
+                            "AtomKekulizeException: non-ring atom 5 marked aromatic"
+                        ],
+                        [
+                            42,
+                            18541,
+                            1,
+                            "AtomKekulizeException: non-ring atom 21 marked aromatic"
+                        ],
+                        [
+                            42,
+                            20808,
+                            0,
+                            "AtomKekulizeException: non-ring atom 5 marked aromatic"
+                        ],
+                        [
+                            42,
+                            20808,
+                            1,
+                            "AtomKekulizeException: non-ring atom 21 marked aromatic"
+                        ],
+                        [
+                            42,
+                            22042,
+                            0,
+                            "AtomKekulizeException: non-ring atom 5 marked aromatic"
+                        ],
+                        [
+                            42,
+                            22042,
+                            1,
+                            "AtomKekulizeException: non-ring atom 21 marked aromatic"
+                        ],
+                        [
+                            42,
+                            31606,
+                            0,
+                            "AtomKekulizeException: non-ring atom 5 marked aromatic"
+                        ],
+                        [
+                            42,
+                            31606,
+                            1,
+                            "AtomKekulizeException: non-ring atom 21 marked aromatic"
+                        ],
+                        [
+                            42,
+                            39384,
+                            0,
+                            "AtomKekulizeException: non-ring atom 12 marked aromatic"
+                        ],
+                        [
+                            42,
+                            39384,
+                            1,
+                            "AtomKekulizeException: non-ring atom 28 marked aromatic"
+                        ],
+                        [
+                            45,
+                            2110,
+                            0,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            45,
+                            2110,
+                            1,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            45,
+                            8308,
+                            0,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            45,
+                            24283,
+                            0,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            45,
+                            24283,
+                            1,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            55,
+                            2110,
+                            0,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            55,
+                            2110,
+                            1,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            55,
+                            2110,
+                            2,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            55,
+                            2110,
+                            3,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            55,
+                            8566,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            55,
+                            10616,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            55,
+                            11383,
+                            0,
+                            "AtomKekulizeException: non-ring atom 5 marked aromatic"
+                        ],
+                        [
+                            55,
+                            14121,
+                            0,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            55,
+                            17495,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            55,
+                            21605,
+                            0,
+                            "AtomKekulizeException: non-ring atom 13 marked aromatic"
+                        ],
+                        [
+                            55,
+                            24218,
+                            0,
+                            "AtomKekulizeException: non-ring atom 10 marked aromatic"
+                        ],
+                        [
+                            55,
+                            24341,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            55,
+                            25757,
+                            0,
+                            "AtomKekulizeException: non-ring atom 7 marked aromatic"
+                        ],
+                        [
+                            55,
+                            26555,
+                            0,
+                            "AtomKekulizeException: non-ring atom 10 marked aromatic"
+                        ],
+                        [
+                            55,
+                            29017,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            55,
+                            29812,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            55,
+                            29839,
+                            0,
+                            "AtomKekulizeException: non-ring atom 12 marked aromatic"
+                        ],
+                        [
+                            55,
+                            30030,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            55,
+                            30398,
+                            0,
+                            "KekulizeException: Can't kekulize mol.  Unkekulized atoms: 5 6"
+                        ],
+                        [
+                            55,
+                            30398,
+                            1,
+                            "KekulizeException: Can't kekulize mol.  Unkekulized atoms: 5 6"
+                        ],
+                        [
+                            55,
+                            31596,
+                            0,
+                            "AtomKekulizeException: non-ring atom 13 marked aromatic"
+                        ],
+                        [
+                            55,
+                            31622,
+                            0,
+                            "AtomKekulizeException: non-ring atom 18 marked aromatic"
+                        ],
+                        [
+                            55,
+                            31622,
+                            1,
+                            "AtomKekulizeException: non-ring atom 5 marked aromatic"
+                        ],
+                        [
+                            55,
+                            35172,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            55,
+                            35766,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            55,
+                            40374,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            55,
+                            41424,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            58,
+                            2110,
+                            0,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            58,
+                            2110,
+                            1,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            58,
+                            2401,
+                            0,
+                            "AtomKekulizeException: non-ring atom 13 marked aromatic"
+                        ],
+                        [
+                            58,
+                            2401,
+                            1,
+                            "AtomKekulizeException: non-ring atom 13 marked aromatic"
+                        ],
+                        [
+                            58,
+                            2608,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            58,
+                            2608,
+                            1,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            58,
+                            6528,
+                            0,
+                            "AtomKekulizeException: non-ring atom 5 marked aromatic"
+                        ],
+                        [
+                            58,
+                            7891,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            58,
+                            9459,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            58,
+                            9459,
+                            1,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            58,
+                            17574,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            58,
+                            17574,
+                            1,
+                            "AtomKekulizeException: non-ring atom 0 marked aromatic"
+                        ],
+                        [
+                            58,
+                            20833,
+                            0,
+                            "AtomKekulizeException: non-ring atom 13 marked aromatic"
+                        ],
+                        [
+                            58,
+                            20833,
+                            1,
+                            "AtomKekulizeException: non-ring atom 13 marked aromatic"
+                        ],
+                        [
+                            58,
+                            25939,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            58,
+                            25939,
+                            1,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            58,
+                            29514,
+                            0,
+                            "AtomKekulizeException: non-ring atom 12 marked aromatic"
+                        ],
+                        [
+                            58,
+                            29514,
+                            1,
+                            "AtomKekulizeException: non-ring atom 12 marked aromatic"
+                        ],
+                        [
+                            58,
+                            36479,
+                            0,
+                            "AtomKekulizeException: non-ring atom 13 marked aromatic"
+                        ],
+                        [
+                            58,
+                            36479,
+                            1,
+                            "AtomKekulizeException: non-ring atom 13 marked aromatic"
+                        ],
+                        [
+                            58,
+                            40529,
+                            0,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            58,
+                            40529,
+                            1,
+                            "AtomKekulizeException: non-ring atom 6 marked aromatic"
+                        ],
+                        [
+                            59,
+                            2110,
+                            0,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            59,
+                            2110,
+                            1,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            59,
+                            2110,
+                            2,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            59,
+                            2110,
+                            3,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            59,
+                            2110,
+                            4,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            59,
+                            2110,
+                            5,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            59,
+                            22745,
+                            0,
+                            "AtomKekulizeException: non-ring atom 0 marked aromatic"
+                        ],
+                        [
+                            59,
+                            22745,
+                            1,
+                            "AtomKekulizeException: non-ring atom 0 marked aromatic"
+                        ],
+                        [
+                            59,
+                            30398,
+                            0,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            59,
+                            30398,
+                            1,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            63,
+                            5719,
+                            0,
+                            "AtomKekulizeException: non-ring atom 24 marked aromatic"
+                        ],
+                        [
+                            63,
+                            5719,
+                            1,
+                            "AtomKekulizeException: non-ring atom 23 marked aromatic"
+                        ],
+                        [
+                            63,
+                            5719,
+                            2,
+                            "AtomKekulizeException: non-ring atom 19 marked aromatic"
+                        ],
+                        [
+                            63,
+                            5719,
+                            3,
+                            "AtomKekulizeException: non-ring atom 18 marked aromatic"
+                        ],
+                        [
+                            63,
+                            6773,
+                            0,
+                            "AtomKekulizeException: non-ring atom 19 marked aromatic"
+                        ],
+                        [
+                            63,
+                            6773,
+                            1,
+                            "AtomKekulizeException: non-ring atom 18 marked aromatic"
+                        ],
+                        [
+                            63,
+                            6773,
+                            2,
+                            "AtomKekulizeException: non-ring atom 14 marked aromatic"
+                        ],
+                        [
+                            63,
+                            6773,
+                            3,
+                            "AtomKekulizeException: non-ring atom 13 marked aromatic"
+                        ],
+                        [
+                            63,
+                            8864,
+                            0,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            63,
+                            8864,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            63,
+                            8864,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            63,
+                            8864,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            63,
+                            9964,
+                            0,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            63,
+                            9964,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            63,
+                            9964,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            63,
+                            9964,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            63,
+                            10178,
+                            0,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            63,
+                            10178,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            63,
+                            10178,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            63,
+                            10178,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            63,
+                            14324,
+                            0,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            63,
+                            14324,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            63,
+                            14324,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            63,
+                            14324,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            63,
+                            14815,
+                            0,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            63,
+                            14815,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            63,
+                            14815,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            63,
+                            14815,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            63,
+                            18339,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            63,
+                            18339,
+                            1,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            63,
+                            18339,
+                            2,
+                            "AtomKekulizeException: non-ring atom 11 marked aromatic"
+                        ],
+                        [
+                            63,
+                            18339,
+                            3,
+                            "AtomKekulizeException: non-ring atom 10 marked aromatic"
+                        ],
+                        [
+                            63,
+                            20962,
+                            0,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            63,
+                            20962,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            63,
+                            20962,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            63,
+                            20962,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            63,
+                            21524,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            63,
+                            21524,
+                            1,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            63,
+                            21524,
+                            2,
+                            "AtomKekulizeException: non-ring atom 11 marked aromatic"
+                        ],
+                        [
+                            63,
+                            21524,
+                            3,
+                            "AtomKekulizeException: non-ring atom 10 marked aromatic"
+                        ],
+                        [
+                            63,
+                            32992,
+                            0,
+                            "AtomKekulizeException: non-ring atom 9 marked aromatic"
+                        ],
+                        [
+                            63,
+                            32992,
+                            1,
+                            "AtomKekulizeException: non-ring atom 8 marked aromatic"
+                        ],
+                        [
+                            63,
+                            32992,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            63,
+                            32992,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            66,
+                            27126,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            68,
+                            14930,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            68,
+                            14930,
+                            1,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            68,
+                            14930,
+                            2,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            68,
+                            14930,
+                            3,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            71,
+                            5719,
+                            0,
+                            "AtomKekulizeException: non-ring atom 31 marked aromatic"
+                        ],
+                        [
+                            71,
+                            5719,
+                            1,
+                            "AtomKekulizeException: non-ring atom 30 marked aromatic"
+                        ],
+                        [
+                            71,
+                            5719,
+                            2,
+                            "AtomKekulizeException: non-ring atom 19 marked aromatic"
+                        ],
+                        [
+                            71,
+                            5719,
+                            3,
+                            "AtomKekulizeException: non-ring atom 18 marked aromatic"
+                        ],
+                        [
+                            71,
+                            6773,
+                            0,
+                            "AtomKekulizeException: non-ring atom 26 marked aromatic"
+                        ],
+                        [
+                            71,
+                            6773,
+                            1,
+                            "AtomKekulizeException: non-ring atom 25 marked aromatic"
+                        ],
+                        [
+                            71,
+                            6773,
+                            2,
+                            "AtomKekulizeException: non-ring atom 14 marked aromatic"
+                        ],
+                        [
+                            71,
+                            6773,
+                            3,
+                            "AtomKekulizeException: non-ring atom 13 marked aromatic"
+                        ],
+                        [
+                            71,
+                            8864,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            71,
+                            8864,
+                            1,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            71,
+                            8864,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            71,
+                            8864,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            71,
+                            9964,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            71,
+                            9964,
+                            1,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            71,
+                            9964,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            71,
+                            9964,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            71,
+                            10178,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            71,
+                            10178,
+                            1,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            71,
+                            10178,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            71,
+                            10178,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            71,
+                            14324,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            71,
+                            14324,
+                            1,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            71,
+                            14324,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            71,
+                            14324,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            71,
+                            14815,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            71,
+                            14815,
+                            1,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            71,
+                            14815,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            71,
+                            14815,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            71,
+                            18339,
+                            0,
+                            "AtomKekulizeException: non-ring atom 23 marked aromatic"
+                        ],
+                        [
+                            71,
+                            18339,
+                            1,
+                            "AtomKekulizeException: non-ring atom 22 marked aromatic"
+                        ],
+                        [
+                            71,
+                            18339,
+                            2,
+                            "AtomKekulizeException: non-ring atom 11 marked aromatic"
+                        ],
+                        [
+                            71,
+                            18339,
+                            3,
+                            "AtomKekulizeException: non-ring atom 10 marked aromatic"
+                        ],
+                        [
+                            71,
+                            20962,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            71,
+                            20962,
+                            1,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            71,
+                            20962,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            71,
+                            20962,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            71,
+                            21524,
+                            0,
+                            "AtomKekulizeException: non-ring atom 23 marked aromatic"
+                        ],
+                        [
+                            71,
+                            21524,
+                            1,
+                            "AtomKekulizeException: non-ring atom 22 marked aromatic"
+                        ],
+                        [
+                            71,
+                            21524,
+                            2,
+                            "AtomKekulizeException: non-ring atom 11 marked aromatic"
+                        ],
+                        [
+                            71,
+                            21524,
+                            3,
+                            "AtomKekulizeException: non-ring atom 10 marked aromatic"
+                        ],
+                        [
+                            71,
+                            32992,
+                            0,
+                            "AtomKekulizeException: non-ring atom 16 marked aromatic"
+                        ],
+                        [
+                            71,
+                            32992,
+                            1,
+                            "AtomKekulizeException: non-ring atom 15 marked aromatic"
+                        ],
+                        [
+                            71,
+                            32992,
+                            2,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            71,
+                            32992,
+                            3,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            73,
+                            853,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            73,
+                            11745,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            73,
+                            22745,
+                            0,
+                            "AtomKekulizeException: non-ring atom 0 marked aromatic"
+                        ],
+                        [
+                            73,
+                            22745,
+                            1,
+                            "AtomKekulizeException: non-ring atom 0 marked aromatic"
+                        ],
+                        [
+                            73,
+                            30398,
+                            0,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            73,
+                            30398,
+                            1,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            73,
+                            37222,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            73,
+                            38374,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            73,
+                            38979,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            74,
+                            2110,
+                            0,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            74,
+                            2110,
+                            1,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            74,
+                            15088,
+                            0,
+                            "AtomKekulizeException: non-ring atom 2 marked aromatic"
+                        ],
+                        [
+                            74,
+                            22845,
+                            0,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            74,
+                            23221,
+                            0,
+                            "AtomKekulizeException: non-ring atom 2 marked aromatic"
+                        ],
+                        [
+                            74,
+                            24159,
+                            0,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            74,
+                            35039,
+                            0,
+                            "AtomKekulizeException: non-ring atom 2 marked aromatic"
+                        ],
+                        [
+                            75,
+                            1729,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            75,
+                            2061,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            75,
+                            2110,
+                            0,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            75,
+                            2110,
+                            1,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            75,
+                            4956,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            75,
+                            7179,
+                            0,
+                            "AtomKekulizeException: non-ring atom 3 marked aromatic"
+                        ],
+                        [
+                            75,
+                            12810,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            75,
+                            20702,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            75,
+                            33956,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            75,
+                            35913,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            75,
+                            36390,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            75,
+                            41436,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            80,
+                            27126,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            81,
+                            306,
+                            0,
+                            "AtomKekulizeException: non-ring atom 2 marked aromatic"
+                        ],
+                        [
+                            81,
+                            1646,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            81,
+                            40437,
+                            0,
+                            "AtomKekulizeException: non-ring atom 4 marked aromatic"
+                        ],
+                        [
+                            82,
+                            21651,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            82,
+                            21651,
+                            1,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            82,
+                            35909,
+                            0,
+                            "AtomKekulizeException: non-ring atom 2 marked aromatic"
+                        ],
+                        [
+                            82,
+                            35909,
+                            1,
+                            "AtomKekulizeException: non-ring atom 2 marked aromatic"
+                        ],
+                        [
+                            87,
+                            5010,
+                            0,
+                            "KekulizeException: Can't kekulize mol.  Unkekulized atoms: 4 16 17 18 19"
+                        ],
+                        [
+                            87,
+                            19702,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            87,
+                            22706,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            87,
+                            40532,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            87,
+                            41983,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            87,
+                            42291,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            88,
+                            34203,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            88,
+                            35058,
+                            0,
+                            "AtomKekulizeException: non-ring atom 2 marked aromatic"
+                        ],
+                        [
+                            90,
+                            16496,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            90,
+                            28509,
+                            0,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            90,
+                            28509,
+                            1,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            90,
+                            28509,
+                            2,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            90,
+                            28509,
+                            3,
+                            "AtomKekulizeException: non-ring atom 1 marked aromatic"
+                        ],
+                        [
+                            93,
+                            2110,
+                            0,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ],
+                        [
+                            93,
+                            2110,
+                            1,
+                            "AtomValenceException: Explicit valence for atom # 1 P, 7, is greater than permitted"
+                        ]
+                    ]
+                },
+                "peak_parent_rss_bytes": 3813834752,
+                "rss_scope": "parent-process-high-water-including-setup; excludes-worker-and-device-memory",
+                "precursors": 96345,
+                "hits": 96345,
+                "batches": 6,
+                "max_batch_precursors": 20168
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.8332767499960028,
+                "max": 3.91596075000416,
+                "mean": 3.878853388998929,
+                "stddev": 0.04198758705485383,
+                "rounds": 3,
+                "median": 3.8873226669966243,
+                "iqr": 0.06201300000611809,
+                "q1": 3.846788229246158,
+                "q3": 3.9088012292522762,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 3.8332767499960028,
+                "hd15iqr": 3.91596075000416,
+                "ops": 0.2578081457876613,
+                "total": 11.636560166996787,
+                "data": [
+                    3.8332767499960028,
+                    3.8873226669966243,
+                    3.91596075000416
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2026-11-14T16:56:17.579445+00:00",
+    "version": "5.2.3"
+}

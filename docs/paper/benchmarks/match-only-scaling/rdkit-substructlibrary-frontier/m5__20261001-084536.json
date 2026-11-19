@@ -1,0 +1,350 @@
+{
+    "machine_info": {
+        "node": "sef0627my2v3DD",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 22.1.3 ",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.14.7",
+        "python_version": "3.14.7",
+        "python_build": [
+            "main",
+            "Aug 25 2026 13:50:14"
+        ],
+        "release": "25.6.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.14.7.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 10,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M5"
+        },
+        "cpu_detail": {
+            "model": "Apple M5",
+            "physical_cores": 10,
+            "logical_cores": 10,
+            "usable_cores": 10,
+            "core_breakdown": "4 Super and 6 Efficiency",
+            "label": "Apple M5, 10 CPU cores",
+            "total_ram_bytes": 17179869184
+        },
+        "cuda": {
+            "available": false
+        },
+        "metal": {
+            "available": null,
+            "probe_skipped": true,
+            "device_name": "Apple M5",
+            "gpu_core_count": 8,
+            "label": "Apple M5, 8 GPU cores"
+        },
+        "software": {
+            "vesma": "0.1.0",
+            "numpy": "2.5.0",
+            "pytest": "9.1.1",
+            "pytest_benchmark": "5.2.3",
+            "rdkit": {
+                "available": true,
+                "version": "2025.09.3",
+                "rdkit_version": "2025.09.3"
+            }
+        },
+        "host_type": "m5"
+    },
+    "commit_info": {
+        "id": "64232d9a928ea4efbdd4e7b2f9c842e9d3553b2f",
+        "time": "2026-09-30T12:46:23+02:00",
+        "author_time": "2026-09-30T12:46:23+02:00",
+        "dirty": true,
+        "project": "vesma",
+        "branch": "main",
+        "clean_scope": "src,tests"
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_match_only_scaling[1-rdkit-substructlibrary-frontier]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[1-rdkit-substructlibrary-frontier]",
+            "params": {
+                "size": 1,
+                "match_only_backend": "rdkit-substructlibrary-frontier"
+            },
+            "param": "1-rdkit-substructlibrary-frontier",
+            "extra_info": {
+                "matches": 146,
+                "molecules": 1,
+                "rules": 42554,
+                "pairs": 42554,
+                "path": "SubstructLibrary frontier -> cached rule LHS queries",
+                "build_seconds": 0.0005019160003030265,
+                "experiment": "match-only",
+                "backend": "rdkit-substructlibrary-frontier",
+                "size": 1,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 1.356487959000333,
+                "max": 1.3882113750000826,
+                "mean": 1.3718932780002433,
+                "stddev": 0.01588139330887437,
+                "rounds": 3,
+                "median": 1.3709805000003144,
+                "iqr": 0.02379256199981228,
+                "q1": 1.3601110942503283,
+                "q3": 1.3839036562501406,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 1.356487959000333,
+                "hd15iqr": 1.3882113750000826,
+                "ops": 0.7289196732982481,
+                "total": 4.11567983400073,
+                "data": [
+                    1.3882113750000826,
+                    1.3709805000003144,
+                    1.356487959000333
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[10-rdkit-substructlibrary-frontier]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[10-rdkit-substructlibrary-frontier]",
+            "params": {
+                "size": 10,
+                "match_only_backend": "rdkit-substructlibrary-frontier"
+            },
+            "param": "10-rdkit-substructlibrary-frontier",
+            "extra_info": {
+                "matches": 1282,
+                "molecules": 10,
+                "rules": 42554,
+                "pairs": 425540,
+                "path": "SubstructLibrary frontier -> cached rule LHS queries",
+                "build_seconds": 0.0006850839999970049,
+                "experiment": "match-only",
+                "backend": "rdkit-substructlibrary-frontier",
+                "size": 10,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 4.787922375000107,
+                "max": 4.826774791999924,
+                "mean": 4.807966861333473,
+                "stddev": 0.019455702997320384,
+                "rounds": 3,
+                "median": 4.80920341700039,
+                "iqr": 0.029139312749862256,
+                "q1": 4.793242635500178,
+                "q3": 4.82238194825004,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 4.787922375000107,
+                "hd15iqr": 4.826774791999924,
+                "ops": 0.20798812238956516,
+                "total": 14.423900584000421,
+                "data": [
+                    4.80920341700039,
+                    4.826774791999924,
+                    4.787922375000107
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[100-rdkit-substructlibrary-frontier]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[100-rdkit-substructlibrary-frontier]",
+            "params": {
+                "size": 100,
+                "match_only_backend": "rdkit-substructlibrary-frontier"
+            },
+            "param": "100-rdkit-substructlibrary-frontier",
+            "extra_info": {
+                "matches": 21264,
+                "molecules": 100,
+                "rules": 42554,
+                "pairs": 4255400,
+                "path": "SubstructLibrary frontier -> cached rule LHS queries",
+                "build_seconds": 0.00855787499995131,
+                "experiment": "match-only",
+                "backend": "rdkit-substructlibrary-frontier",
+                "size": 100,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 4.880717417000142,
+                "max": 4.9279380000002675,
+                "mean": 4.909455875000124,
+                "stddev": 0.02522578323205536,
+                "rounds": 3,
+                "median": 4.9197122079999644,
+                "iqr": 0.03541543725009433,
+                "q1": 4.890466114750097,
+                "q3": 4.925881552000192,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 4.880717417000142,
+                "hd15iqr": 4.9279380000002675,
+                "ops": 0.20368856049652848,
+                "total": 14.728367625000374,
+                "data": [
+                    4.9279380000002675,
+                    4.880717417000142,
+                    4.9197122079999644
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[1000-rdkit-substructlibrary-frontier]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[1000-rdkit-substructlibrary-frontier]",
+            "params": {
+                "size": 1000,
+                "match_only_backend": "rdkit-substructlibrary-frontier"
+            },
+            "param": "1000-rdkit-substructlibrary-frontier",
+            "extra_info": {
+                "matches": 261543,
+                "molecules": 1000,
+                "rules": 42554,
+                "pairs": 42554000,
+                "path": "SubstructLibrary frontier -> cached rule LHS queries",
+                "build_seconds": 0.09511187499992957,
+                "experiment": "match-only",
+                "backend": "rdkit-substructlibrary-frontier",
+                "size": 1000,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 5.989167249999809,
+                "max": 6.133070124999904,
+                "mean": 6.04800005566661,
+                "stddev": 0.07545399168932007,
+                "rounds": 3,
+                "median": 6.021762792000118,
+                "iqr": 0.10792715625007077,
+                "q1": 5.9973161354998865,
+                "q3": 6.105243291749957,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 5.989167249999809,
+                "hd15iqr": 6.133070124999904,
+                "ops": 0.1653439138220676,
+                "total": 18.14400016699983,
+                "data": [
+                    6.133070124999904,
+                    6.021762792000118,
+                    5.989167249999809
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[2881-rdkit-substructlibrary-frontier]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[2881-rdkit-substructlibrary-frontier]",
+            "params": {
+                "size": 2881,
+                "match_only_backend": "rdkit-substructlibrary-frontier"
+            },
+            "param": "2881-rdkit-substructlibrary-frontier",
+            "extra_info": {
+                "matches": 768015,
+                "molecules": 2881,
+                "rules": 42554,
+                "pairs": 122598074,
+                "path": "SubstructLibrary frontier -> cached rule LHS queries",
+                "build_seconds": 0.28532674999996743,
+                "experiment": "match-only",
+                "backend": "rdkit-substructlibrary-frontier",
+                "size": 2881,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 7.541509499999847,
+                "max": 7.652975291000075,
+                "mean": 7.588002402666613,
+                "stddev": 0.057985239876261654,
+                "rounds": 3,
+                "median": 7.5695224169999165,
+                "iqr": 0.08359934325017093,
+                "q1": 7.548512729249865,
+                "q3": 7.6321120725000355,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 7.541509499999847,
+                "hd15iqr": 7.652975291000075,
+                "ops": 0.13178699042696337,
+                "total": 22.76400720799984,
+                "data": [
+                    7.541509499999847,
+                    7.5695224169999165,
+                    7.652975291000075
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2026-10-01T08:47:23.168745+00:00",
+    "version": "5.2.3"
+}

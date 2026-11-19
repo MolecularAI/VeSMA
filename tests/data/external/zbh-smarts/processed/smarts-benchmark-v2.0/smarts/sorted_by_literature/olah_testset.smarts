@@ -1,0 +1,45 @@
+#Olah2004
+#M. Olah, C. Bologa, and T. I. Oprea. An automated PLS search for biologically
+#relevant QSAR descriptors. J. Comput. Aided Mol. Des., 18:437–449, 2004
+#SMARTS pattern here in comparison with 2D molecular descriptors for QSAR
+# SMARTS pattern: 38
+#not daylight conform 0
+[R]~*~*-[CH3]   olah_testset.smarts_0
+[R]~[D3]   olah_testset.smarts_1
+[a]~*~*-[CH3]   olah_testset.smarts_2
+[!$(*#*)&!D1]-!@[!$(*#*)&!D1]   olah_testset.smarts_3
+[!#6]-[CH3]   olah_testset.smarts_4
+[!#6]~*~*~*~[D3]   olah_testset.smarts_5
+[R]~*-[CH3]   olah_testset.smarts_6
+[!#6]~*~*~[R]   olah_testset.smarts_7
+[#9,#17,#35,#53]   olah_testset.smarts_8
+[!#6]~*~[R]   olah_testset.smarts_9
+[#9,#17,#35,#53]~*(~*)~*   olah_testset.smarts_10
+[R]   olah_testset.smarts_11
+[$([#6]-!@[A!C!H]-!@[#6])]   olah_testset.smarts_12
+*(!@*)(!@*)   olah_testset.smarts_13
+*-!:[a]:*:*:[a]-!:*   olah_testset.smarts_14
+[#6X3v3-1,#6X3v4+0,#6X3v3+1]   olah_testset.smarts_15
+[#8,#16]   olah_testset.smarts_16
+*!:[a]:*:*:[a]!:*   olah_testset.smarts_17
+[R](-*(-*))~*~*~[a]   olah_testset.smarts_18
+*-!:[a]:*:[a]-!:*   olah_testset.smarts_19
+[R](-*(-*))~*~*~*~[a]   olah_testset.smarts_20
+[#9,#17,#35,#53]!@*@*   olah_testset.smarts_21
+*-*-[R]~*~*:[a]   olah_testset.smarts_22
+[#9,#17,#35,#53]-[R]   olah_testset.smarts_23
+[CX4v4]   olah_testset.smarts_24
+[#9,#17,#35,#53]~[D3]   olah_testset.smarts_25
+*-*-[R]:[a]   olah_testset.smarts_26
+[#9,#17,#35,#53]-[a]   olah_testset.smarts_27
+*-*-[R]~*:[a]   olah_testset.smarts_28
+*!@[#8]!@*   olah_testset.smarts_29
+[R](-*(-*))~*~[a]   olah_testset.smarts_30
+[$([#8X2v2]([#6])[#6])]   olah_testset.smarts_31
+[#7]~*(~*)~*   olah_testset.smarts_32
+[#6!H0]~@[#6!H0]~@[#6!H0]~@[#6!H0]~@[#6!H0]   olah_testset.smarts_33
+[!a](=*)~*~*~*~[R]   olah_testset.smarts_34
+[#6!H0]~@[#6!H0]~@[#6!H0]~@[#6!H0]   olah_testset.smarts_35
+[#7]~[D3]   olah_testset.smarts_36
+[#7]~*~*~*~*~*~*~*~*~[#8]   olah_testset.smarts_37
+[#6]~!@[#8]   olah_testset.smarts_38

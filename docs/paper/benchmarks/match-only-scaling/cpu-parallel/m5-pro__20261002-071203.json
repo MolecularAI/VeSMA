@@ -1,0 +1,243 @@
+{
+    "machine_info": {
+        "node": "Mac",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 22.1.3 ",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.14.5",
+        "python_version": "3.14.5",
+        "python_build": [
+            "main",
+            "May 10 2026 19:20:57"
+        ],
+        "release": "25.4.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.14.5.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 18,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M5 Pro"
+        },
+        "cpu_detail": {
+            "model": "Apple M5 Pro",
+            "physical_cores": 18,
+            "logical_cores": 18,
+            "usable_cores": 18,
+            "core_breakdown": "6 Super and 12 Performance",
+            "label": "Apple M5 Pro, 18 CPU cores",
+            "total_ram_bytes": 68719476736
+        },
+        "cuda": {
+            "available": false
+        },
+        "metal": {
+            "available": null,
+            "probe_skipped": true,
+            "device_name": "Apple M5 Pro",
+            "gpu_core_count": 20,
+            "label": "Apple M5 Pro, 20 GPU cores"
+        },
+        "software": {
+            "vesma": "0.1.0",
+            "numpy": "2.5.0",
+            "pytest": "9.1.1",
+            "pytest_benchmark": "5.2.3",
+            "rdkit": {
+                "available": true,
+                "version": "2025.09.3",
+                "rdkit_version": "2025.09.3"
+            }
+        },
+        "host_type": "m5-pro"
+    },
+    "commit_info": {
+        "id": "2fcdce84be0f20d2a6ce9f060ae73761e4b722fb",
+        "time": "2026-10-01T19:47:06+02:00",
+        "author_time": "2026-10-01T19:47:06+02:00",
+        "dirty": false,
+        "project": "vesma",
+        "branch": "main",
+        "clean_scope": "src,tests"
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_match_only_scaling[1-cpu-parallel]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[1-cpu-parallel]",
+            "params": {
+                "size": 1,
+                "match_only_backend": "cpu-parallel"
+            },
+            "param": "1-cpu-parallel",
+            "extra_info": {
+                "matches": 146,
+                "molecules": 1,
+                "rules": 42554,
+                "pairs": 42554,
+                "path": "Vesma CPU low-level matcher",
+                "n_jobs": -1,
+                "wrapper_parallelism": "fork-processes",
+                "experiment": "match-only",
+                "backend": "cpu-parallel",
+                "size": 1,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.358378249919042,
+                "max": 0.3655144579242915,
+                "mean": 0.36112612501407665,
+                "stddev": 0.003840532847937401,
+                "rounds": 3,
+                "median": 0.3594856671988964,
+                "iqr": 0.005352156003937125,
+                "q1": 0.3586551042390056,
+                "q3": 0.3640072602429427,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.358378249919042,
+                "hd15iqr": 0.3655144579242915,
+                "ops": 2.7691156378149606,
+                "total": 1.08337837504223,
+                "data": [
+                    0.3655144579242915,
+                    0.3594856671988964,
+                    0.358378249919042
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[10-cpu-parallel]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[10-cpu-parallel]",
+            "params": {
+                "size": 10,
+                "match_only_backend": "cpu-parallel"
+            },
+            "param": "10-cpu-parallel",
+            "extra_info": {
+                "matches": 1282,
+                "molecules": 10,
+                "rules": 42554,
+                "pairs": 425540,
+                "path": "Vesma CPU low-level matcher",
+                "n_jobs": -1,
+                "wrapper_parallelism": "fork-processes",
+                "experiment": "match-only",
+                "backend": "cpu-parallel",
+                "size": 10,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 2.5039761669468135,
+                "max": 2.5785059579648077,
+                "mean": 2.543229124896849,
+                "stddev": 0.03742365046471122,
+                "rounds": 3,
+                "median": 2.5472052497789264,
+                "iqr": 0.055897343263495713,
+                "q1": 2.5147834376548417,
+                "q3": 2.5706807809183374,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 2.5039761669468135,
+                "hd15iqr": 2.5785059579648077,
+                "ops": 0.39320090754330245,
+                "total": 7.629687374690548,
+                "data": [
+                    2.5039761669468135,
+                    2.5472052497789264,
+                    2.5785059579648077
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[100-cpu-parallel]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[100-cpu-parallel]",
+            "params": {
+                "size": 100,
+                "match_only_backend": "cpu-parallel"
+            },
+            "param": "100-cpu-parallel",
+            "extra_info": {
+                "matches": 21264,
+                "molecules": 100,
+                "rules": 42554,
+                "pairs": 4255400,
+                "path": "Vesma CPU low-level matcher",
+                "n_jobs": -1,
+                "wrapper_parallelism": "fork-processes",
+                "experiment": "match-only",
+                "backend": "cpu-parallel",
+                "size": 100,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 31.13249474996701,
+                "max": 32.05734954192303,
+                "mean": 31.664252361282706,
+                "stddev": 0.47776472539034753,
+                "rounds": 3,
+                "median": 31.80291279195808,
+                "iqr": 0.6936410939670168,
+                "q1": 31.300099260464776,
+                "q3": 31.993740354431793,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 31.13249474996701,
+                "hd15iqr": 32.05734954192303,
+                "ops": 0.03158135516955217,
+                "total": 94.99275708384812,
+                "data": [
+                    31.13249474996701,
+                    31.80291279195808,
+                    32.05734954192303
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2026-10-02T07:14:24.994885+00:00",
+    "version": "5.2.3"
+}

@@ -1,0 +1,390 @@
+#Abolmaali2003
+#S. F. B. Abolmaali, J. K. Wegner, and A. Zell. The compressed feature matrix – a
+#fast method for feature based substructure search. J. Mol. Model., 9:235–241,
+#2003.
+[$([NH2]-c),NQ1H3,NQ2H2,NQ3H1,NQ2H1,$(Cl-*),$(Br-*),$(I-*)]   abolmaali.smarts_1
+[$([NH2]-C),$([OH]-*)]   abolmaali.smarts_3
+[CH3,cH3,CQ1H2,cQ1H2,CQ1H1,cQ1H1]~*~[$([NH2]-A),$([OH]-*);!+;!-]   abolmaali.smarts_27
+[CH3,cH3,CQ1H2,cQ1H2,CQ1H1,cQ1H1]~*(~[OQ1X1,oQ1X1,OQ2-X2,oQ2X2,NQ3X3,nQ3X3,NQ2X2,nQ2X2,NQ1X1,nQ1X1])~[$([NH2]-A),$([OH]-*);!+;!-]   abolmaali.smarts_28
+[$([NH2]-A),$([OH]-*);!+;!-]~*(~[OQ1X1,oQ1X1,OQ2X2,oQ2X2,NQ3X3,nQ3X3,NQ2X2,nQ2X2,NQ1X1,nQ1X1;!+;!-])~[$([NH2]-A),$([OH]-*);!+;!-]   abolmaali.smarts_29
+*(~[OQ1X1,oQ1X1,OQ2X2,oQ2X2,NQ3X3,nQ3X3,NQ2X2,nQ2X2,NQ1X1,nQ1X1])(~[$([NH2]-A),$([OH]-*);!+;!-])~*~[$([NH2]-A),$([OH]-*);!+;!-]   abolmaali.smarts_30
+a1a[$([NH2]-a),NQ1H3,NQ2H2,NQ3H1,NQ2H1,nQ1H3,nQ2H2,nQ3H1,   abolmaali.smarts_31
+a12aaaaa1aa[$([NH2]-a),NQ1H3,NQ2H2,NQ3H1,NQ2H1,nQ1H3,nQ2H2,nQ3H1,nQ2H1,$(Cl-*),$(Br-*),$(I-*);!+]2   abolmaali.smarts_32
+#
+#Agrafiotis2007
+#D. K. Agrafiotis, A. C. Gibbs, F. Zhu, S. Izrailev, and E. Martin. Conformational
+#Sampling of Bioactive Molecules: A Comparative Study. J. Chem. Inf. Model.,
+#47:1067–1086, 2007
+[OH;!$([OH][C,S,P])=O)]   agrafiotis.smarts_0
+[N;!H0;!$([N;!H0]#C);!$([NH](C(F)(F)(F))S(=O)=O);!$([nH]1nnnc1);!$([nH]1nncn1);!$([nH]1ncnn1)]   agrafiotis.smarts_3
+[#7,#8,#16;-0,-1;!$([o,s,nX3]);!$([Nv5,Pv4,Pv5,Sv4,Sv6])]   agrafiotis.smarts_4
+[+;!$([+]~[-])]   agrafiotis.smarts_5
+[-;!$([-]~[+])]   agrafiotis.smarts_6
+#
+#Bajorath2010
+#Hany E. A. Ahmed, Martin Vogt, and Ju¨rgen Bajorath, Design and Evaluation of Bonded Atom Pair Descriptors
+#J.Chem.Inf.Model, asap 31.Dec.2009
+[#7]:[#16$(a1aaaaa1)]   bajorath.smarts_1
+[#16]:[#16$(a1aaaa1)]   bajorath.smarts_16
+[#6]:[#6$(a1aaaa1)]   bajorath.smarts_18
+[#16]:[#16$(a1aaaaa1)]   bajorath.smarts_19
+[#6]:[#6$(a1aaaaa1)]   bajorath.smarts_21
+[#16]:[#15$(a1aaaa1)]   bajorath.smarts_31
+[#16]:[#15$(a1aaaaa1)]   bajorath.smarts_34
+[#6]:[#7$(a1aaaa1)]   bajorath.smarts_39
+[#6]:[#7$(a1aaaaa1)]   bajorath.smarts_42
+[#15]:[#15$(a1aaaa1)]   bajorath.smarts_49
+[#15]:[#15$(a1aaaaa1)]   bajorath.smarts_52
+[#6]:[#8$(a1aaaa1)]   bajorath.smarts_54
+[#6]:[#8$(a1aaaaa1)]   bajorath.smarts_57
+[#6]:[#16$(a1aaaa1)]   bajorath.smarts_69
+[#6]:[#16$(a1aaaaa1)]   bajorath.smarts_72
+[#6]:[#15$(a1aaaa1)]   bajorath.smarts_84
+[#6]:[#15$(a1aaaaa1)]   bajorath.smarts_87
+[#7]:[#8$(a1aaaa1)]   bajorath.smarts_102
+[#7]:[#8$(a1aaaaa1)]   bajorath.smarts_105
+C!@[C$(C@*)]   bajorath.smarts_109
+C!@[N$(N@*)]   bajorath.smarts_112
+N!@[C$(C@*)]   bajorath.smarts_115
+N!@[N$(N@*)]   bajorath.smarts_118
+O!@[C$(C@*)]   bajorath.smarts_121
+C!@[N$(C@*)]   bajorath.smarts_124
+C!@[N$(O@*)]   bajorath.smarts_126
+C!@[N$(S@*)]   bajorath.smarts_128
+[#7]:[#7$(a1aaaa1)]   bajorath.smarts_137
+[#7]:[#7$(a1aaaaa1)]   bajorath.smarts_139
+[#7]:[#15$(a1aaaa1)]   bajorath.smarts_147
+#
+#Dissertation J�rg Degen 2009
+#http://ediss.sub.uni-hamburg.de/volltexte/2009/4106/pdf/dissertation_JoergDegen.pdf
+#SMARTS here as exclusion filters
+[C;!D4;!D1;!R;!$(C=[C,O,S,N]);$(C([#6;R])!=[#6;!D1]~[!D1]);!$(C[O,S,N;!R])]-;!@[C;D3;R;$([C]@[N,n,S,s,O,o])]   Brics.smarts_4
+[C;!D4;!D1;!R;!$(C=[C,O,S,N]);$(C([#6;R])!=[#6;!D1]~[!D1]);!$(C[O,S,N;!R])]-;!@[c;X3;R;$([c]@[N,n,S,s,O,o])]   Brics.smarts_5
+[C;!D4;!D1;!R;!$(C=[C,O,S,N]);$(C([#6;R])!=[#6;!D1]~[!D1]);!$(C[O,S,N;!R])]-;!@[C;D3;R;!$([C]@[N,n,S,s,O,o])]   Brics.smarts_6
+[C;!D4;!D1;!R;!$(C=[C,O,S,N]);$(C([#6;R])!=[#6;!D1]~[!D1]);!$(C[O,S,N;!R])]-;!@[c;X3;R;!$([c]@[N,n,S,s,O,o])]   Brics.smarts_7
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[C;D3;R;$([C]@[N,n,S,s,O,o])]   Brics.smarts_8
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[c;X3;R;$([c]@[N,n,S,s,O,o])]   Brics.smarts_9
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[C;D3;R;!$([C]@[N,n,S,s,O,o])]   Brics.smarts_10
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[c;X3;R;!$([c]@[N,n,S,s,O,o])]   Brics.smarts_11
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[c;X3;R;$([c]@[N,n,S,s,O,o])]   Brics.smarts_12
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[C;D3;R;!$([C]@[N,n,S,s,O,o])]   Brics.smarts_13
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[c;X3;R;!$([c]@[N,n,S,s,O,o])]   Brics.smarts_14
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[C;D3;R;!$([C]@[N,n,S,s,O,o])]   Brics.smarts_15
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[c;X3;R;!$([c]@[N,n,S,s,O,o])]   Brics.smarts_16
+[c;X3;R;!$([c]@[N,n,S,s,O,o])]-;!@[c;X3;R;!$([c]@[N,n,S,s,O,o])]   Brics.smarts_17
+[C;D3;!R;$(C(=O)([#6;R])!=[#6;!D1]~[!D1]);!$(C[O,S,N;!R])]-;!@[C;D3;R;$([C]@[N,n,S,s,O,o])]   Brics.smarts_18
+[C;D3;!R;$(C(=O)([#6;R])!=[#6;!D1]~[!D1]);!$(C[O,S,N;!R])]-;!@[c;X3;R;$([c]@[N,n,S,s,O,o])]   Brics.smarts_19
+[C;D3;!R;$(C(=O)([#6;R])!=[#6;!D1]~[!D1]);!$(C[O,S,N;!R])]-;!@[C;D3;R;!$([C]@[N,n,S,s,O,o])]   Brics.smarts_20
+[C;D3;!R;$(C(=O)([#6;R])!=[#6;!D1]~[!D1]);!$(C[O,S,N;!R])]-;!@[c;X3;R;!$([c]@[N,n,S,s,O,o])]   Brics.smarts_21
+[#6;!D1;!$([#6]-;!@[#6]=;!@[C,O,S;!@]);$([#6][!H;!D1]!=[!H;!D1])]=;!@[#6;!D1;!$([#6]-;!@[#6]=;!@[C,O,S;!@]);$([#6][!H;!D1]!=[!H;!D1])]   Brics.smarts_22
+[C;!D4;!D1;!R;!$(C(=O));$(C([O;D2])[#6;!D1]~[!D1])]-;!@[O;D2;$(O([C;!D1;!R])[#6;!D1][!D1]);!$(OCO);!$(OC=*);!$(O[P,S])]   Brics.smarts_23
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[O;D2;$(O([#6;!D1;R])[#6;!D1;R][!D1]);!$(OCO);!$(OC=;!@*);!$(O[P,S])]   Brics.smarts_24
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[O;D2;$(O([#6;!D1;R])[#6;!D1;R][!D1]);!$(OCO);!$(OC=;!@*);!$(O[P,S])]   Brics.smarts_25
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[O;D2;$(O([#6;!D1;R])[#6;!D1;R][!D1]);!$(OCO);!$(OC=;!@*);!$(O[P,S])]   Brics.smarts_26
+[c;X3;R;!$([c]@[N,n,S,s,O,o])]-;!@[O;D2;$(O([#6;!D1;R])[#6;!D1;R][!D1]);!$(OCO);!$(OC=;!@*);!$(O[P,S])]   Brics.smarts_27
+[C;!D4;!D1;!R;$(C(=O));$(C([O;D2])[#6;!D1]!=[!D1])]-;!@[O;D2;$(O(C(=O))[#6;!D1][#6;!D1]);!$(OCO);!$(O[P,S])]   Brics.smarts_28
+[P,S]-;!@[O;D2;$(O([P,S])[#6;!D1][!D1]);!$(OCO);!$(OC=*)]   Brics.smarts_29
+[C;!D4;!D1;!R;$(C(=O));$(C([N;!D1])[!S;!D1][!D1])]-;!@[N;!D1;!$(N(C=O)(C=O));$(N(C(=O))[!S;!D1][!D1])]   Brics.smarts_30
+[S;X4;$(S(=O)(=O))]-;!@[#7;X3;!D1;$([#7](S(=O)(=O))[#6;!D1][!D1]);!$([#7]C(=O))]   Brics.smarts_31
+[C;!D4;!D1;!R;$(C(=O));$(C([n])[!S;!D1][!D1])]-;!@[n;!$(n@[#6](=O))]   Brics.smarts_32
+[C;!D4;!D1;!R;!$(C(=O));$(C([N;X3;!D1])[#6;!D1][!D1])]-;!@[N;X3;!D1;!$(NC=;!@[N,O,S]);$(N([C;!D1;!R])[#6;!D1]!=[!D1])]   Brics.smarts_33
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[N;X3;!D1;!$(NC=;!@[N,O,S]);$(N([#6;!D1;R])[#6;!D1;R]!=,@[!D1])]   Brics.smarts_34
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[N;X3;!D1;!$(NC=;!@[N,O,S]);$(N([#6;!D1;R])[#6;!D1;R]!=,@[!D1])]   Brics.smarts_35
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[N;X3;!D1;!$(NC=;!@[N,O,S]);$(N([#6;!D1;R])[#6;!D1;R]!=,@[!D1])]   Brics.smarts_36
+[c;X3;R;!$([c]@[N,n,S,s,O,o])]-;!@[N;X3;!D1;!$(NC=;!@[N,O,S]);$(N([#6;!D1;R])[#6;!D1;R]!=,@[!D1])]   Brics.smarts_37
+[C;!D4;!D1;!R;!$(C=[C,O,S,N]);!$(C[O,S,N;!R]);$(C([n])!=[#6;!D1]~[!D1])]-;!@[n;!$(n@[#6](=O))]   Brics.smarts_38
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[n;!$(n@[#6](=O))]   Brics.smarts_39
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[n;!$(n@[#6](=O))]   Brics.smarts_40
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[n;!$(n@[#6](=O))]   Brics.smarts_41
+[c;X3;R;!$([c]@[N,n,S,s,O,o])]-;!@[n;!$(n@[#6](=O))]   Brics.smarts_42
+[C;!D4;!D1;!R;!$(C=[C,O,S,N]);!$(C[O,S,N;!R]);$(C([#7;R;D3])!=[#6;!D1]~[!D1])]-;!@[#7;R;D3;$([#7]@[#6](=O))]   Brics.smarts_43
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[#7;R;D3;$([#7]@[#6](=O))]   Brics.smarts_44
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[#7;R;D3;$([#7]@[#6](=O))]   Brics.smarts_45
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[#7;R;D3;$([#7]@[#6](=O))]   Brics.smarts_46
+[c;X3;R;!$([c]@[N,n,S,s,O,o])]-;!@[#7;R;D3;$([#7]@[#6](=O))]   Brics.smarts_47
+[C;!D4;!D1;!R;$(C(=O));$(C([#7;R;D3])[!S;!D1][!D1])]-;!@[#7;R;D3;$([#7]@[#6](=O))]   Brics.smarts_48
+[C;!D4;!D1;!R;!$(C(=S));$(C([S;D2])[#6;!D1]~[!D1])]-;!@[S;D2;$(S([C;!D1;!R])[#6;!D1][!D1]);!$(SCS);!$(SC=*);!$(S[P,S])]   Brics.smarts_49
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[S;D2;$(S([#6;!D1;R])[#6;!D1;R][!D1]);!$(SCS);!$(SC=;!@*);!$(S[P,S])]   Brics.smarts_50
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[S;D2;$(S([#6;!D1;R])[#6;!D1;R][!D1]);!$(SCS);!$(SC=;!@*);!$(S[P,S])]   Brics.smarts_51
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[S;D2;$(S([#6;!D1;R])[#6;!D1;R][!D1]);!$(SCS);!$(SC=;!@*);!$(S[P,S])]   Brics.smarts_52
+[c;X3;R;!$([c]@[N,n,S,s,O,o])]-;!@[S;D2;$(S([#6;!D1;R])[#6;!D1;R][!D1]);!$(SCS);!$(SC=;!@*);!$(S[P,S])]   Brics.smarts_53
+[C;!D4;!D1;!R;$(C(S=O)[#6;!D1][!D1])]-;!@[S;$(S(=O)([C;!D1;!R])[#6;!D1][!D1])]   Brics.smarts_54
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[S;$(S(=O)([#6;!D1;R])[#6;!D1;R][!D1])]   Brics.smarts_55
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[S;$(S(=O)([#6;!D1;R])[#6;!D1;R][!D1])]   Brics.smarts_56
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[S;$(S(=O)([#6;!D1;R])[#6;!D1;R][!D1])]   Brics.smarts_57
+[c;X3;R;!$([c]@[N,n,S,s,O,o])]-;!@[S;$(S(=O)([#6;!D1;R])[#6;!D1;R][!D1])]   Brics.smarts_58
+[C;!D4;!D1;!R;$(C(=O));$(C([N;!D1])[!N;!D1][!D1])]-;!@[N;!D1;!$(N(C=O)(C=O));$(N(C(=O))[!N;!D1][!D1])]   Brics.smarts_59
+[C;!D4;!D1;!R;$(C(=O));$(C([n])[!N;!D1][!D1])]-;!@[n;!$(n@[#6](=O));!$((C=O)(n)([#7]))]   Brics.smarts_60
+[C;!D4;!D1;!R;$(C(=O));$(C([O;D2])[#6;!D1]!=[!D1])]-;!@[O;D2;$(O(C(=O))[#6;!D1][#6;!D1]);!$(OCO);!$(O[P,S])]   Brics.smarts_61
+[C;!D4;!D1;!R;!$(C(=O));$(C([N;X3;!D1])[#6;!D1][!D1])]-;!@[N;X3;!D1;!$(NC=;!@[N,O,S]);$(N([C;!D1;!R])[#6;!D1]!=[!D1])]   Brics.smarts_62
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[N;X3;!D1;!$(NC=;!@[N,O,S]);$(N([#6;!D1])[#6;!D1;R]!=,@[!D1])]   Brics.smarts_63
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[N;X3;!D1;!$(NC=;!@[N,O,S]);$(N([#6;!D1])[#6;!D1;R]!=,@[!D1])]   Brics.smarts_64
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[N;X3;!D1;!$(NC=;!@[N,O,S]);$(N([#6;!D1])[#6;!D1;R]!=,@[!D1])]   Brics.smarts_65
+[c;X3;R;!$([c]@[N,n,S,s,O,o])]-;!@[N;X3;!D1;!$(NC=;!@[N,O,S]);$(N([#6;!D1])[#6;!D1;R]!=,@[!D1])]   Brics.smarts_66
+[N;!D1;!$(N(C=O)(C=O));$(N(C(=O))[!D1][!D1])]-;!@[C;!D4;!D1;!R;$(C(=O));$(C([N;!D1])[N;!D1][!D1])]   Brics.smarts_67
+[C;!D4;!D1;!R;!$(C(=O));$(C([O;D2])[#6;!D1]~[!D1])]-;!@[O;D2;$(O([C;!D1;!R])[#6;!D1][!D1]);!$(OCO);!$(OC=*);!$(O[P,S])]   Brics.smarts_68
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[O;D2;$(O([#6;!D1;R])[#6;!D1][!D1]);!$(OCO);!$(OC=;!@*);!$(O[P,S])]   Brics.smarts_69
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[O;D2;$(O([#6;!D1;R])[#6;!D1][!D1]);!$(OCO);!$(OC=;!@*);!$(O[P,S])]   Brics.smarts_70
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[O;D2;$(O([#6;!D1;R])[#6;!D1][!D1]);!$(OCO);!$(OC=;!@*);!$(O[P,S])]   Brics.smarts_71
+[c;X3;R;!$([c]@[N,n,S,s,O,o])]-;!@[O;D2;$(O([#6;!D1;R])[#6;!D1][!D1]);!$(OCO);!$(OC=;!@*);!$(O[P,S])]   Brics.smarts_72
+[#6;!D1;!$([#6]-;!@[#6]=;!@[C,O,S;!@]);$([#6][!H;!D1]!=[!H;!D1])]=;!@[#6;!D1;!$([#6]-;!@[#6]=;!@[C,O,S;!@]);$([#6][!H;!D1]!=[!H;!D1])]   Brics.smarts_73
+[N;X4]-;!@[C;!D4;!D1;!R;!$(C(=O));$(C([N;X4;!D1])[#6;!D1][!D1])]   Brics.smarts_74
+[N;X4]-;!@[C;D3;R;$([C]@[N,n,S,s,O,o])]   Brics.smarts_75
+[N;X4]-;!@[c;X3;R;$([c]@[N,n,S,s,O,o])]   Brics.smarts_76
+[N;X4]-;!@[C;D3;R;!$([C]@[N,n,S,s,O,o])]   Brics.smarts_77
+[N;X4]-;!@[c;X3;R;!$([c]@[N,n,S,s,O,o])]   Brics.smarts_78
+[C;!D4;!D1;!R;!$(C=[C,O,S,N]);!$(C[O,S,N;!R]);$(C([n])!=[#6;!D1]~[!D1])]-;!@[n;!$(n@[#6](=O))]   Brics.smarts_79
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[n;!$(n@[#6](=O))]   Brics.smarts_80
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[n;!$(n@[#6](=O))]   Brics.smarts_81
+[C;!D4;!D1;!R;!$(C=[C,O,S,N]);!$(C[O,S,N;!R]);$(C([#7;R;D3])!=[#6;!D1]~[!D1])]-;!@[#7;R;D3;$([#7]@[#6](=O))]   Brics.smarts_82
+[C;D3;R;$([C]@[N,n,S,s,O,o])]-;!@[#7;R;D3;$([#7]@[#6](=O))]   Brics.smarts_83
+[C;D3;R;!$([C]@[N,n,S,s,O,o])]-;!@[#7;R;D3;$([#7]@[#6](=O))]   Brics.smarts_84
+[C;!D4;!D1;!R;$(C(=O));$(C([#7;R;D3])[!S;!D1][!D1])]-;!@[#7;R;D3;$([#7]@[#6](=O))]   Brics.smarts_85
+[c;X3;R;$([c]@[N,n,S,s,O,o])]-;!@[c;X3;R;!$([c]@[N,n,S,s,O,o])]   Brics.smarts_86
+[c;X3;R;!$([c]@[N,n,S,s,O,o])]-;!@[c;X3;R;!$([c]@[N,n,S,s,O,o])]   Brics.smarts_87
+[S;X4;$(S(=O)(=O))]-;!@[#7;X3;!D1;$([#7](S(=O)(=O))[#6;!D1][!D1]);!$([#7]C(=O))]   Brics.smarts_88
+[CD1H2,CD2H1,CD3H0;!$(C=,#*)]   Brics.smarts_120
+#
+#Daylight examples
+#Daylight SMARTS examples. http://www.daylight.com/dayhtml_tutorials/ languages/
+#smarts/smarts_examples.html, 09 2009.
+[$([CX2](=C)=C)]   daylight_examples.smarts_1
+[$([CX3]=[CX3])]   daylight_examples.smarts_2
+[$([CX2]#C)]   daylight_examples.smarts_3
+[$([CX3]=[OX1]),$([CX3+]-[OX1-])]   daylight_examples.smarts_5
+[NX3;H2,H1;!$(NC=O)]   daylight_examples.smarts_36
+[NX3;H2;!$(NC=[!#6]);!$(NC#[!#6])][#6]   daylight_examples.smarts_38
+[NX3;H2,H1;!$(NC=O)].[NX3;H2,H1;!$(NC=O)]   daylight_examples.smarts_39
+[NX3][$(C=C),$(cc)]   daylight_examples.smarts_40
+[$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([*])[CX3](=[OX1])[OX2H,OX1-,N]   daylight_examples.smarts_43
+[$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][CX3](=[OX1])[OX2H,OX1-,N])]   daylight_examples.smarts_51
+[CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1   daylight_examples.smarts_52
+[$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N]   daylight_examples.smarts_58
+[CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1   daylight_examples.smarts_72
+[$(*-[NX2-]-[NX2+]#[NX1]),$(*-[NX2]=[NX2+]=[NX1-])]   daylight_examples.smarts_84
+[$([NX1-]=[NX2+]=[NX1-]),$([NX1]#[NX2+]-[NX1-2])]   daylight_examples.smarts_85
+[$([NX2]=[NX3+]([O-])[#6]),$([NX2]=[NX3+0](=[O])[#6])]   daylight_examples.smarts_89
+[$([#6]=[N+]=[N-]),$([#6-]-[N+]#[N])]   daylight_examples.smarts_90
+[$([nr5]:[nr5,or5,sr5]),$([nr5]:[cr5]:[nr5,or5,sr5])]   daylight_examples.smarts_91
+[CX3;$([C]([#6])[#6]),$([CH][#6])]=[NX2][#6]   daylight_examples.smarts_94
+[$([CX3]([#6])[#6]),$([CX3H][#6])]=[$([NX2][#6]),$([NX2H])]   daylight_examples.smarts_95
+[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]   daylight_examples.smarts_100
+[$([OX1]=[NX3](=[OX1])[OX1-]),$([OX1]=[NX3+]([OX1-])[OX1-])]   daylight_examples.smarts_101
+[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]   daylight_examples.smarts_104
+[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8].[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]   daylight_examples.smarts_105
+[$([#7+][OX1-]),$([#7v5]=[OX1]);!$([#7](~[O])~[O]);!$([#7]=[#7])]   daylight_examples.smarts_107
+[OX2H][$(C=C),$(cc)]   daylight_examples.smarts_114
+[$([OH]-*=[!#6])]   daylight_examples.smarts_115
+[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]   daylight_examples.smarts_117
+[$(P(=[OX1])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)]),$([P+]([OX1-])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)])]   daylight_examples.smarts_118
+[$([#16X3](=[OX1])[OX2H0]),$([#16X3+]([OX1-])[OX2H0])]   daylight_examples.smarts_130
+[$([#16X3](=[OX1])[OX2H,OX1H0-]),$([#16X3+]([OX1-])[OX2H,OX1H0-])]   daylight_examples.smarts_131
+[$([#16X4](=[OX1])=[OX1]),$([#16X4+2]([OX1-])[OX1-])]   daylight_examples.smarts_132
+[$([#16X4](=[OX1])(=[OX1])([#6])[#6]),$([#16X4+2]([OX1-])([OX1-])([#6])[#6])]   daylight_examples.smarts_133
+[$([#16X4](=[OX1])(=[OX1])([#6])[OX2H,OX1H0-]),$([#16X4+2]([OX1-])([OX1-])([#6])[OX2H,OX1H0-])]   daylight_examples.smarts_134
+[$([#16X4](=[OX1])(=[OX1])([#6])[OX2H0]),$([#16X4+2]([OX1-])([OX1-])([#6])[OX2H0])]   daylight_examples.smarts_135
+[$([#16X4]([NX3])(=[OX1])(=[OX1])[#6]),$([#16X4+2]([NX3])([OX1-])([OX1-])[#6])]   daylight_examples.smarts_136
+[$([SX4](=[OX1])(=[OX1])([!O])[NX3]),$([SX4+2]([OX1-])([OX1-])([!O])[NX3])]   daylight_examples.smarts_138
+[$([#16X3]=[OX1]),$([#16X3+][OX1-])]   daylight_examples.smarts_139
+[$([#16X3](=[OX1])([#6])[#6]),$([#16X3+]([OX1-])([#6])[#6])]   daylight_examples.smarts_140
+[$([#16X4](=[OX1])(=[OX1])([OX2H,OX1H0-])[OX2][#6]),$([#16X4+2]([OX1-])([OX1-])([OX2H,OX1H0-])[OX2][#6])]   daylight_examples.smarts_141
+[$([SX4](=O)(=O)(O)O),$([SX4+2]([O-])([O-])(O)O)]   daylight_examples.smarts_142
+[$([#16X4](=[OX1])(=[OX1])([OX2][#6])[OX2][#6]),$([#16X4](=[OX1])(=[OX1])([OX2][#6])[OX2][#6])]   daylight_examples.smarts_143
+[$([#16X4]([NX3])(=[OX1])(=[OX1])[OX2][#6]),$([#16X4+2]([NX3])([OX1-])([OX1-])[OX2][#6])]   daylight_examples.smarts_144
+[$([#16X4]([NX3])(=[OX1])(=[OX1])[OX2H,OX1H0-]),$([#16X4+2]([NX3])([OX1-])([OX1-])[OX2H,OX1H0-])]   daylight_examples.smarts_145
+[$([#6X4@](*)(*)(*)*),$([#6X4@H](*)(*)*)]   daylight_examples.smarts_152
+[$([cX2+](:*):*)]   daylight_examples.smarts_155
+[$([cX3](:*):*),$([cX2+](:*):*)]   daylight_examples.smarts_156
+[$([cX3](:*):*),$([cX2+](:*):*),$([CX3]=*),$([CX2+]=*)]   daylight_examples.smarts_157
+[$([nX3](:*):*),$([nX2](:*):*),$([#7X2]=*),$([NX3](=*)=*),$([#7X3+](-*)=*),$([#7X3+H]=*)]   daylight_examples.smarts_158
+[$([NX4+]),$([NX3]);!$(*=*)&!$(*:*)]   daylight_examples.smarts_160
+[$([$([NX3]=O),$([NX3+][O-])])]   daylight_examples.smarts_162
+[$([$([NX4]=O),$([NX4+][O-])])]   daylight_examples.smarts_163
+[$([$([NX4]=O),$([NX4+][O-,#0])])]   daylight_examples.smarts_164
+[$([NX4+]),$([NX4]=*)]   daylight_examples.smarts_165
+[$([SX3]=N)]   daylight_examples.smarts_166
+[$([SX1]=[#6])]   daylight_examples.smarts_167
+[$([NX1]#*)]   daylight_examples.smarts_168
+[$([OX2])]   daylight_examples.smarts_169
+[!$([#6+0]);!$(C(F)(F)F);!$(c(:[!c]):[!c])!$([#6]=,#[!#6])]   daylight_examples.smarts_173
+[$([#6+0]);!$(C(F)(F)F);!$(c(:[!c]):[!c])!$([#6]=,#[!#6])]   daylight_examples.smarts_174
+[$([SX1]~P)]   daylight_examples.smarts_175
+[$([NX3]C=N)]   daylight_examples.smarts_176
+[$([NX3]N=C)]   daylight_examples.smarts_177
+[$([NX3]N=N)]   daylight_examples.smarts_178
+[$([OX2]C=N)]   daylight_examples.smarts_179
+[!$(*#*)&!D1]-!@[!$(*#*)&!D1]   daylight_examples.smarts_180
+[$([*R2]([*R])([*R])([*R]))].[$([*R2]([*R])([*R])([*R]))]   daylight_examples.smarts_181
+[$([nX2r5]:[a-]),$([nX2r5]:[a]:[a-])]   daylight_examples.smarts_194
+[$([$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([*])[CX3](=[OX1])[OX2H,OX1-,N])]   daylight_examples.smarts_201
+[$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N]   daylight_examples.smarts_202
+[$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][CX3](=[OX1])[OX2H,OX1-,N])]   daylight_examples.smarts_203
+[$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([*])[CX3](=[OX1])[OX2H,OX1-,N]   daylight_examples.smarts_204
+[$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([CH3X4])[CX3](=[OX1])[OX2H,OX1-,N]([$([CH3X4]),$([CH2X4][CH2X4][CH2X4][NHX3][CH0X3](=[NH2X3+,NHX2+0])[NH2X3]),$([CH2X4][CX3](=[OX1])[NX3H2]),$([CH2X4][CX3](=[OX1])[OH0-,OH]),$([CH2X4][SX2H,SX1H0-]),$([CH2X4][CH2X4][CX3](=[OX1])[OH0-,OH]),$([CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1),$([CHX4]([CH3X4])[CH2X4][CH3X4]),$([CH2X4][CHX4]([CH3X4])[CH3X4]),$([CH2X4][CH2X4][CH2X4][CH2X4][NX4+,NX3+0]),$([CH2X4][CH2X4][SX2][CH3X4]),$([CH2X4][cX3]1[cX3H][cX3H][cX3H][cX3H][cX3H]1),$([CH2X4][OX2H]),$([CHX4]([CH3X4])[OX2H]),$([CH2X4][cX3]1[cX3H][nX3H][cX3]2[cX3H][cX3H][cX3H][cX3H][cX3]12),$([CH2X4][cX3]1[cX3H][cX3H][cX3]([OHX2,OH0X1-])[cX3H][cX3H]1),$([CHX4]([CH3X4])[CH3X4])])   daylight_examples.smarts_206
+[$([$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([$([CH3X4]),$([CH2X4][CH2X4][CH2X4][NHX3][CH0X3](=[NH2X3+,NHX2+0])[NH2X3]),$([CH2X4][CX3](=[OX1])[NX3H2]),$([CH2X4][CX3](=[OX1])[OH0-,OH]),$([CH2X4][SX2H,SX1H0-]),$([CH2X4][CH2X4][CX3](=[OX1])[OH0-,OH]),$([CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1),$([CHX4]([CH3X4])[CH2X4][CH3X4]),$([CH2X4][CHX4]([CH3X4])[CH3X4]),$([CH2X4][CH2X4][CH2X4][CH2X4][NX4+,NX3+0]),$([CH2X4][CH2X4][SX2][CH3X4]),$([CH2X4][cX3]1[cX3H][cX3H][cX3H][cX3H][cX3H]1),$([CH2X4][OX2H]),$([CHX4]([CH3X4])[OX2H]),$([CH2X4][cX3]1[cX3H][nX3H][cX3]2[cX3H][cX3H][cX3H][cX3H][cX3]12),$([CH2X4][cX3]1[cX3H][cX3H][cX3]([OHX2,OH0X1-])[cX3H][cX3H]1),$([CHX4]([CH3X4])[CH3X4])])[CX3](=[OX1])[OX2H,OX1-,N])]   daylight_examples.smarts_207
+[$([NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]);!$([$([$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([$([CH3X4]),$([CH2X4][CH2X4][CH2X4][NHX3][CH0X3](=[NH2X3+,NHX2+0])[NH2X3]),$([CH2X4][CX3](=[OX1])[NX3H2]),$([CH2X4][CX3](=[OX1])[OH0-,OH]),$([CH2X4][SX2H,SX1H0-]),$([CH2X4][CH2X4][CX3](=[OX1])[OH0-,OH]),$([CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1),$([CHX4]([CH3X4])[CH2X4][CH3X4]),$([CH2X4][CHX4]([CH3X4])[CH3X4]),$([CH2X4][CH2X4][CH2X4][CH2X4][NX4+,NX3+0]),$([CH2X4][CH2X4][SX2][CH3X4]),$([CH2X4][cX3]1[cX3H][cX3H][cX3H][cX3H][cX3H]1),$([CH2X4][OX2H]),$([CHX4]([CH3X4])[OX2H]),$([CH2X4][cX3]1[cX3H][nX3H][cX3]2[cX3H][cX3H][cX3H][cX3H][cX3]12),$([CH2X4][cX3]1[cX3H][cX3H][cX3]([OHX2,OH0X1-])[cX3H][cX3H]1),$([CHX4]([CH3X4])[CH3X4])])[CX3](=[OX1])[OX2H,OX1-,N])])]   daylight_examples.smarts_208
+[$(*-[NX2-]-[NX2+]#[NX1]),$(*-[NX2]=[NX2+]=[NX1-])]   daylight_examples.smarts_209
+[$([NX1-]=[NX2+]=[NX1-]),$([NX1]#[NX2+]-[NX1-2])]   daylight_examples.smarts_210
+[$([$(*-[NX2-]-[NX2+]#[NX1]),$(*-[NX2]=[NX2+]=[NX1-])]),$([$([NX1-]=[NX2+]=[NX1-]),$([NX1]#[NX2+]-[NX1-2])])]   daylight_examples.smarts_211
+[$([CX3]=[OX1])]   daylight_examples.smarts_212
+[$([OX1]=[CX3])]   daylight_examples.smarts_213
+([Cl!$(Cl~c)].[c!$(c~Cl)])   daylight_examples.smarts_221
+[NX3;H2,H1;!$(NC=O)].[NX3;H2,H1;!$(NC=O)]   daylight_examples.smarts_224
+[!H0;F,Cl,Br,I,N+,$([OH]-*=[!#6]),+]   daylight_examples.smarts_231
+[$([OH]-*=[!#6])]   daylight_examples.smarts_234
+[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]   daylight_examples.smarts_235
+[$([#16X4](=[OX1])(=[OX1])([#6])[OX2H,OX1H0-]),$([#16X4+2]([OX1-])([OX1-])([#6])[OX2H,OX1H0-])]   daylight_examples.smarts_236
+[$([cX2+](:*):*)]   daylight_examples.smarts_242
+[$([NX1-]=[NX2+]=[NX1-]),$([NX1]#[NX2+]-[NX1-2])]   daylight_examples.smarts_243
+[$([!-0!-1!-2!-3!-4]~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~*~*~*~[!+0!+1!+2!+3!+4])]   daylight_examples.smarts_245
+[!$([#6,F,Cl,Br,I,o,s,nX3,#7v5,#15v5,#16v4,#16v6,*+1,*+2,*+3])]   daylight_examples.smarts_248
+[!$([#6,H0,-,-2,-3])]   daylight_examples.smarts_249
+[O,N;!H0]-*~*-*=[$([C,N;R0]=O)]   daylight_examples.smarts_251
+A[#6;!$(C(F)(F)F)]   daylight_examples.smarts_258
+[$(c:cCl),$(c:c:cCl),$(c:c:c:cCl)]-[$(c:cCl),$(c:c:cCl),$(c:c:c:cCl)]   daylight_examples.smarts_259
+[c;$([*Cl]),$([*H1])]1ccc(O)c(C)c1   daylight_examples.smarts_261
+Cc1:c(O):c:c:[$(cCl),$([cH])]:c1   daylight_examples.smarts_262
+#
+#Enoch2008
+#S. J. Enoch, J. C. Madden, and M. T. D. Cronin. Identification of mechanisms
+#of toxic action for skin sensitisation using a SMARTS pattern based approach.
+#SAR QSAR Environ Res, 19:555–578, 2008
+c1([F,Cl,Br,I,$(N(=O)~O)])c([F,Cl,Br,I,$(N(=O)~O),$(C#N),$(C=O),$(C(F)(F)F),$(S=O)])cc([F,Cl,Br,I,$(N(=O)~O),$(C#N),$(C=O),$(C(F)(F)F),$(S=O)])cc1   enoch.smarts_0
+c1([F,Cl,Br,I,$(N(=O)~O)])c([F,Cl,Br,I,$(N(=O)~O),$(C#N),$(C=O),$(C(F)(F)F),$(S=O)])cccc1([F,Cl,Br,I,$(N(=O)~O),$(C#N),$(C=O),$(C(F)(F)F),$(S=O)])   enoch.smarts_1
+c1([F,Cl,Br,I,$(N(=O)~O)])ncc([F,Cl,Br,I,$(N(=O)~O),$(C#N),$(C=O),$(C(F)(F)F),$(S=O)])cc1   enoch.smarts_2
+c1([F,Cl,Br,I,$(N(=O)~O)])ncccc1([F,Cl,Br,I,$(N(=O)~O),$(C#N),$(C=O),$(C(F)(F)F),$(S=O)])   enoch.smarts_3
+c1([F,Cl,Br,I,$(N(=O)~O)])ncccn1   enoch.smarts_4
+c1([F,Cl,Br,I,$(N(=O)~O)])ncncc1   enoch.smarts_5
+c1([F,Cl,Br,I,$(N(=O)~O)])ncc([F,Cl,Br,I,$(N(=O)~O),$(C#N),$(C=O),$(C(F)(F)F),$(S=O)])nc1   enoch.smarts_6
+c1nc([F,Cl,Br,I,$(N(=O)~O)])ncn1   enoch.smarts_7
+[#6][$([NX2]=O),$(N=C=O),$(OC#N),$(SC#N),$(N=C=S)]   enoch.smarts_15
+[CH2,CH]=[CH][$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_20
+[CH2]=C[$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_21
+aC=C[$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_22
+C#C[$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_23
+[CH2,CH]=[CH]C=C[$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_24
+[CHR]=[CR][$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_25
+C1=[C,N][$(S(=O)(=O)),$(C=[N,O]),$(S=O)][C,N]=C1c2ccccc2   enoch.smarts_29
+c1c([OH,NH2,NH])c([OH,NH2,NH,$(N=N),$(N(C)C)])ccc1   enoch.smarts_31
+c1c([OH,NH2,NH])ccc([OH,NH2,NH,$(N=N),$(N(C)C)])c1   enoch.smarts_32
+c1c([OH,NH2,NH])cc([OH,NH2,NH,$(N(C)C)])cc1   enoch.smarts_36
+C([F,Cl,Br,I])[CH2,CH][$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_37
+[$([CH]=[CH2,CH]),$(C(C)=[CH2,CH]),$(C#C);!$(C(C)=CC)][CH2][OH]   enoch.smarts_38
+F[CH2,CH]C(F)[$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_42
+Cl[CH2,CH]C(Cl)[$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_43
+Br[CH2,CH]C(Br)[$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_44
+I[CH2,CH]C(I)[$(N(=O)~O),$(C=O),$(C#N),$(S=O),$(C(=O)N),$(a)]   enoch.smarts_45
+[$(C=C),$(C#C),a][CH2,CH][O,S][$([CH]=O),$([CH]=S),$(C(C)=O),$(C(C)=S),[a]]   enoch.smarts_49
+[#6][O,SX2,N][O,SX2,N][$([CH]=O),$([CH]=S),$(C(C)=O),$(C(C)=S),[a]]   enoch.smarts_51
+[!$(C=C);!$(C#C)]C(=[O,SX1,N])[F,Cl,Br,I]   enoch.smarts_55
+[!$(C=C);!$(C#C)]C(=[O,SX1,N])[O,S,N][a]   enoch.smarts_56
+[!$(C=C);!$(C#C)]C(=[O,SX1,N])[O,S,N]C(=[O,SX1,N])   enoch.smarts_57
+[!$(C=C);!$(C#C)]C(=[O,S,N])[O,S][$(C=C),$(C=N),$(C#C),$(C#N)]   enoch.smarts_58
+[!$(C=C);!$(C#C)]C(=[O,SX1,N])[O,S,N][CX4,O,S][$(C=O),a,$(C=C),$(C#C),$(C=N),$(C#N)]   enoch.smarts_63
+#
+# Hann1999
+#M. Hann, B. Hudson, X. Lewell, R. Lifely, L. Miller, and N. Ramsden. Strategic
+#Pooling of Compounds for High-Throughput-Screening. J. Chem. Inf. Comput.
+#Sci., 39(5):897–902, 1999.
+[nH0;!$(n-C);!$(n(:c)(:c):a)]1ccccc1   hann.smarts_94
+[$(NH2)!:c],$([NH1]([CX4])!:c),$([NH0]([CX4])([CX4])!:c)]   hann.smarts_96
+[$(P(=O)[O,S]);!$(P[OH1])]   hann.smarts_106
+[$(c1(=O)ccn([C,c])cc1),$(c1(=O)n([C,c])cccc1)]   hann.smarts_108
+[$(c(=O)(~c)~c);!$([$(c1(=O)ccn([C,c])cc1),$(c1(=O)n([C,c])cccc1)])]   hann.smarts_109
+[OH1][C,c,N;!$(C=O)]   hann.smarts_115
+[$([NH2]!:c),$([NH1]([CX4])!:c),$([NH0]([CX4])([CX4])!:c)]   hann.smarts_118
+#
+#Recore2007
+#P. Maas, T. Schulz-Gasch, M. Stahl, and M. Rarey. Recore: A Fast and Versatile
+#Method for Scaffold Hopping Based on Small Molecule Crystal Structure
+#Conformations. J. Chem. Inf. Model., 47:390–399, 2007
+[C;X4;!D4]-;!@[c;$(c[n&H0,cH,S,O])]   maas_recore.smarts_1
+[c;$(c[n&H0,cH,S,O])]-;!@[c;$(c[n&H0,cH,S,O])]   maas_recore.smarts_2
+[c;$(c([cH])([cH,n&H0,O]))][F,Cl,Br,I]   maas_recore.smarts_7
+[C;$(C(=O))]-;!@[N;!$(N(C=O)(C=O));!$(N[N,O,S])]   maas_recore.smarts_8
+[c;$(c([n&H0,cH,S,O]))]-;!@[N;X3;!$(N[N,O,S])]   maas_recore.smarts_10
+[S;X4;$(S(=O)(=O))]-;!@[N;X3;!$(N[N,O,S])]   maas_recore.smarts_11
+[c;$(c[n&H0,cH,S,O])]-;!@[n]   maas_recore.smarts_12
+[C;$(C(=O))]-;!@[n]   maas_recore.smarts_14
+[C;X4;!D4]-;!@[O;D2;$(O[C,c]);!$(OCO);!$(OC=*)]   maas_recore.smarts_15
+[P,S]-;!@[O;D2;$(O[C,c]);!$(OCO);!$(OC=*)]   maas_recore.smarts_16
+[C;$(C(=O))]-;!@[O;D2;$(O[C,c]);!$(OCO);!$(OC=*)]   maas_recore.smarts_17
+#
+#Olah2004
+#M. Olah, C. Bologa, and T. I. Oprea. An automated PLS search for biologically
+#relevant QSAR descriptors. J. Comput. Aided Mol. Des., 18:437–449, 2004
+[!$(*#*)&!D1]-!@[!$(*#*)&!D1]   olah_testset.smarts_3
+[$([#6]-!@[A!C!H]-!@[#6])]   olah_testset.smarts_12
+[$([#8X2v2]([#6])[#6])]   olah_testset.smarts_31
+#
+#Walters2002
+#W. P. Walters and A. M. Murcko. Prediction of ’drug-likeness’. Adv. Drug Deliv.
+#Rev., 54:255–271, 2002
+[N;+0,+1;$(N(=O)~[O;H0;-0,-1])]   walters.smarts_1
+#
+#Kenny, P.; Montanari, C. & Prokopczyk, I. ClogPalk: a method for predicting 
+#alkane/water partition coefficient Journal of Computer-Aided Molecular Design,
+#Springer Netherlands, 2013, 27, 389-402
+C(=N)([N;$([N;H2;X3]),$([N;H1;X3][CX4]),$([NX3]([CX4])[CX4])])[N;$([N;H2;X3]),$([N;H1;X3][CX4]),$([NX3]([CX4])[CX4])]   kenny.smarts_4
+C(=O)([N;$([N;H2;X3]),$([N;H1;X3][CX4]),$([NX3]([CX4])[CX4])])[N;$([N;H2;X3]),$([N;H1;X3][CX4]),$([NX3]([CX4])[CX4])]   kenny.smarts_5
+C(=[O,S;X1])([#6;!$([CX4])])N([CX4])[CX4]   kenny.smarts_6
+C(=[O,S;X1])([#6;!$([CX4])])O[CX4]   kenny.smarts_7
+C(=[O,S;X1])([#6;!$([CX4])])[#6;!$([CX4])]   kenny.smarts_8
+C(=[O,S;X1])([#6;!$([CX4])])[CX4]   kenny.smarts_9
+C(=[O,S;X1])([#6;!$([CX4])])[NH2]   kenny.smarts_10
+C(=[O,S;X1])([#6;!$([CX4])])[NH][CX4]   kenny.smarts_11
+C(=[O,S;X1])([CX4])N([#6;!$([CX4])])[CX4]   kenny.smarts_12
+C(=[O,S;X1])([CX4])O[#6;!$([CX4])]   kenny.smarts_14
+C(=[O,S;X1])([CX4])[NH][#6;!$([CX4])]   kenny.smarts_18
+C(=[O,S;X1])[ND3][$([C,S]=[N,O,S])]   kenny.smarts_20
+C(=[O,S;X1])[NH][$([C,S]=[N,O,S])]   kenny.smarts_21
+C(=[SX1])([N;$([N;H2;X3]),$([N;H1;X3][CX4]),$([NX3]([CX4])[CX4])])[N;$([N;H2;X3]),$([N;H1;X3][CX4]),$([NX3]([CX4])[CX4])]   kenny.smarts_22
+O=C([OH])[#6;!$([CX4])]   kenny.smarts_31
+O=[#6]*[#6]([$([O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]);!$(N1CC(=O)AC1=O)])*[#6]=O   kenny.smarts_34
+[#6;!$([CX4])]   kenny.smarts_39
+[$(C1CNCC1),$(C1CNCCC1),$(C1CCNCC1)]   kenny.smarts_40
+[$(N(=O)=O),$([N+]([O-])=O)]   kenny.smarts_41
+[$(N(=O)=O),$([N+]([O-])=O)][#6;!$([CX4])]   kenny.smarts_42
+[$(N(=O)=O),$([N+]([O-])=O)][CX4]   kenny.smarts_43
+[$([N;$([N;H2;X3][CX4]),$([N;H1;X3]([CX4])[CX4]),$([NX3]([CX4])([CX4])[CX4])]),$(O([CX4])[CX4])][CX4][CX4][N,$(O([CX4])[CX4])]   kenny.smarts_44
+[$([N;$([N;H2;X3][CX4]),$([N;H1;X3]([CX4])[CX4]),$([NX3]([CX4])([CX4])[CX4])]),O&!H][CX4][#6;!$([CX4])]   kenny.smarts_45
+[$([N;$([N;H2;X3][CX4]),$([N;H1;X3]([CX4])[CX4]),$([NX3]([CX4])([CX4])[CX4])]),O&!H][CX4][N,O]   kenny.smarts_46
+[$([CR][CX4]),$([CH])](=[O,S;X1])C=C   kenny.smarts_47
+[$([O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]);!$(N1CC(=O)AC1=O)]   kenny.smarts_48
+[$([O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]);!$(N1CC(=O)AC1=O)]-[#6]*[#6](=O)*[#6]-[$([O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]);!$(N1CC(=O)AC1=O)]   kenny.smarts_49
+[$([O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]);!$(N1CC(=O)AC1=O)]-[#6]*[#6]=O   kenny.smarts_50
+[$(n1([#6])[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1)]   kenny.smarts_51
+[$(o1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1),$(s1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1)][c;!$(c=[C,N,O,S])][n&D2]   kenny.smarts_52
+[$(o1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1),$(s1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1)][n&D2]   kenny.smarts_53
+[$([nH]1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1),$(n1([#6])[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1)][c;!$(c=[C,N,O,S])][n&D2]   kenny.smarts_54
+[$([nH]1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1),$(n1([#6])[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1)][n&D2]   kenny.smarts_55
+[CH](=[O,S;X1])[#6;!$([CX4])]   kenny.smarts_62
+[N;$([N;H2;X3]),$([N;H1;X3][CX4]),$([NX3]([CX4])[CX4])]   kenny.smarts_66
+[N;$([N;H2;X3][CX4]),$([N;H1;X3]([CX4])[CX4]),$([NX3]([CX4])([CX4])[CX4])]   kenny.smarts_67
+[N;$([N;H2;X3][CX4]),$([N;H1;X3]([CX4])[CX4]),$([NX3]([CX4])([CX4])[CX4])]-[CX4]-C=O   kenny.smarts_68
+[N;$([NX4]=O),$([N;X4;+][O-])]   kenny.smarts_69
+[O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]   kenny.smarts_81
+[O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]-[#6;!$(C=[O,S;X1])]*[#6]-C=O   kenny.smarts_82
+[O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]-[#6;!$(C=[O,S;X1])]*[#6]-[$(N(=O)=O),$([N+]([O-])=O)]   kenny.smarts_83
+[O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]-[$([CX4]);!$([$(C1CNCC1),$(C1CNCCC1),$(C1CCNCC1)])]-[CX4]-[CX4]-[N;$([N;H2;X3][CX4]),$([N;H1;X3]([CX4])[CX4]),$([NX3]([CX4])([CX4])[CX4])]   kenny.smarts_84
+[O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]-[$([CX4]);!$([$(C1CNCC1),$(C1CNCCC1),$(C1CCNCC1)])]-[CX4]-[N;$([N;H2;X3][CX4]),$([N;H1;X3]([CX4])[CX4]),$([NX3]([CX4])([CX4])[CX4])]   kenny.smarts_85
+[O&H,n&H,$([NH][C,S]=O),$([N;H,H2]c)]-c[aR3][n&D2]   kenny.smarts_86
+[O,S;X1]=c1[n&D2][c;!$(c=[C,N,O,S])][nX3][c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])]1   kenny.smarts_88
+[O,S;X1]=c1[nX3][c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])][n&D2]1   kenny.smarts_89
+[O,S;X1]=c1[nX3][c;!$(c=[C,N,O,S])][n&D2][c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])]1   kenny.smarts_90
+[c;!$(c=[C,N,O,S])]   kenny.smarts_104
+[c;!$(c=[C,N,O,S]),n&D2]   kenny.smarts_105
+[n&D2;r5][aR3][aR3][n&D2&r6,$(c=O)]   kenny.smarts_106
+[n&D2]1[c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])]([n&D2])[c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])]1   kenny.smarts_108
+[n&D2]1[c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])][n&D2][c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])]1   kenny.smarts_109
+[n&D2]1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][n&D2][$(o1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1),$([c;!$(c=[C,N,O,S])]),$(s1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1),n&X3]1   kenny.smarts_110
+[n&D2]1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]c([N;$([N;H2;X3]),$([N;H1;X3][CX4]),$([NX3]([CX4])[CX4])])[c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])]1   kenny.smarts_111
+[n&D2][$([c;!$(c=[C,N,O,S])]);R2][n&D2]   kenny.smarts_112
+[n;$([nX3]=O),$([n;+;X3][O-])]   kenny.smarts_114
+[nH]1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1   kenny.smarts_116
+c1(=[O,S;X1])([aR3])[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][nX3][c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])]1   kenny.smarts_123
+c1(=[O,S;X1])[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][nX3]cc1   kenny.smarts_124
+n1([#6])[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1   kenny.smarts_126
+n1([CX4])[c;!$(c=[C,N,O,S])][n&D2][c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])][c;!$(c=[C,N,O,S])]1[n&D2]   kenny.smarts_127
+o1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1   kenny.smarts_128
+s1[c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2][c;!$(c=[C,N,O,S]),n&D2]1   kenny.smarts_129

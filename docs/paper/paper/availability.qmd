@@ -1,0 +1,39 @@
+# Availability and Requirements
+
+- **Project name:** VeSMA
+- **Project home page:** [https://github.com/MolecularAI/VeSMA](https://github.com/MolecularAI/VeSMA)
+- **Archived version:** `ZENODO_DOI_PENDING_RELEASE`
+- **Operating systems:** Linux for CPU and CUDA; macOS for CPU and Metal; other CPU platforms may work but are not claimed by the release validation
+- **Programming language:** Python 3.14 or later; CUDA C++ and Metal Shading Language for the corresponding backends
+- **Other requirements:** NumPy and the dependencies declared in `pyproject.toml`; RDKit and RDChiral for interoperability and reference-validation extras; CuPy/CUDA 12 for NVIDIA execution; Apple Metal tooling for the Metal extension
+- **License:** MIT
+- **Restrictions for non-academic use:** none
+
+The release source includes the benchmark harness, retained raw `pytest-benchmark` JSON, paper source, Supplimentary Information (SI), and reproduction commands. Large upstream PaRoutes inputs are obtained or regenerated through documented dataset targets and retain source checksums in benchmark metadata.
+
+## Availability of data and materials
+The VeSMA source, retained benchmark records, and manuscript sources will be available at https://github.com/MolecularAI/VeSMA/ and archived under ZENODO_DOI_PENDING_RELEASE. PaRoutes data used in the evaluation are described by Genheden and Bjerrum [@genheden2022paroutes], and their provenance is recorded in the distributed benchmark metadata.
+
+## Competing interests
+
+Alexey Voronov is an employee of AstraZeneca and has stock ownership and/or stock options or interests in the company. Anna Reymer declares no competing interests.
+
+## Funding
+
+AR was supported by an Inserm Research Chair (Inserm Chaire de Recherche) through ANR grant ANR-22-CPJ1-0044-01.
+
+## Authors' contributions
+
+AV conceived the project, selected the architecture, directed and reviewed the software implementation, designed and interpreted the validation, created the figures, and drafted the manuscript. AR contributed to methodology, writing and revision. Both authors reviewed and approved the final manuscript; AV accepts responsibility for the software and computational results.
+
+## Acknowledgements
+
+The authors are grateful to the RDKit contributors and the developers of the open-source cheminformatics and retrosynthesis software on which this work builds.
+
+## Trademark notice
+
+NVIDIA and CUDA are trademarks or registered trademarks of NVIDIA Corporation. Apple, Metal, and macOS are trademarks of Apple Inc.; Apple silicon and M5 Pro are Apple product names used descriptively. AMD and AMD EPYC are trademarks of Advanced Micro Devices, Inc. Linux is a registered trademark of Linus Torvalds. Other product names are used for identification only and may be trademarks of their respective owners.
+
+## Generative AI disclosure
+
+Generative AI tools from Anthropic Claude, Google Gemini, and OpenAI ChatGPT and Codex assisted software development, literature synthesis, and manuscript revision. AV reviewed and validated the VeSMA code. Both authors reviewed the AI-assisted content and computational outputs, verified all claims and references, and take responsibility for the accuracy and integrity of the work.

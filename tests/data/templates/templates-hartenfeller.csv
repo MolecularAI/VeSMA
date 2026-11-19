@@ -1,0 +1,170 @@
+template_code,retro_template,classification
+Hartenfeller 1a,[C:11]-[CH:10]1-[NH:9]-[CH2:8]-[CH2:7]-[c:2]2:[c:3]:[c:4]:[c:5]:[c:6]:[c:1]12>>[cH:1]1:[c:6]:[c:5]:[c:4]:[c:3]:[c:2]1-[CH2:7]-[CH2:8]-[NH2:9].[C:11]-[CH:10]=O,Pictet-Spengler (Aldehyde + Primary Amine)
+Hartenfeller 1b,[C:11]-[CH:10]1-[N:9](-[C:12])-[CH2:8]-[CH2:7]-[c:2]2:[c:3]:[c:4]:[c:5]:[c:6]:[c:1]12>>[cH:1]1:[c:6]:[c:5]:[c:4]:[c:3]:[c:2]1-[CH2:7]-[CH2:8]-[NH:9](-[C:12]).[C:11]-[CH:10]=O,Pictet-Spengler (Aldehyde + Sec. Amine)
+Hartenfeller 1c,[C:11]-[C:10]1(-[C:13])-[NH:9]-[CH2:8]-[CH2:7]-[c:2]2:[c:3]:[c:4]:[c:5]:[c:6]:[c:1]12>>[cH:1]1:[c:6]:[c:5]:[c:4]:[c:3]:[c:2]1-[CH2:7]-[CH2:8]-[NH2:9].[C:11]-[C:10](-[C:13])=O,Pictet-Spengler (Ketone + Primary Amine)
+Hartenfeller 1d,[C:11]-[C:10]1(-[C:13])-[N:9](-[C:12])-[CH2:8]-[CH2:7]-[c:2]2:[c:3]:[c:4]:[c:5]:[c:6]:[c:1]12>>[cH:1]1:[c:6]:[c:5]:[c:4]:[c:3]:[c:2]1-[CH2:7]-[CH2:8]-[NH:9](-[C:12]).[C:11]-[C:10](-[C:13])=O,Pictet-Spengler (Ketone + Sec. Amine)
+Hartenfeller 1e,[CH2:10]1-[NH:9]-[CH2:8]-[CH2:7]-[c:2]2:[c:3]:[c:4]:[c:5]:[c:6]:[c:1]12>>[cH:1]1:[c:6]:[c:5]:[c:4]:[c:3]:[c:2]1-[CH2:7]-[CH2:8]-[NH2:9].[CH2:10]=O,Pictet-Spengler (Formaldehyde + Primary Amine)
+Hartenfeller 1f,[CH2:10]1-[N:9](-[C:12])-[CH2:8]-[CH2:7]-[c:2]2:[c:3]:[c:4]:[c:5]:[c:6]:[c:1]12>>[cH:1]1:[c:6]:[c:5]:[c:4]:[c:3]:[c:2]1-[CH2:7]-[CH2:8]-[NH:9](-[C:12]).[CH2:10]=O,Pictet-Spengler (Formaldehyde + Sec. Amine)
+Hartenfeller 2a,[c:1]1:[n:2](-[C:7]):[c:5](-[C:6]):[n:4]:[c:3]1>>[c:1](-[NH:2](-[C:7])):[c:3]-[NH2:4].[C:6]-[C:5](=O)[OH],Benzimidazole substituted (acid)
+Hartenfeller 2b,[c:1]1:[n:2](-[C:7]):[c:5](-[C:6]):[n:4]:[c:3]1>>[c:1](-[NH:2](-[C:7])):[c:3]-[NH2:4].[C:6]-[C:5](=O)[O][C],Benzimidazole substituted (methyl-ester)
+Hartenfeller 2c,[c:1]1:[nH:2]:[c:5](-[#6:6]):[n:4]:[c:3]1>>[c:1](-[NH2:2]):[c:3]-[NH2:4].[#6:6]-[C:5](=O)[OH],Benzimidazole unsubstituted (acid)
+Hartenfeller 2d,[c:1]1:[nH:2]:[c:5](-[#6:6]):[n:4]:[c:3]1>>[c:1](-[NH2:2]):[c:3]-[NH2:4].[#6:6]-[C:5](=O)[O][C],Benzimidazole unsubstituted (methyl-ester)
+Hartenfeller 3,[c:1]1:[n:2]:[c:5](-[#6:6]):[n:4]:[c:3]1>>[c:1](-[N:2]):[c:3]-[N:4].[#6:6]-[C:5]=O.O=O,Benzimidazole aldehyde
+Hartenfeller 4,[c:1]1:[s:2]:[c:5](-[#6:6]):[n:4]:[c:3]1>>[c:1](-[S:2]):[c:3]-[N:4].[#6:6]-[C:5]=O.O=O,Benzothiazole
+Hartenfeller 4b,[c:1]1:[s:2]:[c:5](-[#6:6]):[n:4]:[c:3]1>>[c:1](-[S:2]):[c:3]-[N:4].[#6:6]-[C:5](=O)[OH].O=O,Benzothiazole carboxylic-acid
+Hartenfeller 5,[c:1]1:[o:2]:[c:5](-[c:6]):[n:4]:[c:3]1>>[c:1](-[O:2]):[c:3]-[N:4].[c:6]-[C:5]=O.O=O,Benzoxazole arom-aldehyde
+Hartenfeller 6,[c:1]1:[o:2]:[c:5](-[#6:6]):[n:4]:[c:3]1>>[c:1](-[O:2]):[c:3]-[N:4].[#6:6]-[C:5](=O)[OH],Benzoxazole carboxylic-acid
+Hartenfeller 7a,[c:1]1(-[C:6]):[n:2]:[c:3]:[s:4]:[c:5]1-[C:7]>>[C:6]-[C:1](=O)-[C:5](-[C:7])-[Cl].[N:2]-[C:3]=[S:4],Thiazole (Cl-precursor)
+Hartenfeller 7b,[c:1]1(-[C:6]):[n:2]:[c:3]:[s:4]:[c:5]1-[C:7]>>[C:6]-[C:1](=O)-[C:5](-[C:7])-[Br].[N:2]-[C:3]=[S:4],Thiazole (Br-precursor)
+Hartenfeller 7c,[c:1]1(-[C:6]):[n:2]:[c:3]:[s:4]:[c:5]1-[C:7]>>[C:6]-[C:1](=O)-[C:5](-[C:7])-[I].[N:2]-[C:3]=[S:4],Thiazole (I-precursor)
+Hartenfeller 8,"[c:4]1:[c:1]-,:[#6:2](=[O:3])-,:[#7:6]-,:[#6:7]=,:[#7:5]1>>[c:1](-[C:2](=[O:3])[OH]):[c:4]-[N:5].[N:6]-[C:7]=O",Niementowski quinazoline
+Hartenfeller 10a,[c:1]1:[n:2]:[n](-[C:3]):[n]:[n]1>>[C:1]#[N:2].[C:3]-[Cl].[N-]=[N+]=[N-],Tetrazole connect regio 1 (Cl)
+Hartenfeller 10b,[c:1]1:[n:2]:[n](-[C:3]):[n]:[n]1>>[C:1]#[N:2].[C:3]-[Br].[N-]=[N+]=[N-],Tetrazole connect regio 1 (Br)
+Hartenfeller 10c,[c:1]1:[n:2]:[n](-[C:3]):[n]:[n]1>>[C:1]#[N:2].[C:3]-[I].[N-]=[N+]=[N-],Tetrazole connect regio 1 (I)
+Hartenfeller 11a,[c:1]1:[n:2]:[n]:[n]:[n]1-[C:3]>>[C:1]#[N:2].[C:3]-[Cl].[N-]=[N+]=[N-].[N-]=[N+]=[N-],Tetrazole connect regio 2 (Cl)
+Hartenfeller 11b,[c:1]1:[n:2]:[n]:[n]:[n]1-[C:3]>>[C:1]#[N:2].[C:3]-[Br].[N-]=[N+]=[N-].[N-]=[N+]=[N-],Tetrazole connect regio 2 (Br)
+Hartenfeller 11c,[c:1]1:[n:2]:[n]:[n]:[n]1-[C:3]>>[C:1]#[N:2].[C:3]-[I].[N-]=[N+]=[N-].[N-]=[N+]=[N-],Tetrazole connect regio 2 (I)
+Hartenfeller 12a,[c:1]1:[c:2]:[n](-[C:3]):[n]:[n]1>>[C:1]#[C:2].[C:3]-[Cl].[N-]=[N+]=[N-],"Huisgen 1,4-subst (Cl)"
+Hartenfeller 12b,[c:1]1:[c:2]:[n](-[C:3]):[n]:[n]1>>[C:1]#[C:2].[C:3]-[Br].[N-]=[N+]=[N-],"Huisgen 1,4-subst (Br)"
+Hartenfeller 12c,[c:1]1:[c:2]:[n](-[C:3]):[n]:[n]1>>[C:1]#[C:2].[C:3]-[I].[N-]=[N+]=[N-],"Huisgen 1,4-subst (I)"
+Hartenfeller 13a,[c:1]1:[cH1:2]:[n]:[n]:[n]1-[C:3]>>[C:1]#[C:2].[C:3]-[Cl].[N-]=[N+]=[N-],"Huisgen 1,5-subst (Cl)"
+Hartenfeller 13b,[c:1]1:[cH1:2]:[n]:[n]:[n]1-[C:3]>>[C:1]#[C:2].[C:3]-[Br].[N-]=[N+]=[N-],"Huisgen 1,5-subst (Br)"
+Hartenfeller 13c,[c:1]1:[cH1:2]:[n]:[n]:[n]1-[C:3]>>[C:1]#[C:2].[C:3]-[I].[N-]=[N+]=[N-],"Huisgen 1,5-subst (I)"
+Hartenfeller 14a,[c:1]1:[c:2](-[C:4]):[n]:[n]:[n]1-[C:3]>>[C:1]#[C:2]-[C:4].[C:3]-[Cl].[N-]=[N+]=[N-],Huisgen disubst (Cl)
+Hartenfeller 14b,[c:1]1:[c:2](-[C:4]):[n]:[n]:[n]1-[C:3]>>[C:1]#[C:2]-[C:4].[C:3]-[Br].[N-]=[N+]=[N-],Huisgen disubst (Br)
+Hartenfeller 14c,[c:1]1:[c:2](-[C:4]):[n]:[n]:[n]1-[C:3]>>[C:1]#[C:2]-[C:4].[C:3]-[I].[N-]=[N+]=[N-],Huisgen disubst (I)
+Hartenfeller 15,[n:2]1:[c:1]:[n:3]:[n:4]:[c:5]:1>>[C:1]#[N:2].[N:3]-[N:4]-[C:5]=O,"1,2,4-triazole acetohydrazide"
+Hartenfeller 16a,[n:2]1:[c:1]:[n;D2]:[n;D2]:[c:5]:1>>[C:1]#[N:2].[C:5](=O)[OH].NN,"1,2,4-triazole (acid)"
+Hartenfeller 16b,[n:2]1:[c:1]:[n;D2]:[n;D2]:[c:5]:1>>[C:1]#[N:2].[C:5](=O)[O][C].NN,"1,2,4-triazole (methyl-ester)"
+Hartenfeller 18a,[O:6]1-[c:5]:[c:1]-[C:2](=[O:3])-[C:4]-[C:7]12-[CH2:8]-[CH2:9]-[N:10]-[CH2:11]-[CH2:12]2>>[c:1](-[C:2](=[O:3])-[C:4]):[c:5]-[OH:6].[C:7]1(=O)-[CH2:8]-[CH2:9]-[N:10]-[CH2:11]-[CH2:12]1,Spiro-chromanone (piperidin-4-one)
+Hartenfeller 18b,[O:6]1-[c:5]:[c:1]-[C:2](=[O:3])-[C:4]-[C:7]12-[CH2:8]-[CH2:9]-[CH2:10]-[CH2:11]-[CH2:12]2>>[c:1](-[C:2](=[O:3])-[C:4]):[c:5]-[OH:6].[C:7]1(=O)-[CH2:8]-[CH2:9]-[CH2:10]-[CH2:11]-[CH2:12]1,Spiro-chromanone (cyclohexanone)
+Hartenfeller 19,[c:1]1(-[C:4]):[c:2]:[c:3](-[C:5]):[n:7]:[n:6]1>>[C:4]-[C:1](=O)-[C:2]-[C:3](=O)-[C:5].[NH2:6]-[NH2:7],Pyrazole
+Hartenfeller 20,"[c:1]1:[c:2]-,:[#6:3]=,:[#7:4]-,:[#7:5]-,:[#6:6]1=[O:8]>>[c:1](-[C:6](=[O:8])[OH]):[c:2]-[C:3]=O.[N:4]-[N:5]",Phthalazinone
+Hartenfeller 21,[c:1]1(-[C:5]):[c:2]:[c:3]:[c:4](-[C:6]):[n:7]1>>[C:5]-[C:1](=O)-[C:2]-[C:3]-[C:4](=O)-[C:6].[N:7],Paal-Knorr pyrrole
+Hartenfeller 22,[c:1]1:[nH]:[c:3]:[n]:[c:2]1>>[C:1](=O)-[C:2]=O.[CH:3]=O.N.N,Triaryl-imidazole (Debus-Radziszewski)
+Hartenfeller 23,[n:1]1:[c:2]:[c:3]:[c:4]2:[c:5]:1:[c:6]:[c:7]:[c:8]:[c:9]:2>>[N:1](-[N])-[c:5]1:[c:6]:[c:7]:[c:8]:[c:9]:[c:4]:1.[C:2](=O)-[C:3],Fischer indole
+Hartenfeller 24a,[n:1]1:[c:6](-[C:9]):[cH:5]:[cH:4]:[c:3]2:[c:2]1:[c:10]:[c:11]:[c:12]:[c:13]2>>[NH2:1]-[c:2]1:[c:10]:[c:11]:[c:12]:[c:13]:[c:3]1-[CH:4]=O.[C:6](-[C:9])(=O)-[CH3:5],"Friedlaender (C4=H, C5=H)"
+Hartenfeller 24b,[n:1]1:[c:6](-[C:9]):[cH:5]:[c:4](-[C:7]):[c:3]2:[c:2]1:[c:10]:[c:11]:[c:12]:[c:13]2>>[NH2:1]-[c:2]1:[c:10]:[c:11]:[c:12]:[c:13]:[c:3]1-[C:4](-[C:7])=O.[C:6](-[C:9])(=O)-[CH3:5],"Friedlaender (C4=C, C5=H)"
+Hartenfeller 24c,[n:1]1:[c:6](-[C:9]):[c:5](-[C:8]):[cH:4]:[c:3]2:[c:2]1:[c:10]:[c:11]:[c:12]:[c:13]2>>[NH2:1]-[c:2]1:[c:10]:[c:11]:[c:12]:[c:13]:[c:3]1-[CH:4]=O.[C:6](-[C:9])(=O)-[CH2:5]-[C:8],"Friedlaender (C4=H, C5=C)"
+Hartenfeller 24d,[n:1]1:[c:6](-[C:9]):[c:5](-[C:8]):[c:4](-[C:7]):[c:3]2:[c:2]1:[c:10]:[c:11]:[c:12]:[c:13]2>>[NH2:1]-[c:2]1:[c:10]:[c:11]:[c:12]:[c:13]:[c:3]1-[C:4](-[C:7])=O.[C:6](-[C:9])(=O)-[CH2:5]-[C:8],"Friedlaender (C4=C, C5=C)"
+Hartenfeller 25a,[o:3]1:[c:4]:[c:5]:[c:1]2:[c:2]:1:[c:6]:[c:7]:[c:8]:[c:9]:2>>[c:1]1(-[Cl]):[c:2](-[O:3]):[c:6]:[c:7]:[c:8]:[c:9]:1.[C:5]#[C:4],Benzofuran (Cl)
+Hartenfeller 25b,[o:3]1:[c:4]:[c:5]:[c:1]2:[c:2]:1:[c:6]:[c:7]:[c:8]:[c:9]:2>>[c:1]1(-[Br]):[c:2](-[O:3]):[c:6]:[c:7]:[c:8]:[c:9]:1.[C:5]#[C:4],Benzofuran (Br)
+Hartenfeller 25c,[o:3]1:[c:4]:[c:5]:[c:1]2:[c:2]:1:[c:6]:[c:7]:[c:8]:[c:9]:2>>[c:1]1(-[I]):[c:2](-[O:3]):[c:6]:[c:7]:[c:8]:[c:9]:1.[C:5]#[C:4],Benzofuran (I)
+Hartenfeller 26a,[s:3]1:[c:4]:[c:5]:[c:1]2:[c:2]:1:[c:6]:[c:7]:[c:8]:[c:9]:2>>[c:1]1(-[Cl]):[c:2](-[S:3]):[c:6]:[c:7]:[c:8]:[c:9]:1.[C:5]#[C:4],Benzothiophene (Cl)
+Hartenfeller 26b,[s:3]1:[c:4]:[c:5]:[c:1]2:[c:2]:1:[c:6]:[c:7]:[c:8]:[c:9]:2>>[c:1]1(-[Br]):[c:2](-[S:3]):[c:6]:[c:7]:[c:8]:[c:9]:1.[C:5]#[C:4],Benzothiophene (Br)
+Hartenfeller 26c,[s:3]1:[c:4]:[c:5]:[c:1]2:[c:2]:1:[c:6]:[c:7]:[c:8]:[c:9]:2>>[c:1]1(-[I]):[c:2](-[S:3]):[c:6]:[c:7]:[c:8]:[c:9]:1.[C:5]#[C:4],Benzothiophene (I)
+Hartenfeller 27a,[n:3]1:[c:4]:[c:5]:[c:1]2:[c:2]:1:[c:6]:[c:7]:[c:8]:[c:9]:2>>[c:1]1(-[Cl]):[c:2](-[N:3]):[c:6]:[c:7]:[c:8]:[c:9]:1.[C:5]#[C:4],Indole (Cl)
+Hartenfeller 27b,[n:3]1:[c:4]:[c:5]:[c:1]2:[c:2]:1:[c:6]:[c:7]:[c:8]:[c:9]:2>>[c:1]1(-[Br]):[c:2](-[N:3]):[c:6]:[c:7]:[c:8]:[c:9]:1.[C:5]#[C:4],Indole (Br)
+Hartenfeller 27c,[n:3]1:[c:4]:[c:5]:[c:1]2:[c:2]:1:[c:6]:[c:7]:[c:8]:[c:9]:2>>[c:1]1(-[I]):[c:2](-[N:3]):[c:6]:[c:7]:[c:8]:[c:9]:1.[C:5]#[C:4],Indole (I)
+Hartenfeller 28,[C:6]-[c:5]1:[n:4]:[o:3]:[c:2](-[C:1]):[n]1>>[C:6]-[C:5]#[N:4].[C:1]-[C:2](=O)[OH:3].NO,Oxadiazole
+Hartenfeller 29a,[CH2:4]-[O:3]-[CX4:2]>>([C:4]-[Cl]).([O:3]-[C:2]),Williamson ether (Cl)
+Hartenfeller 29b,[CH2:4]-[O:3]-[CX4:2]>>([C:4]-[Br]).([O:3]-[C:2]),Williamson ether (Br)
+Hartenfeller 29c,[CH2:4]-[O:3]-[CX4:2]>>([C:4]-[I]).([O:3]-[C:2]),Williamson ether (I)
+Hartenfeller 29d,[CH2:4]-[O:3]-[c:2]>>[C:4]-[Cl].[O:3]-[c:2],Williamson aryl ether (Cl)
+Hartenfeller 29e,[CH2:4]-[O:3]-[c:2]>>[C:4]-[Br].[O:3]-[c:2],Williamson aryl ether (Br)
+Hartenfeller 29f,[CH2:4]-[O:3]-[c:2]>>[C:4]-[I].[O:3]-[c:2],Williamson aryl ether (I)
+Hartenfeller 30a,[C:4]-[CH2:1]-[NH:3]-[C:5]>>[C:4]-[CH:1]=O.[NH2:3]-[C:5].[BH4-].O,Reductive amination (Aldehyde + Primary Amine)
+Hartenfeller 30b,[C:4]-[CH1:1](-[C:6])-[NH:3]-[C:5]>>[C:4]-[C:1](-[C:6])=O.[NH2:3]-[C:5].[BH4-].O,Reductive amination (Ketone + Primary Amine)
+Hartenfeller 30c,[C:4]-[CH2:1]-[N:3](-[C:7])-[C:5]>>([C:4]-[CH:1]=O).([NH:3](-[C:7])-[C:5]).([BH4-]).(O),Reductive amination (Aldehyde + Secondary Amine)
+Hartenfeller 30d,[C:4]-[CH1:1](-[C:6])-[N:3](-[C:7])-[C:5]>>[C:4]-[C:1](-[C:6])=O.[NH:3](-[C:7])-[C:5].[BH4-].O,Reductive amination (Ketone + Secondary Amine)
+Hartenfeller 31a,[c:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[Cl].[c:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki (Cl)
+Hartenfeller 31b,[c:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[Br].[c:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki (Br)
+Hartenfeller 31c,[c:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[I].[c:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki (I)
+Hartenfeller 31d,[n:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[Cl].[n:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki 2-azinyl boronate (Cl)
+Hartenfeller 31e,[n:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[Br].[n:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki 2-azinyl boronate (Br)
+Hartenfeller 31f,[n:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[I].[n:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki 2-azinyl boronate (I)
+Hartenfeller 31g,[s:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[Cl].[s:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki 2-thienyl boronate (Cl)
+Hartenfeller 31h,[s:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[Br].[s:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki 2-thienyl boronate (Br)
+Hartenfeller 31i,[s:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[I].[s:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki 2-thienyl boronate (I)
+Hartenfeller 31j,[o:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[Cl].[o:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki 2-furyl boronate (Cl)
+Hartenfeller 31k,[o:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[Br].[o:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki 2-furyl boronate (Br)
+Hartenfeller 31l,[o:3]:[c:1](:[c:4])-!@[c:2]>>[c:2]-[I].[o:3]:[c:1](:[c:4])-[B]([OH])[OH].O,Suzuki 2-furyl boronate (I)
+Hartenfeller 32a,[N:13]1-[CH2:14]-[CH2:15]-[C:10](=[CH:11]-[CH2:12]1)-[c:1]2:[c:9]:[nH:8]:[c:7]3:[c:6]:[c:5]:[c:4]:[c:3]:[c:2]23>>[c:3]1:[c:4]:[c:5]:[c:6]:[c:7]2:[nH:8]:[c:9]:[cH:1]:[c:2]12.O=[C:10]1-[CH2:11]-[CH2:12]-[N:13]-[CH2:14]-[CH2:15]1,Piperidine indole (Unsubstituted N)
+Hartenfeller 32b,[N:13]1-[CH2:14]-[CH2:15]-[C:10](=[CH:11]-[CH2:12]1)-[c:1]2:[c:9]:[n:8](-[*:16]):[c:7]3:[c:6]:[c:5]:[c:4]:[c:3]:[c:2]23>>[c:3]1:[c:4]:[c:5]:[c:6]:[c:7]2:[n:8](-[*:16]):[c:9]:[cH:1]:[c:2]12.O=[C:10]1-[CH2:11]-[CH2:12]-[N:13]-[CH2:14]-[CH2:15]1,Piperidine indole (Substituted N)
+Hartenfeller 33a,[c:2]-[CH3:1]>>[c:2]-[Cl].[C:1]-[Br].[Zn],Negishi methyl (Cl)
+Hartenfeller 33b,[c:2]-[CH3:1]>>[c:2]-[Br].[C:1]-[Br].[Zn],Negishi methyl (Br)
+Hartenfeller 33c,[c:2]-[CH3:1]>>[c:2]-[I].[C:1]-[Br].[Zn],Negishi methyl (I)
+Hartenfeller 33d,[c:2]-!@[CH2:1]-[#6:3]>>[c:2]-[Cl].[C:1](-[Br])-[#6:3].[Zn],Negishi primary (Cl)
+Hartenfeller 33e,[c:2]-!@[CH2:1]-[#6:3]>>[c:2]-[Br].[C:1](-[Br])-[#6:3].[Zn],Negishi primary (Br)
+Hartenfeller 33f,[c:2]-!@[CH2:1]-[#6:3]>>[c:2]-[I].[C:1](-[Br])-[#6:3].[Zn],Negishi primary (I)
+Hartenfeller 33g,[c:2]-!@[CH1:1](-[#6:3])-[#6:4]>>[c:2]-[Cl].[C:1](-[Br])(-[#6:3])-[#6:4].[Zn],Negishi secondary (Cl)
+Hartenfeller 33h,[c:2]-!@[CH1:1](-[#6:3])-[#6:4]>>[c:2]-[Br].[C:1](-[Br])(-[#6:3])-[#6:4].[Zn],Negishi secondary (Br)
+Hartenfeller 33i,[c:2]-!@[CH1:1](-[#6:3])-[#6:4]>>[c:2]-[I].[C:1](-[Br])(-[#6:3])-[#6:4].[Zn],Negishi secondary (I)
+Hartenfeller 33j,[c:2]-!@[CH0X4:1](-[#6:3])(-[#6:4])-[#6:5]>>[c:2]-[Cl].[C:1](-[Br])(-[#6:3])(-[#6:4])-[#6:5].[Zn],Negishi tertiary (Cl)
+Hartenfeller 33k,[c:2]-!@[CH0X4:1](-[#6:3])(-[#6:4])-[#6:5]>>[c:2]-[Br].[C:1](-[Br])(-[#6:3])(-[#6:4])-[#6:5].[Zn],Negishi tertiary (Br)
+Hartenfeller 33l,[c:2]-!@[CH0X4:1](-[#6:3])(-[#6:4])-[#6:5]>>[c:2]-[I].[C:1](-[Br])(-[#6:3])(-[#6:4])-[#6:5].[Zn],Negishi tertiary (I)
+Hartenfeller 34,"[C;H1,H2:1]-[N:2](-[C:3]=[O:4])-[C:5]=[O:6]>>[C:1]-[OH].[N:2](-[C:3]=[O:4])-[C:5]=[O:6].c1ccccc1P(c1ccccc1)c1ccccc1.CC(C)OC(=O)N=NC(=O)OC(C)C",Mitsunobu imide
+Hartenfeller 35,"[C;H1,H2:1]-[O:2]-[c:3]>>[C:1]-[OH].[O:2]-[c:3].c1ccccc1P(c1ccccc1)c1ccccc1.CC(C)OC(=O)N=NC(=O)OC(C)C",Mitsunobu phenole
+Hartenfeller 36,"[C;H1,H2:1]-[N:2](-[#6:3])-[S:4](=[O:5])=[O:6]>>[C:1]-[OH].[N:2](-[#6:3])-[S:4](=[O:5])=[O:6].c1ccccc1P(c1ccccc1)c1ccccc1.CC(C)OC(=O)N=NC(=O)OC(C)C",Mitsunobu sulfonamide
+Hartenfeller 41a,[c:4]-[C:1]=[CH1:2]-[C:3]>>[C:1]=[C:2]-[C:3].[c:4]-[Cl],Heck terminal vinyl (Cl)
+Hartenfeller 41b,[c:4]-[C:1]=[CH1:2]-[C:3]>>[C:1]=[C:2]-[C:3].[c:4]-[Br],Heck terminal vinyl (Br)
+Hartenfeller 41c,[c:4]-[C:1]=[CH1:2]-[C:3]>>[C:1]=[C:2]-[C:3].[c:4]-[I],Heck terminal vinyl (I)
+Hartenfeller 41d,[C:5]=[C:4]-[C:1]=[CH1:2]-[C:3]>>[C:1]=[C:2]-[C:3].[C:5]=[C:4]-[Cl],"Heck terminal vinyl (vinyl, Cl)"
+Hartenfeller 41e,[C:5]=[C:4]-[C:1]=[CH1:2]-[C:3]>>[C:1]=[C:2]-[C:3].[C:5]=[C:4]-[Br],"Heck terminal vinyl (vinyl, Br)"
+Hartenfeller 41f,[C:5]=[C:4]-[C:1]=[CH1:2]-[C:3]>>[C:1]=[C:2]-[C:3].[C:5]=[C:4]-[I],"Heck terminal vinyl (vinyl, I)"
+Hartenfeller 42a,[c:4]-[C:1]=[C:2](-[C:5])-[C:3]>>[C:1]=[C:2](-[C:5])-[C:3].[c:4]-[Cl],Heck non-terminal vinyl (Cl)
+Hartenfeller 42b,[c:4]-[C:1]=[C:2](-[C:5])-[C:3]>>[C:1]=[C:2](-[C:5])-[C:3].[c:4]-[Br],Heck non-terminal vinyl (Br)
+Hartenfeller 42c,[c:4]-[C:1]=[C:2](-[C:5])-[C:3]>>[C:1]=[C:2](-[C:5])-[C:3].[c:4]-[I],Heck non-terminal vinyl (I)
+Hartenfeller 42d,[C:6]=[C:4]-[C:1]=[C:2](-[C:5])-[C:3]>>[C:1]=[C:2](-[C:5])-[C:3].[C:6]=[C:4]-[Cl],"Heck non-terminal vinyl (vinyl, Cl)"
+Hartenfeller 42e,[C:6]=[C:4]-[C:1]=[C:2](-[C:5])-[C:3]>>[C:1]=[C:2](-[C:5])-[C:3].[C:6]=[C:4]-[Br],"Heck non-terminal vinyl (vinyl, Br)"
+Hartenfeller 42f,[C:6]=[C:4]-[C:1]=[C:2](-[C:5])-[C:3]>>[C:1]=[C:2](-[C:5])-[C:3].[C:6]=[C:4]-[I],"Heck non-terminal vinyl (vinyl, I)"
+Hartenfeller 43a,[c:2]-!@[C:1]=[C:3]>>[c:2]-[Cl].[C:1](-[Sn](C)(C)C)=[C:3],Stille vinyl-stannane (Cl)
+Hartenfeller 43b,[c:2]-!@[C:1]=[C:3]>>[c:2]-[Br].[C:1](-[Sn](C)(C)C)=[C:3],Stille vinyl-stannane (Br)
+Hartenfeller 43c,[c:2]-!@[C:1]=[C:3]>>[c:2]-[I].[C:1](-[Sn](C)(C)C)=[C:3],Stille vinyl-stannane (I)
+Hartenfeller 44a,[C:1]-[C:2](=O)-[C:3]>>[C:1]-[C:2]#N.[C:3]-[Cl].[Mg].O.O,Grignard carbonyl (Cl)
+Hartenfeller 44b,[C:1]-[C:2](=O)-[C:3]>>[C:1]-[C:2]#N.[C:3]-[Br].[Mg].O.O,Grignard carbonyl (Br)
+Hartenfeller 44c,[C:1]-[C:2](=O)-[C:3]>>[C:1]-[C:2]#N.[C:3]-[I].[Mg].O.O,Grignard carbonyl (I)
+Hartenfeller 45a,[C:1]-[C:2](-[OH:3])-[C:4]>>[C:1]-[C:2]=[O:3].[C:4]-[Cl].[Mg].O,Grignard alcohol (Cl)
+Hartenfeller 45b,[C:1]-[C:2](-[OH:3])-[C:4]>>[C:1]-[C:2]=[O:3].[C:4]-[Br].[Mg].O,Grignard alcohol (Br)
+Hartenfeller 45c,[C:1]-[C:2](-[OH:3])-[C:4]>>[C:1]-[C:2]=[O:3].[C:4]-[I].[Mg].O,Grignard alcohol (I)
+Hartenfeller 46a,[c:1]-[C:2]#[C:3]>>[c:1]-[Cl].[C:2]#[C:3],Sonogashira (Cl)
+Hartenfeller 46b,[c:1]-[C:2]#[C:3]>>[c:1]-[Br].[C:2]#[C:3],Sonogashira (Br)
+Hartenfeller 46c,[c:1]-[C:2]#[C:3]>>[c:1]-[I].[C:2]#[C:3],Sonogashira (I)
+Hartenfeller 47,[C:1](=O)-[N:2]-[#6:3]>>([C:1](=O)[Cl]).([N:2]-[#6:3]),Schotten-Baumann amide
+Hartenfeller 48,[S:1](=O)(=O)-[N:2]>>[S:1](=O)(=O)[Cl].[N:2],Sulfonamide
+Hartenfeller 49a,[c:1]-[n:2]1:[c:3]:[c:4]:[c:5]:[c:6]:1>>[c:1]-[B]([OH])[OH].[nH:2]1:[c:3]:[c:4]:[c:5]:[c:6]:1.O.O=O,N-arylation pyrrole-type
+Hartenfeller 49b,[c:1]-[n:2]1:[n:3]:[c:4]:[c:5]:[c:6]:1>>[c:1]-[B]([OH])[OH].[nH:2]1:[n:3]:[c:4]:[c:5]:[c:6]:1.O.O=O,N-arylation pyrazole-type
+Hartenfeller 49c,[c:1]-[n:2]1:[c:3]:[n:4]:[c:5]:[c:6]:1>>[c:1]-[B]([OH])[OH].[nH:2]1:[c:3]:[n:4]:[c:5]:[c:6]:1.O.O=O,N-arylation imidazole-type
+Hartenfeller 50a,[#6:3]-[C:1]=[C:2]>>[#6:3]-[C:1]=O.[C:2]-[Cl].c1ccccc1P(c1ccccc1)c1ccccc1,Wittig (Cl)
+Hartenfeller 50b,[#6:3]-[C:1]=[C:2]>>[#6:3]-[C:1]=O.[C:2]-[Br].c1ccccc1P(c1ccccc1)c1ccccc1,Wittig (Br)
+Hartenfeller 50c,[#6:3]-[C:1]=[C:2]>>[#6:3]-[C:1]=O.[C:2]-[I].c1ccccc1P(c1ccccc1)c1ccccc1,Wittig (I)
+Hartenfeller 51a,[c:1]-!@[NH1;D2:2]-[CX4:3]>>[c:1]-[Cl].[N:2]-[CX4:3],"Buchwald-Hartwig (N-alkyl secondary, Cl)"
+Hartenfeller 51b,[c:1]-!@[NH1;D2:2]-[CX4:3]>>[c:1]-[Br].[N:2]-[CX4:3],"Buchwald-Hartwig (N-alkyl secondary, Br)"
+Hartenfeller 51c,[c:1]-!@[NH1;D2:2]-[CX4:3]>>[c:1]-[I].[N:2]-[CX4:3],"Buchwald-Hartwig (N-alkyl secondary, I)"
+Hartenfeller 51d,[c:1]-!@[NH0;D3:2](-[CX4:3])-[CX4:4]>>[c:1]-[Cl].[N:2](-[CX4:3])-[CX4:4],"Buchwald-Hartwig (N-alkyl tertiary, Cl)"
+Hartenfeller 51e,[c:1]-!@[NH0;D3:2](-[CX4:3])-[CX4:4]>>[c:1]-[Br].[N:2](-[CX4:3])-[CX4:4],"Buchwald-Hartwig (N-alkyl tertiary, Br)"
+Hartenfeller 51f,[c:1]-!@[NH0;D3:2](-[CX4:3])-[CX4:4]>>[c:1]-[I].[N:2](-[CX4:3])-[CX4:4],"Buchwald-Hartwig (N-alkyl tertiary, I)"
+Hartenfeller 51g,[c:1]-!@[NH1;D2:2]-[c:3]>>[c:1]-[Cl].[N:2]-[c:3],"Buchwald-Hartwig (diarylamine, Cl)"
+Hartenfeller 51h,[c:1]-!@[NH1;D2:2]-[c:3]>>[c:1]-[Br].[N:2]-[c:3],"Buchwald-Hartwig (diarylamine, Br)"
+Hartenfeller 51i,[c:1]-!@[NH1;D2:2]-[c:3]>>[c:1]-[I].[N:2]-[c:3],"Buchwald-Hartwig (diarylamine, I)"
+Hartenfeller 51j,[c:1]-!@[NH0;D3:2](-[c:3])-[CX4:4]>>[c:1]-[Cl].[N:2](-[c:3])-[CX4:4],"Buchwald-Hartwig (diarylamine N-alkyl, Cl)"
+Hartenfeller 51k,[c:1]-!@[NH0;D3:2](-[c:3])-[CX4:4]>>[c:1]-[Br].[N:2](-[c:3])-[CX4:4],"Buchwald-Hartwig (diarylamine N-alkyl, Br)"
+Hartenfeller 51l,[c:1]-!@[NH0;D3:2](-[c:3])-[CX4:4]>>[c:1]-[I].[N:2](-[c:3])-[CX4:4],"Buchwald-Hartwig (diarylamine N-alkyl, I)"
+Hartenfeller 52,[c:4]1:[c:5]:[n:3]:[c:2]:[n:1]1>>[C:4](=O)-[C:5]-[Br].[N:3]-[C:2]=[N:1],Imidazole
+Hartenfeller 53a,[c:2]-!@[c:1]1:[c:3](-[C:4](=[O:5])-[C:6]):[c:7]:[c:8]:[c:9]:[c:10]:1>>[c:2]-[Cl].[c:1]1(-[C](=O)[OH]):[c:3](-[C:4](=[O:5])-[C:6]):[c:7]:[c:8]:[c:9]:[c:10]:1,"Decarboxylative coupling (ortho-ketone, Cl)"
+Hartenfeller 53b,[c:2]-!@[c:1]1:[c:3](-[C:4](=[O:5])-[C:6]):[c:7]:[c:8]:[c:9]:[c:10]:1>>[c:2]-[Br].[c:1]1(-[C](=O)[OH]):[c:3](-[C:4](=[O:5])-[C:6]):[c:7]:[c:8]:[c:9]:[c:10]:1,"Decarboxylative coupling (ortho-ketone, Br)"
+Hartenfeller 53c,[c:2]-!@[c:1]1:[c:3](-[C:4](=[O:5])-[C:6]):[c:7]:[c:8]:[c:9]:[c:10]:1>>[c:2]-[I].[c:1]1(-[C](=O)[OH]):[c:3](-[C:4](=[O:5])-[C:6]):[c:7]:[c:8]:[c:9]:[c:10]:1,"Decarboxylative coupling (ortho-ketone, I)"
+Hartenfeller 53d,[c:2]-[c:1]1:[c:3](-[C:4](=[O:5])-[N:6]):[c:7]:[c:8]:[c:9]:[c:10]:1>>[c:2]-[Cl].[c:1]1(-[C](=O)[OH]):[c:3](-[C:4](=[O:5])-[N:6]):[c:7]:[c:8]:[c:9]:[c:10]:1,"Decarboxylative coupling (ortho-amide, Cl)"
+Hartenfeller 53e,[c:2]-[c:1]1:[c:3](-[C:4](=[O:5])-[N:6]):[c:7]:[c:8]:[c:9]:[c:10]:1>>[c:2]-[Br].[c:1]1(-[C](=O)[OH]):[c:3](-[C:4](=[O:5])-[N:6]):[c:7]:[c:8]:[c:9]:[c:10]:1,"Decarboxylative coupling (ortho-amide, Br)"
+Hartenfeller 53f,[c:2]-[c:1]1:[c:3](-[C:4](=[O:5])-[N:6]):[c:7]:[c:8]:[c:9]:[c:10]:1>>[c:2]-[I].[c:1]1(-[C](=O)[OH]):[c:3](-[C:4](=[O:5])-[N:6]):[c:7]:[c:8]:[c:9]:[c:10]:1,"Decarboxylative coupling (ortho-amide, I)"
+Hartenfeller 54a,[c:1]1(-[N:2])[n:3][a:4][a:5][a:6][a:7]1>>[c:1]1(-[Cl])[n:3][a:4][a:5][a:6][a:7]1.[N:2],"Heteroaromatic nuc sub (ortho, Cl)"
+Hartenfeller 54b,[c:1]1(-[N:2])[n:3][a:4][a:5][a:6][a:7]1>>[c:1]1(-[F])[n:3][a:4][a:5][a:6][a:7]1.[N:2],"Heteroaromatic nuc sub (ortho, F)"
+Hartenfeller 54c,[c:1]1(-[N:2])[a:4][a:5][n:3][a:6][a:7]1>>[c:1]1(-[Cl])[a:4][a:5][n:3][a:6][a:7]1.[N:2],"Heteroaromatic nuc sub (para, Cl)"
+Hartenfeller 54d,[c:1]1(-[N:2])[a:4][a:5][n:3][a:6][a:7]1>>[c:1]1(-[F])[a:4][a:5][n:3][a:6][a:7]1.[N:2],"Heteroaromatic nuc sub (para, F)"
+Hartenfeller 55a,[c:1]1(-[N:2]):[c:3](-[N+](=O)[O-]):[c:4]:[c:5]:[c:6]:[c:7]:1>>[c:1]1(-[Cl]):[c:3](-[N+](=O)[O-]):[c:4]:[c:5]:[c:6]:[c:7]:1.[N:2],Nucl sub aromatic ortho nitro (Cl)
+Hartenfeller 55b,[c:1]1(-[N:2]):[c:3](-[N+](=O)[O-]):[c:4]:[c:5]:[c:6]:[c:7]:1>>[c:1]1(-[F]):[c:3](-[N+](=O)[O-]):[c:4]:[c:5]:[c:6]:[c:7]:1.[N:2],Nucl sub aromatic ortho nitro (F)
+Hartenfeller 56a,[c:1]1(-[N:2]):[c:3]:[c:4]:[c:5](-[N+](=O)[O-]):[c:6]:[c:7]:1>>[c:1]1(-[Cl]):[c:3]:[c:4]:[c:5](-[N+](=O)[O-]):[c:6]:[c:7]:1.[N:2],Nucl sub aromatic para nitro (Cl)
+Hartenfeller 56b,[c:1]1(-[N:2]):[c:3]:[c:4]:[c:5](-[N+](=O)[O-]):[c:6]:[c:7]:1>>[c:1]1(-[F]):[c:3]:[c:4]:[c:5](-[N+](=O)[O-]):[c:6]:[c:7]:1.[N:2],Nucl sub aromatic para nitro (F)
+Hartenfeller 57,[N:3]-[C:1](=O)-[N:2]>>[N:3]-[C:1]=O.[N:2],Urea
+Hartenfeller 58,[N:3]-[C:1](=S)-[N:2]>>[N:3]-[C:1]=S.[N:2],Thiourea
+iSCB 62,[c:1]1:[n:2]:[c:5](-[C:6]):[n:4]:[c:3]1>>[c:1](-[N:2]):[c:3]-[N:4].[C:6]-[C:5](=O)[OH],Benzimidazole acid-ester (fuzzy)
+iSCB 64a,[C:1]-[S;D2:2]-[C:3]>>[C:1]-[Cl].[S:2]-[C:3],Williamson-like thiol (Cl)
+iSCB 64b,[C:1]-[S;D2:2]-[C:3]>>[C:1]-[Br].[S:2]-[C:3],Williamson-like thiol (Br)
+iSCB 64c,[C:1]-[S;D2:2]-[C:3]>>[C:1]-[I].[S:2]-[C:3],Williamson-like thiol (I)
+iSCB 65a,[CH2:1]-[NH1:2]-[CX4:3]>>[C:1]-[Cl].[N:2]-[CX4:3],Williamson-like amine (Cl)
+iSCB 65b,[CH2:1]-[NH1:2]-[CX4:3]>>[C:1]-[Br].[N:2]-[CX4:3],Williamson-like amine (Br)
+iSCB 65c,[CH2:1]-[NH1:2]-[CX4:3]>>[C:1]-[I].[N:2]-[CX4:3],Williamson-like amine (I)
+iSCB 66a,[c:1]-!@[c:2]>>[c:1]-[Sn](C)(C)(C).[c:2]-[Cl],Stille organo-stannane (Cl)
+iSCB 66b,[c:1]-!@[c:2]>>[c:1]-[Sn](C)(C)(C).[c:2]-[Br],Stille organo-stannane (Br)
+iSCB 66c,[c:1]-!@[c:2]>>[c:1]-[Sn](C)(C)(C).[c:2]-[I],Stille organo-stannane (I)
+iSCB 67a,[S:1](=O)(=O)-[O:2]>>[S:1](=O)(=O)[Cl].[O:2],Sulfonyl ester (Cl)

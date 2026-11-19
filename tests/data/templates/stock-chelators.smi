@@ -1,0 +1,11 @@
+C1CNCCNCCNCCN1	cyclen (1,4,7,10-tetraazacyclododecane)	also in Enamine
+C1CNCCNCCN1	TACN (1,4,7-triazacyclononane)	also in Enamine
+C1CNCCCNCCNCCCN1	cyclam (1,4,8,11-tetraazacyclotetradecane)	also in Enamine
+OC(=O)CN1CCN(CC(O)=O)CCN(CC(O)=O)CCN(CC(O)=O)CC1	DOTA	not in Enamine
+OC(=O)CN1CCNCCN(CC(O)=O)CCN(CC(O)=O)CC1	DO3A	not in Enamine
+CC(C)(C)OC(=O)CN1CCN(CC(=O)OC(C)(C)C)CCN(CC(=O)OC(C)(C)C)CCN(CC(O)=O)CC1	DOTA tris(t-Bu ester)	not in Enamine
+OC(=O)CN1CCN(CC(O)=O)CCN(CC(O)=O)CC1	NOTA	not in Enamine
+OC(=O)CN1CCN(CC(O)=O)CCCN(CC(O)=O)CCN(CC(O)=O)CCC1	TETA	not in Enamine
+OC(=O)CN(CC(O)=O)CCN(CC(O)=O)CCN(CC(O)=O)CC(O)=O	DTPA	not in Enamine
+OC(=O)CN(CC(O)=O)CCN(CC(O)=O)CC(O)=O	EDTA	also in Enamine
+OC(=O)CN(CC(O)=O)CC(O)=O	NTA (nitrilotriacetic acid)	also in Enamine

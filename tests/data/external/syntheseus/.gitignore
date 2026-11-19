@@ -1,0 +1,3 @@
+# The 273 MB eMolecules inventory is downloaded on demand, never committed.
+# Everything tests read lives in targets/ and stays committed.
+/raw/emolecules-inventory.csv.gz

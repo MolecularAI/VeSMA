@@ -1,0 +1,48 @@
+---
+libname: "VeSMA"
+title: "VeSMA: GPU-native library for retrosynthetic expansion and beyond"
+authors:
+  - name: Alexey Voronov
+    affiliation:
+      - AstraZeneca R&D, Gothenburg, Sweden
+    roles:
+      - conceptualization
+      - methodology
+      - software
+      - validation
+      - visualization
+      - writing
+    corresponding: true
+    orcid: 0000-0003-0709-4954
+    email: alexey.voronov1@astrazeneca.com
+  - name: Anna Reymer
+    affiliation: University Grenoble Alpes, Inserm 1209, CNRS 5309, Institute for Advanced Biosciences, Grenoble, France
+    roles:
+      - methodology
+      - writing
+    corresponding: false
+    orcid: 0000-0001-8458-7918
+    email: anna.reymer@inserm.fr
+bibliography: references.bib
+keywords:
+  - Retrosynthesis
+  - reaction-template application
+  - GPU acceleration
+  - Reaction SMARTS
+  - computer-aided synthesis planning
+abstract: |
+  Template-based computer-aided synthesis planning generates candidate precursors by applying retrosynthetic reaction templates to target molecules. Applying these templates across large collections of molecules is computationally demanding, as each application requires both identifying matching molecular patterns and constructing the resulting precursors. Here we present VeSMA, a reaction-template application library with dedicated NVIDIA CUDA, Apple Metal, and CPU backends accessible through a unified interface. To our knowledge, VeSMA is the first implementation to execute the complete reaction-template application pipeline on GPUs, rather than accelerating only template selection or substructure matching. VeSMA enumerates distinct template matches, applies the corresponding graph transformations, constructs precursor molecules, and updates the number of hydrogen atoms and recalculates aromaticity. We evaluate VeSMA using the PaRoutes collection of published multi-step retrosynthetic routes and reaction templates derived from USPTO patents, testing agreement across backends and with established reaction engines, as well as its use in successive retrosynthetic steps. Across nearly 770 000 confirmed molecule–template pairs, VeSMA and RDChiral produce identical precursor outcome sets for 98.3% of pairs when stereochemistry is excluded from the comparison. We further measure reaction-application throughput and demonstrate integration into an exhaustive depth-two expansion. VeSMA is released as a library for integration into retrosynthetic planning workflows, benchmarking, and further development.
+---
+
+**Scientific Contribution.**
+We present {{< meta libname >}}, a reaction-template application library that executes the complete pipeline: from template matching and graph editing to precursor generation, using NVIDIA CUDA, Apple Metal, or a parallel CPU backend. {{< meta libname >}} produces consistent outcomes across backends, agrees with RDChiral for 98.3% of nearly 770 000 confirmed molecule–template pairs, and retains generated intermediates across successive retrosynthetic steps. By accelerating complete reaction application rather than substructure matching alone, {{< meta libname >}} provides reusable infrastructure for retrosynthetic planners and other high-throughput cheminformatics workflows.
+
+{{< include introduction.qmd >}}
+
+{{< include methods.qmd >}}
+
+{{< include benchmarks.qmd >}}
+
+{{< include conclusions.qmd >}}
+
+{{< include availability.qmd >}}

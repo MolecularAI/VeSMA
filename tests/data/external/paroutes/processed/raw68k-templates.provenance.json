@@ -1,0 +1,15 @@
+{
+  "file": "raw68k-templates.tsv.gz",
+  "source": "uspto_raw_template_library.csv.gz",
+  "raw_reaction_rows": 819797,
+  "unique_retro_templates": 67557,
+  "unique_template_hashes": 42554,
+  "dedup_key": "retro_template",
+  "columns": [
+    "retro_template",
+    "template_hash",
+    "library_occurence"
+  ],
+  "note": "Full raw USPTO template library deduplicated to unique retro_template SMARTS (raw68k). reaction_hash is dropped here; route recovery maps the reference hashes retained in used14k-reactions.tsv.gz back by SMARTS.",
+  "computed_on": "2026-07-06"
+}

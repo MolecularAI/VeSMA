@@ -1,0 +1,107 @@
+tag,template_code,classification
+palladium,Hartenfeller 31a,Suzuki (Cl)
+palladium,Hartenfeller 31b,Suzuki (Br)
+palladium,Hartenfeller 31c,Suzuki (I)
+palladium,Hartenfeller 31d,Suzuki 2-azinyl boronate (Cl)
+palladium,Hartenfeller 31e,Suzuki 2-azinyl boronate (Br)
+palladium,Hartenfeller 31f,Suzuki 2-azinyl boronate (I)
+palladium,Hartenfeller 31g,Suzuki 2-thienyl boronate (Cl)
+palladium,Hartenfeller 31h,Suzuki 2-thienyl boronate (Br)
+palladium,Hartenfeller 31i,Suzuki 2-thienyl boronate (I)
+palladium,Hartenfeller 31j,Suzuki 2-furyl boronate (Cl)
+palladium,Hartenfeller 31k,Suzuki 2-furyl boronate (Br)
+palladium,Hartenfeller 31l,Suzuki 2-furyl boronate (I)
+palladium,Hartenfeller 33a,Negishi methyl (Cl)
+palladium,Hartenfeller 33b,Negishi methyl (Br)
+palladium,Hartenfeller 33c,Negishi methyl (I)
+palladium,Hartenfeller 33d,Negishi primary (Cl)
+palladium,Hartenfeller 33e,Negishi primary (Br)
+palladium,Hartenfeller 33f,Negishi primary (I)
+palladium,Hartenfeller 33g,Negishi secondary (Cl)
+palladium,Hartenfeller 33h,Negishi secondary (Br)
+palladium,Hartenfeller 33i,Negishi secondary (I)
+palladium,Hartenfeller 33j,Negishi tertiary (Cl)
+palladium,Hartenfeller 33k,Negishi tertiary (Br)
+palladium,Hartenfeller 33l,Negishi tertiary (I)
+palladium,Hartenfeller 41a,Heck terminal vinyl (Cl)
+palladium,Hartenfeller 41b,Heck terminal vinyl (Br)
+palladium,Hartenfeller 41c,Heck terminal vinyl (I)
+palladium,Hartenfeller 41d,"Heck terminal vinyl (vinyl, Cl)"
+palladium,Hartenfeller 41e,"Heck terminal vinyl (vinyl, Br)"
+palladium,Hartenfeller 41f,"Heck terminal vinyl (vinyl, I)"
+palladium,Hartenfeller 42a,Heck non-terminal vinyl (Cl)
+palladium,Hartenfeller 42b,Heck non-terminal vinyl (Br)
+palladium,Hartenfeller 42c,Heck non-terminal vinyl (I)
+palladium,Hartenfeller 42d,"Heck non-terminal vinyl (vinyl, Cl)"
+palladium,Hartenfeller 42e,"Heck non-terminal vinyl (vinyl, Br)"
+palladium,Hartenfeller 42f,"Heck non-terminal vinyl (vinyl, I)"
+palladium,Hartenfeller 43a,Stille vinyl-stannane (Cl)
+palladium,Hartenfeller 43b,Stille vinyl-stannane (Br)
+palladium,Hartenfeller 43c,Stille vinyl-stannane (I)
+palladium,Hartenfeller 46a,Sonogashira (Cl)
+palladium,Hartenfeller 46b,Sonogashira (Br)
+palladium,Hartenfeller 46c,Sonogashira (I)
+palladium,Hartenfeller 51a,"Buchwald-Hartwig (N-alkyl secondary, Cl)"
+palladium,Hartenfeller 51b,"Buchwald-Hartwig (N-alkyl secondary, Br)"
+palladium,Hartenfeller 51c,"Buchwald-Hartwig (N-alkyl secondary, I)"
+palladium,Hartenfeller 51d,"Buchwald-Hartwig (N-alkyl tertiary, Cl)"
+palladium,Hartenfeller 51e,"Buchwald-Hartwig (N-alkyl tertiary, Br)"
+palladium,Hartenfeller 51f,"Buchwald-Hartwig (N-alkyl tertiary, I)"
+palladium,Hartenfeller 51g,"Buchwald-Hartwig (diarylamine, Cl)"
+palladium,Hartenfeller 51h,"Buchwald-Hartwig (diarylamine, Br)"
+palladium,Hartenfeller 51i,"Buchwald-Hartwig (diarylamine, I)"
+palladium,Hartenfeller 51j,"Buchwald-Hartwig (diarylamine N-alkyl, Cl)"
+palladium,Hartenfeller 51k,"Buchwald-Hartwig (diarylamine N-alkyl, Br)"
+palladium,Hartenfeller 51l,"Buchwald-Hartwig (diarylamine N-alkyl, I)"
+palladium,Hartenfeller 53a,"Decarboxylative coupling (ortho-ketone, Cl)"
+palladium,Hartenfeller 53b,"Decarboxylative coupling (ortho-ketone, Br)"
+palladium,Hartenfeller 53c,"Decarboxylative coupling (ortho-ketone, I)"
+palladium,Hartenfeller 53d,"Decarboxylative coupling (ortho-amide, Cl)"
+palladium,Hartenfeller 53e,"Decarboxylative coupling (ortho-amide, Br)"
+palladium,Hartenfeller 53f,"Decarboxylative coupling (ortho-amide, I)"
+palladium,MC 12a,Aryl ether by Buchwald C-O coupling (Cl)
+palladium,MC 12b,Aryl ether by Buchwald C-O coupling (Br)
+palladium,MC 12c,Aryl ether by Buchwald C-O coupling (I)
+palladium,MC 18a,Arylboronic acid by Miyaura borylation (Cl)
+palladium,MC 18b,Arylboronic acid by Miyaura borylation (Br)
+palladium,MC 18c,Arylboronic acid by Miyaura borylation (I)
+palladium,MC 34a,Aryl nitrile by palladium cyanation of an aryl halide (Cl)
+palladium,MC 34b,Aryl nitrile by palladium cyanation of an aryl halide (Br)
+palladium,MC 34c,Aryl nitrile by palladium cyanation of an aryl halide (I)
+palladium,MC 35a,Aryl carboxylic acid by carbonylation of an aryl halide (Cl)
+palladium,MC 35b,Aryl carboxylic acid by carbonylation of an aryl halide (Br)
+palladium,MC 35c,Aryl carboxylic acid by carbonylation of an aryl halide (I)
+palladium,MC 55a,Pinacol boronate by Miyaura borylation (Cl)
+palladium,MC 55b,Pinacol boronate by Miyaura borylation (Br)
+palladium,Mac 3a,"Macrocyclic biaryl, intramolecular Suzuki (Cl)"
+palladium,Mac 3b,"Macrocyclic biaryl, intramolecular Suzuki (Br)"
+palladium,Mac 3c,"Macrocyclic biaryl, intramolecular Suzuki (I)"
+palladium,Mac 4a,"Macrocyclic biaryl, intramolecular Stille (Cl)"
+palladium,Mac 4b,"Macrocyclic biaryl, intramolecular Stille (Br)"
+palladium,Mac 4c,"Macrocyclic biaryl, intramolecular Stille (I)"
+palladium,iSCB 66a,Stille organo-stannane (Cl)
+palladium,iSCB 66b,Stille organo-stannane (Br)
+palladium,iSCB 66c,Stille organo-stannane (I)
+strong-acid,Hartenfeller 1a,Pictet-Spengler (Aldehyde + Primary Amine)
+strong-acid,Hartenfeller 1b,Pictet-Spengler (Aldehyde + Sec. Amine)
+strong-acid,Hartenfeller 1c,Pictet-Spengler (Ketone + Primary Amine)
+strong-acid,Hartenfeller 1d,Pictet-Spengler (Ketone + Sec. Amine)
+strong-acid,Hartenfeller 1e,Pictet-Spengler (Formaldehyde + Primary Amine)
+strong-acid,Hartenfeller 1f,Pictet-Spengler (Formaldehyde + Sec. Amine)
+strong-acid,Hartenfeller 23,Fischer indole
+strong-acid,MC 15,Aryl ketone by Friedel-Crafts acylation
+strong-acid,MC 42,Nitroarene by electrophilic aromatic nitration
+strong-acid,MC 83,Aryl aldehyde by Vilsmeier-Haack formylation
+strong-acid,MC 91a,Intramolecular Friedel-Crafts alkylation closing a ring (Cl)
+strong-acid,MC 91b,Intramolecular Friedel-Crafts alkylation closing a ring (Br)
+strong-acid,MC 91c,Intramolecular Friedel-Crafts alkylation closing a ring (I)
+strong-acid,MC 92,Intramolecular Friedel-Crafts acylation closing a ring
+carbanion,Hartenfeller 44a,Grignard carbonyl (Cl)
+carbanion,Hartenfeller 44b,Grignard carbonyl (Br)
+carbanion,Hartenfeller 44c,Grignard carbonyl (I)
+carbanion,Hartenfeller 45a,Grignard alcohol (Cl)
+carbanion,Hartenfeller 45b,Grignard alcohol (Br)
+carbanion,Hartenfeller 45c,Grignard alcohol (I)
+carbanion,MC 97a,Aryl halide by directed metalation ortho to a ring halogen (Cl)
+carbanion,MC 97b,Aryl halide by directed metalation ortho to a ring halogen (Br)
+carbanion,MC 97c,Aryl halide by directed metalation ortho to a ring halogen (I)

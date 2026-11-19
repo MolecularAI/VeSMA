@@ -1,0 +1,15 @@
+template_code,retro_template,classification
+Se 1,[C:5]-[Se+;D3:1](-[C:6])-!@[CH2:2]-[CH:3]-[OH:4]>>[C:5]-[Se;H0;+0:1]-[C:6].[CH2:2]1-[CH:3]-[O:4]1,Selenonium salt (selenide + epoxide)
+Se 2a,[C:5]-[Se+;D3:1](-[C:6])-!@[C:2]>>[C:5]-[Se;H0;+0:1]-[C:6].[C:2]-[Cl],"Selenonium salt (selenide + alkyl halide, Cl)"
+Se 2b,[C:5]-[Se+;D3:1](-[C:6])-!@[C:2]>>[C:5]-[Se;H0;+0:1]-[C:6].[C:2]-[Br],"Selenonium salt (selenide + alkyl halide, Br)"
+Se 2c,[C:5]-[Se+;D3:1](-[C:6])-!@[C:2]>>[C:5]-[Se;H0;+0:1]-[C:6].[C:2]-[I],"Selenonium salt (selenide + alkyl halide, I)"
+Se 3a,[C:1]-!@[Se;D2:2]-[C:3]>>[C:1]-[Cl].[Se:2]-[C:3],"Dialkyl selenide (selenol + alkyl halide, Cl)"
+Se 3b,[C:1]-!@[Se;D2:2]-[C:3]>>[C:1]-[Br].[Se:2]-[C:3],"Dialkyl selenide (selenol + alkyl halide, Br)"
+Se 3c,[C:1]-!@[Se;D2:2]-[C:3]>>[C:1]-[I].[Se:2]-[C:3],"Dialkyl selenide (selenol + alkyl halide, I)"
+Se 4a,[c:1]-!@[Se;D2:2]-[C:3]>>[c:1]-[Cl].[Se:2]-[C:3],"Aryl selenide (selenol + aryl halide, Cl)"
+Se 4b,[c:1]-!@[Se;D2:2]-[C:3]>>[c:1]-[Br].[Se:2]-[C:3],"Aryl selenide (selenol + aryl halide, Br)"
+Se 4c,[c:1]-!@[Se;D2:2]-[C:3]>>[c:1]-[I].[Se:2]-[C:3],"Aryl selenide (selenol + aryl halide, I)"
+Se 5,[Se;D2:1]-!@[Se;D2:2]>>[Se:1].[Se:2],Diselenide (oxidative coupling of two selenols)
+Se 6a,[C:1]-@[Se;D2:2]-@[C:3]>>[C:1]-[Cl].[C:3]-[Cl].[SeH2:2],"Cyclic selenide from a 1,4-dihalide + selenide (Cl)"
+Se 6b,[C:1]-@[Se;D2:2]-@[C:3]>>[C:1]-[Br].[C:3]-[Br].[SeH2:2],"Cyclic selenide from a 1,4-dihalide + selenide (Br)"
+Se 6c,[C:1]-@[Se;D2:2]-@[C:3]>>[C:1]-[I].[C:3]-[I].[SeH2:2],"Cyclic selenide from a 1,4-dihalide + selenide (I)"

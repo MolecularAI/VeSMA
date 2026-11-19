@@ -1,0 +1,271 @@
+# Results and Discussion
+
+```{python}
+#| include: false
+from pathlib import Path
+
+import pandas as pd
+
+from paperlib import figures
+from paperlib import paper_tables as pt
+
+BENCH = Path.cwd() / ".." / "benchmarks"
+pd.set_option("display.max_colwidth", None)
+```
+
+```{=typst}
+#show table.cell: set align(left)
+#show table.cell: set text(size: 8pt)
+```
+
+## Performance and output consistency of  {{< meta libname >}}
+We present  {{< meta libname >}}, developed to accelerate the complete reaction-template application pipeline on GPUs, with CPU, CUDA, and Metal backends available through a common interface. The pipeline includes atom-assignment enumeration, molecular-graph editing, precursor separation, recalculation of the number of hydrogen atoms and aromaticity, and provenance tracking (@fig-pipeline). We evaluated  {{< meta libname >}} by measuring complete reaction-application throughput and comparing the generated precursors across its three backends and against RDKit and RDChiral references. We considered both aspects together to determine whether the measured throughput was accompanied by consistent precursor outcomes. The benchmark used confirmed positive molecule–template pairs from PaRoutes [@genheden2022paroutes], ensuring that every evaluated pair proceeded to reaction application.
+
+We first assessed how efficiently {{< meta libname >}} performs complete reaction application on CPU and GPU hardware (@tbl-template-application-full). Every timed invocation streams usable precursor graphs to host memory and releases each batch after consumption. Matching, graph editing, precursor separation, hydrogen reconstruction, aromaticity and ring perception, and host delivery are included; input parsing, compilation, molecular-key generation, and deduplication are excluded. RDKit uses its native reaction application and product sanitization, without canonical SMILES generation. We report serial and parallel RDKit, parallel {{< meta libname >}} CPU, Metal, and CUDA on both RTX 4090 and RTX 5090 systems. Metal accelerated this workload relative to the CPU implementations on the Apple M5 Pro. The CUDA systems have different host CPUs, so their absolute timings compare complete host-and-GPU pipelines and do not isolate the effect of GPU generation.
+
+
+```{python}
+#| label: tbl-template-application-full
+#| output: asis
+LIB = "{{< meta libname >}}"  # resolved by Quarto from the front matter
+scaling = pt.load_application(BENCH / "reaction-application")
+full = scaling[scaling["molecules"] == scaling["molecules"].max()]
+
+# (backend, machine, row label); measurements on different systems are not compared.
+ROWS = [
+    ("rdkit-serial", "m5-pro", "RDKit (single core)"),
+    ("rdkit-parallel", "m5-pro", "RDKit parallel"),
+    ("cpu-parallel", "m5-pro", f"{LIB} CPU parallel"),
+    ("metal", "m5-pro", f"{LIB} Metal"),
+]
+rows = pt.select_records(
+    full, [(backend, host) for backend, host, _ in ROWS], ["backend", "machine.host_type"]
+).assign(label=[label for *_, label in ROWS])
+# Select each retained GPU by its recorded device, allowing the host CPU to change.
+# Multiple retained runs for a GPU fail explicitly instead of selecting stale data.
+for device in ("NVIDIA GeForce RTX 4090", "NVIDIA GeForce RTX 5090"):
+    gpu_row = pt.require_one_record(
+        full[(full["backend"] == "cuda-host") & (full["machine.cuda.device_name"] == device)],
+        context=f"current {device} application measurement",
+    )
+    rows = pd.concat([rows, gpu_row.to_frame().T.assign(label=f"{LIB} CUDA host")], ignore_index=True)
+
+
+# The caption's counts come from the rows themselves, which must agree on the workload and
+# on how many raw precursors every VeSMA backend generates.
+workload = pt.require_agreeing_records(
+    rows, ["molecules", "positive_pairs"], context="main-table workload"
+)
+is_rdkit = rows["backend"].str.startswith("rdkit")
+vesma_precursors = pt.require_agreeing_records(
+    rows[~is_rdkit], ["precursors"], context="VeSMA precursor counts"
+)["precursors"]
+rdkit_precursors = pt.require_agreeing_records(
+    rows[is_rdkit], ["precursors"], context="RDKit precursor counts"
+)["precursors"]
+
+table = pd.DataFrame(
+    {
+        "Backend and mode": rows["label"],
+        "System": rows.apply(pt.host_label, axis=1, joiner="+"),
+        "Wall time": rows["stats.mean"].map(pt.format_duration),
+        "Confirmed positive pairs/s": rows["pairs_per_second"].map(pt.format_significant),
+        "Time per precursor (µs)": rows["seconds_per_precursor"].map(pt.format_microseconds),
+    }
+)
+print(pt.qtable(
+    table,
+    caption=(
+        f"Complete reaction-application performance of {LIB} for the full workload of "
+        f"{workload['molecules']:,} products and {workload['positive_pairs']:,} confirmed "
+        f"positive molecule–template pairs. Each record has one warmup and three timed repeats; "
+        "the table reports mean wall time. All rows deliver unkeyed precursor graphs to host "
+        "memory, with batches released after consumption. Wall time and throughput are reported for "
+        "each backend on the indicated system; measurements obtained on different systems are "
+        "absolute results rather than direct speedup comparisons. Time per precursor divides "
+        "wall time by the raw precursors that backend generated, "
+        f"{vesma_precursors:,} for {LIB} and {rdkit_precursors:,} for RDKit."
+    ),
+    table_id="tbl-template-application-full",
+    colwidths=[26, 24, 11, 21, 18],
+))
+```
+
+We next examined whether the {{< meta libname >}} backends produced consistent outputs. Across the 768,015 confirmed positive molecule–template pairs, the CPU, Metal, and CUDA backends each generated 3,291,757 raw precursors, showing identical output multiplicity across the three implementations. In comparison, RDKit generated 3,458,007 precursors from the same pairs. This difference arose mainly when a template specified two precursor components and the matched bond was part of a ring. RDKit followed the two-component topology encoded in the template and duplicated the shared ring atoms, whereas {{< meta libname >}} applied the bond edit directly to the molecular graph and returned a single ring-opened precursor. When the disconnected bond was not part of a ring, the two implementations produced identical output multiplicity.
+
+This specific difference prompted us to examine how the choice of reaction engine changed the generated precursor set. We therefore compared {{< meta libname >}}, RDKit, and RDChiral for each confirmed molecule–template pair (@tbl-precursor-audit-agreement). {{< meta libname >}} showed high agreement with both RDKit and RDChiral, with slightly higher agreement with RDChiral. Agreement with RDKit was similar to agreement between RDKit and RDChiral, showing that reaction engines can differ even when they share the same molecular infrastructure.
+
+```{python}
+#| label: tbl-precursor-audit-agreement
+#| output: asis
+print(pt.qtable(
+    pt.precursor_audit_agreement_table(),
+    caption="Exact agreement of precursor outcome sets across all 768,015 confirmed positive molecule--template pairs. Comparable-pair rates exclude pairs for which either engine could not provide a complete outcome set in the shared comparison space.",
+    table_id="tbl-precursor-audit-agreement",
+    colwidths=[34, 33, 33],
+))
+```
+
+The performance table measures reaction application with unkeyed host output. Molecular-key generation and deduplication are optional downstream operations and are excluded from these timings. The Supplementary Information (SI) reports scaling across workload sizes, hardware, software, and reproduction settings for the same workload.
+
+## Validation across reaction templates and multi-step routes
+
+After establishing performance and output consistency, we examined whether {{< meta libname >}} supports the range of reaction templates required for multi-step retrosynthesis. We tested {{< meta libname >}} against three PaRoutes-derived template collections [@genheden2022paroutes]: `used14k`, containing 13,978 unique templates; `raw68k`, containing 67,557; and `uspto42k`, containing 42,554. Every unique template parsed and compiled successfully, confirming that {{< meta libname >}} covers all reaction rules needed for the subsequent route-level evaluation.
+
+Template compatibility alone, however, did not establish whether the generated precursors remained usable in subsequent reaction steps. We therefore performed template-guided replay of 10,000 PaRoutes n1 routes. Starting from each target molecule, we applied the template recorded at each reaction node and passed the precursors generated by {{< meta libname >}}, rather than the reference intermediates, to the next step. Successful replay therefore required the complete reaction-application sequence, molecular identity handling, and stock matching to remain consistent across successive steps.
+
+We next compared the replayed routes with the corresponding reference routes at three levels: complete route agreement, template-and-stock agreement, and template-only agreement (@tbl-route-replay). Complete route agreement required the same templates, intermediates, and stock leaves; the other two measures progressively allowed differences in intermediates and leaves. CUDA and Metal produced identical outcomes and achieved complete route agreement for 99.7% of the 10,000 routes, compared with 99.5% for RDKit. The identical GPU outcomes show that the consistency observed for individual reaction applications was maintained across complete multi-step routes.
+
+```{python}
+#| label: tbl-route-replay
+#| output: asis
+replay = pt.load_benchmarks(BENCH / "route-replay")
+pt.require_columns(replay, [
+    "mode", "routes", "strict_reference_recoveries", "loose_reference_recoveries",
+    "library_reference_recoveries", "diagnostics.not-solved",
+    "diagnostics.strict-reference-route-not-generated", "stats.mean",
+], context="template-guided route replay")
+replay = replay[(replay["mode"] == "topology") & (replay["routes"] == 10000)].copy()
+replay["order"] = replay["backend"].map(pt.backend_order)
+replay = replay.sort_values("order")
+rows = []
+for _, r in replay.iterrows():
+    total = int(r["routes"])
+    rows.append({
+        "Backend and system": f"{pt.backend_label(r['backend'])}; {r['machine.host_type']}",
+        "Complete route": pt.fraction_cell(r["strict_reference_recoveries"], total),
+        "Template + stock": pt.fraction_cell(r["loose_reference_recoveries"], total),
+        "Template only": pt.fraction_cell(r["library_reference_recoveries"], total),
+        "Unsolved": f"{int(r['diagnostics.not-solved']):,}",
+        "Generated but not complete": f"{int(r['diagnostics.strict-reference-route-not-generated']):,}",
+    })
+print(pt.qtable(pd.DataFrame(rows), caption="Template-guided replay of 10,000 PaRoutes n1 routes using RDKit, Metal, and CUDA. Complete route agreement requires identical templates, intermediates, and stock leaves; template-and-stock and template-only agreement progressively permit differences in intermediates and leaves. Detailed disagreement indices and diagnostic categories are provided in the Supplementary Information (SI)", table_id="tbl-route-replay"))
+```
+
+## {{< meta libname >}} validation in exhaustive depth-two expansion
+
+We next examined how {{< meta libname >}} performs when many alternative transformations are explored. We integrated {{< meta libname >}} into {{< meta libname >}}-Retrosynthesis (VeRTSY), a workflow that applies a fixed template collection exhaustively to successive molecular frontiers. Using the previously evaluated used14k collection, we evaluated VeRTSY on the 2,881 targets corresponding to depth-two routes in the PaRoutes n1 set. Across the two expansion layers, VeRTSY deduplicated the generated molecules, constructed an AND/OR graph of alternative reactions, and assessed stock-terminating routes and recovery of the corresponding reference routes. The fingerprint prefilter excluded only molecule–template pairs that could not match, preserving exhaustive application of the remaining templates.
+
+Since the used14k collection was derived from the PaRoutes n1 and n5 routes, the templates required to reproduce the evaluated reference routes were present by construction. The experiment therefore tested whether the complete workflow could preserve and recognize known routes while enumerating alternatives. Generalization to an independent template collection, route ranking, and the synthetic feasibility of the additional routes remained outside its scope.
+
+Exhaustive expansion recovered the reference route for 99.7% of the targets (@tbl-depth-two), with identical outcomes under complete route, template-and-stock, and template-only comparisons. For the remaining eight targets, VeRTSY found alternative routes reaching stock; consequently, every target had at least one stock-terminating route. These recovery results do not show the amount of work required. We therefore examined how the molecular frontier and computational workload grew across the two expansion layers.
+
+```{python}
+#| label: tbl-depth-two
+#| output: asis
+recovery = pt.load_benchmarks(BENCH / "route-recovery")
+full = recovery[(recovery["backend"] == "cuda-device-prefilter") & (recovery["rule_set"] == "used14k") & (recovery["num_targets"] == 2881)]
+r = pt.require_one_record(full, context="full used14k depth-two record")
+
+# The reader's guide to this table is built here, from the same row the table is built from,
+# and carried in the caption rather than in the paragraph below. A rerun on new hardware moved
+# these counts once already and the prose kept the old ones -- claiming ten unsolved targets
+# against a record that solves every one -- because a number retyped into a sentence has
+# nothing tying it to the data. Every count the paragraph used to quote is a row of the table.
+d2_targets = int(r["num_targets"])
+d2_recovered = int(r["strict_reference_recoveries"])
+# Load-bearing: the caption says all three comparisons recover the *same* references.
+assert (
+    d2_recovered
+    == int(r["loose_reference_recoveries"])
+    == int(r["library_reference_recoveries"])
+), "complete route, template-and-stock, and template-only recoveries differ; the caption claims one number for all three"
+d2_solved = int(r["any_solved_recoveries"])
+# Written to read as English at whatever the counts happen to be: today nothing is unsolved,
+# and "and 0 are not solved at all" is not a clause anyone would write by hand.
+d2_rest = f"{d2_solved - d2_recovered:,} are solved by other routes"
+if d2_targets - d2_solved:
+    d2_rest += f" and {d2_targets - d2_solved:,} are not solved at all"
+d2_summary = (
+    f"All three comparisons recover the same {d2_recovered:,} references "
+    f"({100 * d2_recovered / d2_targets:.1f}%); of the remainder, {d2_rest}."
+)
+
+table = pd.DataFrame([
+    {
+        "Outcome": "Reference route recovered under all three comparisons",
+        "Result": pt.fraction_cell(
+            r["strict_reference_recoveries"],
+            r["num_targets"]
+        )
+    },
+    {
+        "Outcome": "Any stock-terminating route found",
+        "Result": pt.fraction_cell(
+            r["any_solved_recoveries"],
+            r["num_targets"]
+        )
+    },
+    {
+        "Outcome": "Layer-expansion wall time",
+        "Result": pt.format_duration(float(r["total_search_seconds"]))
+    },
+    {
+        "Outcome": "Complete workflow wall time, including route analysis",
+        "Result": pt.format_duration(float(r["stats.mean"]))
+    },
+])
+print(pt.qtable(table, caption=f"Exhaustive depth-two route recovery for 2,881 targets corresponding to depth-two routes in the PaRoutes n1 set using the used14k collection. The calculation used CUDA device execution with fingerprint prefiltering on {pt.host_label(r)}. Wall times are single-run observations for this validation workload.", table_id="tbl-depth-two"))
+```
+
+The frontier grew from 2,879 unique non-stock molecules to approximately 328,000 after the first expansion and 20.5 million after the second, corresponding to approximately 114- and 63-fold increases, respectively (@fig-frontier-growth a). The second layer alone evaluated 4.6 billion molecule–template pairs and generated approximately 179 million raw precursors before stock filtering and deduplication reduced the output to 20.5 million unique non-stock molecules (@fig-frontier-growth b). Thus, filtering and deduplication substantially reduced the precursor pool, but the surviving frontier still expanded rapidly. Accelerating reaction application therefore addresses only part of the computational burden of exhaustive expansion; the growing molecular frontier must also be managed between successive layers. The extent of this growth is specific to the target set, template collection, stock, and molecular identity criteria used here.
+
+```{python}
+#| output: asis
+
+# `recovery` is the route-recovery table loaded for tbl-depth-two above.
+STAGES = {  # the record's per-layer counters, in pipeline order, and how the axis names them
+    "frontier_size": "Input frontier",
+    "pairs": "Pairs evaluated",
+    "applications": "Reaction applications",
+    "precursors": "Precursors generated",
+    "next_frontier_size": "Unique output",
+}
+full = recovery.query("backend == 'cuda-device-prefilter' and rule_set == 'used14k' and num_targets == 2881")
+record = pt.require_one_record(full, context="full used14k depth-two record")
+layers = pd.json_normalize([layer for target in record["targets"] for layer in target["layers"]])
+totals = layers.groupby("depth")[list(STAGES)].sum()  # summed over targets: one row per layer
+
+output, next_input = totals["next_frontier_size"], totals["frontier_size"]
+assert (output.iloc[:-1].to_numpy() == next_input.iloc[1:].to_numpy()).all(), "a layer's output is the next layer's input"
+sizes = pd.concat([next_input.iloc[:1], output], ignore_index=True)  # frontier entering layer 0, then leaving each layer
+limits = figures.decade_limits(totals.to_numpy())  # one y range for both panels
+
+# Layer 1's input frontier is layer 0's output, labelled where the dashed line ends.
+labelled = pd.DataFrame(True, index=totals.index, columns=totals.columns)
+labelled.iloc[-1, 0] = False
+
+# Panel sizes in inches. Side by side they fit the narrowest text width we print (A4, 5.77 in);
+# on a narrower page the renderer wraps panel (b) under panel (a).
+HEIGHT, WIDTH_A, WIDTH_B = 3.0, 2.3, 3.35
+panels = [
+    figures.trend_panel(
+        sizes, limits=limits, size=(WIDTH_A, HEIGHT), tag="(a)",
+        xlabel="Breadth-first\nexpansion layer", ylabel="Unique non-stock\nfrontier molecules",
+    ),
+    figures.profile_panel(
+        totals.rename(columns=STAGES), limits=limits, size=(WIDTH_B, HEIGHT), tag="(b)",
+        ylabel="Count per expansion layer",
+        label=lambda depth: f"Layer {depth} → {depth + 1}",
+        guide=(output.iloc[0], "output = next\nlayer's input"),
+        labelled=labelled,
+        xtick_rotation=40,
+    ),
+]
+print(figures.qfigure(
+    panels,
+    figure_id="fig-frontier-growth",
+    alts=[
+        "Line plot on a logarithmic axis of the unique non-stock frontier molecules at each expansion layer, with the multiplier between consecutive layers marked.",
+        "Line plot on a logarithmic axis of the molecule-rule pairs evaluated, reaction applications, precursors generated and unique output retained, one line per expansion layer; a dashed line marks each layer's output as the next layer's input.",
+    ],
+    caption=(
+        "Per-layer workload of the exhaustive route-recovery integration test summarized in @tbl-depth-two. "
+        "(a) Unique non-stock frontier size recorded at each layer, with observed multipliers annotated. "
+        "(b) Molecule--rule pairs evaluated, reaction applications, raw precursors generated, and unique non-stock output "
+        "retained after stock filtering and host-controlled WL-key deduplication. "
+        "Each layer's unique output equals the next layer's input frontier (dashed line). "
+        "Exact counts are given in Supplimentary Information (SI)."
+    ),
+))
+```

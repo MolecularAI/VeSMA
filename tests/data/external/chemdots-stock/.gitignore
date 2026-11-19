@@ -1,0 +1,4 @@
+/raw/
+# Re-fetchable with prepare.sh, and an order of magnitude larger than the
+# SMILES-only file beside it. Both read as the same stock; only a report tells them apart.
+/processed/chemdots_enamine_bbs_annotated.smi.bz2

@@ -1,0 +1,4 @@
+template_code,retro_template,classification
+Gly 1a,[CH1:1](-[O:2])(-[C:3])-[C:4]#[N:5]>>[CH1:1](-[O:2])(-[C:3])-[O]-[C](-[CH3])=[O].[C:4](#[N:5])-[Si](-[CH3])(-[CH3])-[CH3],C-glycosyl nitrile from an anomeric acetate and TMSCN (Lewis acid)
+Gly 1b,[CH1:1](-[O:2])(-[C:3])-[C:4]#[N:5]>>[CH1:1](-[O:2])(-[C:3])-[Br].[C:4](#[N:5])-[Si](-[CH3])(-[CH3])-[CH3],C-glycosyl nitrile from a glycosyl bromide and TMSCN
+Gly 1c,[CH1:1](-[O:2])(-[C:3])-[C:4]#[N:5]>>[CH1:1](-[O:2])(-[C:3])-[Cl].[C:4](#[N:5])-[Si](-[CH3])(-[CH3])-[CH3],C-glycosyl nitrile from a glycosyl chloride and TMSCN

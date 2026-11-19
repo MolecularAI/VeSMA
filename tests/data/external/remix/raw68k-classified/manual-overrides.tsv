@@ -1,0 +1,29 @@
+# Hand-assigned labels for templates no classifier could label.
+#
+# Applied last by build_raw68k_classified.py, which marks every row it touches
+# label_source=manual so the curated set can be built with or without them.
+#
+# These three are the only templates in the library that BOTH ReactionClassifier and
+# Rxn-INSIGHT return "0.0 Unrecognized" for, and they are the same three rows in both
+# files. They are one chemistry: the Balz-Schiemann reaction, a primary aromatic amine
+# converted to an aryl fluoride via a diazonium salt. What defeats both classifiers is
+# most likely the fluorinating agent's SMILES, written F-[PH](-F)(-F)(-F)(-F)-F rather
+# than as a tetrafluoroborate or hexafluorophosphate anion.
+#
+# The code is taken from the vendored taxonomy, not invented. The taxonomy carries this
+# transformation twice:
+#
+#   9.1.5.12    Aryl Primary Amine to Aryl Fluoride   (Halogenation > Halogenation of Arenes)
+#   8.7.4.18    Primary aromatic amine to aryl fluoride  (Other FGI > Amine Derivatizations)
+#
+# 9.1.5.12 is used because it sits in a coherent, systematically populated family --
+# 9.1.5.7 is the aryl iodide and 9.1.5.14 the aryl bromide of the same Sandmeyer-type
+# chemistry -- where 8.7 is an "Other" catch-all. Both codes have "cond: Balz-Schiemann
+# Reaction" as a child, so the taxonomy agrees they are the same reaction; the choice is
+# which of its two homes to file under, and it is recorded here rather than left implicit.
+#
+# Columns: template_hash, code, name, basis, added_on
+template_hash	code	name	basis	added_on
+0cce9c94f55663241dc80254955bb6d0f52e04b990d65674344f5e60f500f7bc	9.1.5.12	Aryl Primary Amine to Aryl Fluoride	manual; template_code 2110, library_occurence 18; Balz-Schiemann	2026-09-23
+92033cdaa0ea12b7aa20f274e0d00ff608508bd914951450cbabe15dcdd2eb2a	9.1.5.12	Aryl Primary Amine to Aryl Fluoride	manual; template_code 24283, library_occurence 9; Balz-Schiemann	2026-09-23
+f63c1c50694862d494f1ef87316a6d153ad20b465b2683b4c5b452a43a068d0f	9.1.5.12	Aryl Primary Amine to Aryl Fluoride	manual; template_code 40914, library_occurence 18; Balz-Schiemann	2026-09-23

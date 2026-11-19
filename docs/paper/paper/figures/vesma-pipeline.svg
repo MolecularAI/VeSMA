@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="680" viewBox="0 0 1400 680" role="img" aria-labelledby="title desc">
+  <title id="title">Vesma reaction-application flow</title>
+  <desc id="desc">CPU preparation parses and compiles reaction rules and constructs molecular graphs. A necessary-only fingerprint prefilter may remove impossible pairs before separate CPU, CUDA, or Metal implementations enumerate subgraph assignments, apply atom and bond edits, split components, and update hydrogen state, aromaticity, and ring descriptors. ReactionMatcher returns a raw backend-native precursor batch and HitArray. Molecules may be materialized, reused for the next frontier, or optionally assigned molecular keys that are returned to the caller for stock lookup and deduplication.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+    <style>
+      .group { fill:#f8fafc; stroke:#64748b; stroke-width:2; }
+      .core-group { fill:#f0f9ff; stroke:#0284c7; stroke-width:2.4; }
+      .box { fill:#ffffff; stroke:#64748b; stroke-width:1.8; }
+      .core-box { fill:#ffffff; stroke:#0284c7; stroke-width:1.8; }
+      .optional { fill:#fffbeb; stroke:#d97706; stroke-width:2.2; stroke-dasharray:8 6; }
+      .result { fill:#ecfdf5; stroke:#059669; stroke-width:2.2; }
+      .key { fill:#faf5ff; stroke:#9333ea; stroke-width:2.2; stroke-dasharray:8 6; }
+      .arrow { fill:none; stroke:#334155; stroke-width:2.2; marker-end:url(#arrow); }
+      .branch { fill:none; stroke:#475569; stroke-width:2; marker-end:url(#arrow); }
+      .label { font:600 21px Arial, sans-serif; fill:#0f172a; text-anchor:middle; }
+      .small { font:400 17px Arial, sans-serif; fill:#334155; text-anchor:middle; }
+      .tiny { font:400 15px Arial, sans-serif; fill:#334155; text-anchor:middle; }
+      .source { font:400 14px Arial, sans-serif; fill:#334155; text-anchor:middle; }
+      .group-label { font:600 20px Arial, sans-serif; fill:#0f172a; }
+      .tag { font:600 16px Arial, sans-serif; fill:#075985; text-anchor:middle; }
+      .note { font:400 16px Arial, sans-serif; fill:#475569; text-anchor:middle; }
+      .optional-label { font:600 15px Arial, sans-serif; fill:#92400e; text-anchor:middle; }
+    </style>
+  </defs>
+  <rect width="1400" height="680" fill="#ffffff"/>
+
+  <rect class="group" x="25" y="30" width="300" height="410" rx="18"/>
+  <text class="group-label" x="48" y="62">CPU preparation</text>
+
+  <rect class="box" x="45" y="82" width="120" height="72" rx="10"/>
+  <text class="source" x="105" y="109">
+    <tspan x="105">Reaction SMARTS</tspan>
+    <tspan x="105" dy="22">or SMIRKS</tspan>
+  </text>
+  <rect class="box" x="185" y="82" width="120" height="72" rx="10"/>
+  <text class="source" x="245" y="102">
+    <tspan x="245">SMARTS / SMILES</tspan>
+    <tspan x="245" dy="22">or RDKit Mol</tspan>
+  </text>
+
+  <rect class="box" x="45" y="182" width="120" height="66" rx="10"/>
+  <text class="small" x="105" y="208">
+    <tspan x="105">Parse and</tspan>
+    <tspan x="105" dy="22">compile</tspan>
+  </text>
+  <rect class="box" x="185" y="182" width="120" height="66" rx="10"/>
+  <text class="small" x="245" y="208">
+    <tspan x="245">Construct</tspan>
+    <tspan x="245" dy="22">CMol / GMol</tspan>
+  </text>
+
+  <path class="arrow" d="M105 154 L105 182"/>
+  <path class="arrow" d="M245 154 L245 182"/>
+
+  <rect class="box" x="55" y="285" width="240" height="105" rx="12"/>
+  <text class="label" x="175" y="316">Encoded graph inputs</text>
+  <text class="small" x="175" y="352">+ atom masks + edit plan</text>
+  <text class="note" x="175" y="418">Pack/copy for CUDA or Metal</text>
+  <path class="arrow" d="M105 248 C105 270 145 263 155 285"/>
+  <path class="arrow" d="M245 248 C245 270 205 263 195 285"/>
+
+  <rect class="optional" x="365" y="235" width="175" height="120" rx="14"/>
+  <text class="optional-label" x="452" y="267">(OPTIONAL)</text>
+  <text class="label" x="452" y="302">
+    <tspan x="452">Fingerprint</tspan>
+    <tspan x="452" dy="25">prefilter</tspan>
+  </text>
+
+  <rect class="core-group" x="575" y="80" width="570" height="350" rx="18"/>
+  <text class="group-label" x="598" y="115">Backend reaction application</text>
+  <text class="note" x="860" y="144">separate implementations behind one result contract</text>
+
+  <rect x="690" y="162" width="88" height="34" rx="17" fill="#e0f2fe" stroke="#0284c7"/>
+  <text class="tag" x="734" y="184">CPU</text>
+  <rect x="816" y="162" width="88" height="34" rx="17" fill="#e0f2fe" stroke="#0284c7"/>
+  <text class="tag" x="860" y="184">CUDA</text>
+  <rect x="942" y="162" width="88" height="34" rx="17" fill="#e0f2fe" stroke="#0284c7"/>
+  <text class="tag" x="986" y="184">Metal</text>
+
+  <rect class="core-box" x="595" y="225" width="125" height="120" rx="12"/>
+  <text class="label" x="657" y="259">
+    <tspan x="657">Subgraph</tspan>
+    <tspan x="657" dy="25">match</tspan>
+  </text>
+  <text class="small" x="657" y="309">
+    <tspan x="657">enumerate</tspan>
+    <tspan x="657" dy="21">assignments</tspan>
+  </text>
+
+  <rect class="core-box" x="735" y="225" width="120" height="120" rx="12"/>
+  <text class="label" x="795" y="272">
+    <tspan x="795">Apply</tspan>
+    <tspan x="795" dy="25">graph edits</tspan>
+  </text>
+
+  <rect class="core-box" x="870" y="225" width="120" height="120" rx="12"/>
+  <text class="label" x="930" y="259">
+    <tspan x="930">Split</tspan>
+    <tspan x="930" dy="25">connected</tspan>
+    <tspan x="930" dy="25">components</tspan>
+  </text>
+
+  <rect class="core-box" x="1005" y="225" width="120" height="120" rx="12"/>
+  <text class="label" x="1065" y="252">
+    <tspan x="1065">Update</tspan>
+    <tspan x="1065" dy="25">properties</tspan>
+  </text>
+  <text class="small" x="1065" y="307">
+    <tspan x="1065">H, aromaticity</tspan>
+    <tspan x="1065" dy="21">R, r, x</tspan>
+  </text>
+
+  <path class="arrow" d="M720 285 L735 285"/>
+  <path class="arrow" d="M855 285 L870 285"/>
+  <path class="arrow" d="M990 285 L1005 285"/>
+
+  <rect class="result" x="1170" y="190" width="200" height="190" rx="15"/>
+  <text class="label" x="1270" y="225">
+    <tspan x="1270">ReactionMatcher</tspan>
+    <tspan x="1270" dy="25">result</tspan>
+  </text>
+  <text class="small" x="1270" y="288">
+    <tspan x="1270">raw backend-native</tspan>
+    <tspan x="1270" dy="22">precursor batch</tspan>
+    <tspan x="1270" dy="27">+ HitArray</tspan>
+    <tspan class="tiny" x="1270" dy="22">(product, rule, application)</tspan>
+  </text>
+
+  <path class="arrow" d="M295 320 L365 320"/>
+  <path class="arrow" d="M540 285 L595 285"/>
+  <path class="arrow" d="M1125 285 L1170 285"/>
+
+  <path d="M1270 380 L1270 470 L500 470" fill="none" stroke="#475569" stroke-width="2"/>
+  <path class="branch" d="M500 470 L500 520"/>
+  <path class="branch" d="M825 470 L825 520"/>
+  <path class="branch" d="M1200 470 L1200 505"/>
+
+  <rect class="result" x="350" y="520" width="300" height="120" rx="14"/>
+  <text class="label" x="500" y="555">Molecule output</text>
+  <text class="small" x="500" y="587">
+    <tspan x="500">return or materialize</tspan>
+    <tspan x="500" dy="23">precursor molecules</tspan>
+  </text>
+
+  <rect class="result" x="675" y="520" width="300" height="120" rx="14"/>
+  <text class="label" x="825" y="555">Next frontier</text>
+  <text class="small" x="825" y="585">
+    <tspan x="825">reuse the precursor batch</tspan>
+    <tspan x="825" dy="23">(CUDA may retain it on device</tspan>
+    <tspan x="825" dy="22">as an optimization)</tspan>
+  </text>
+
+  <rect class="key" x="1030" y="520" width="340" height="120" rx="14"/>
+  <text class="optional-label" x="1200" y="542">(OPTIONAL)</text>
+  <text class="label" x="1200" y="570">Molecular keys</text>
+  <text class="small" x="1200" y="596">key values returned to caller</text>
+  <text class="small" x="1200" y="621">stock lookup + deduplication</text>
+</svg>

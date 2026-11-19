@@ -1,0 +1,11 @@
+{
+  "file": "retrostar190.smi.gz",
+  "source": "https://raw.githubusercontent.com/AustinT/retro-fallback-iclr24/main/retro_fallback_iclr24/iclr24_experiments/retrostar190/retrostar190.smiles",
+  "upstream": "https://ndownloader.figshare.com/files/44956066",
+  "upstream_file": "190-hard-test-routes.pkl",
+  "targets": 190,
+  "unique_targets": 190,
+  "sha256_plain": "92ab1b8618bbd5a9edae2257d2c370ac60df08131a52c7cea08c4d245702e079",
+  "note": "Retro* Hard: the 190 targets of Chen et al. (2020), the set the syntheseus paper reports multi-step search on. SMILES are RDKit-canonical as extracted upstream and are not re-canonicalized here.",
+  "computed_on": "2026-08-14"
+}

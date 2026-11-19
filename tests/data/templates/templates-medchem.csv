@@ -1,0 +1,258 @@
+template_code,retro_template,classification
+MC 1a,[c:1]1(-[O:2]-[#6:8]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1>>[c:1]1(-[Cl]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1.[O:2]-[#6:8],SNAr with an alcohol on an azine (Cl)
+MC 2a,[c:1]1(-[S:2]-[#6:8]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1>>[c:1]1(-[Cl]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1.[S:2]-[#6:8],SNAr with a thiol on an azine (Cl)
+MC 1b,[c:1]1(-[O:2]-[#6:8]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1>>[c:1]1(-[F]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1.[O:2]-[#6:8],SNAr with an alcohol on an azine (F)
+MC 2b,[c:1]1(-[S:2]-[#6:8]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1>>[c:1]1(-[F]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1.[S:2]-[#6:8],SNAr with a thiol on an azine (F)
+MC 1c,[c:1]1(-[O:2]-[#6:8]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1>>[c:1]1(-[Br]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1.[O:2]-[#6:8],SNAr with an alcohol on an azine (Br)
+MC 2c,[c:1]1(-[S:2]-[#6:8]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1>>[c:1]1(-[Br]):[n:3]:[c:4]:[c:5]:[c:6]:[c:7]:1.[S:2]-[#6:8],SNAr with a thiol on an azine (Br)
+MC 3,[c:1]-[NH2;D1:2]>>([c:1]-[N+;H0:2](=O)[O-]).(Cl[Sn]Cl).(Cl[Sn]Cl).(Cl[Sn]Cl).(Cl).(Cl).(Cl).(O),Aniline by nitro reduction
+MC 4,[C:1](=[O])-[NH2;D1:2]>>([C:1]#[N:2]).(O),Primary amide by nitrile hydrolysis
+MC 5,[CH2:1](-[#6:3])-[OH:2]>>([CH:1](-[#6:3])=[O:2]).([BH4-]).(O),Primary alcohol by aldehyde reduction (borohydride; scope is aldehyde and ketone)
+MC 6,[CH1:1](-[#6:3])(-[#6:4])-[OH:2]>>([C:1](-[#6:3])(-[#6:4])=[O:2]).([BH4-]).(O),Secondary alcohol by ketone reduction (borohydride; scope is aldehyde and ketone)
+MC 7,[n:1]1:[c:2]:[n:3]:[c:4]:[c:5]:[c:6]:1>>[N:1]-[C:2]=[N:3].[C:4](=O)-[C:5]-[C:6]=O,"Pyrimidine from an amidine and a 1,3-dicarbonyl"
+MC 8a,[C:1](=O)-[N;H0;D3:2](-[#6:3])-[CX4:4]>>([C:1](=O)-[NH:2]-[#6:3]).([CX4:4]-[Cl]),Amide N-alkylation (Cl)
+MC 9a,[c:1]-!@[Cl]>>[c:1]-[NH2],"Aryl halide from an aniline, Sandmeyer (Cl)"
+MC 12a,[c:1]-!@[O:2]-[#6:3]>>[c:1]-[Cl].[O:2]-[#6:3],Aryl ether by Buchwald C-O coupling (Cl)
+MC 13a,[c:1]-!@[n:2]>>[c:1]-[Cl].[nH:2],N-arylation of an azole (Cl)
+MC 14a,[S:1](=O)(=O)-[N;H0;D3:2](-[#6:3])-[CX4:4]>>[S:1](=O)(=O)-[NH:2]-[#6:3].[CX4:4]-[Cl],Sulfonamide N-alkylation (Cl)
+MC 8b,[C:1](=O)-[N;H0;D3:2](-[#6:3])-[CX4:4]>>([C:1](=O)-[NH:2]-[#6:3]).([CX4:4]-[Br]),Amide N-alkylation (Br)
+MC 9b,[c:1]-!@[Br]>>[c:1]-[NH2],"Aryl halide from an aniline, Sandmeyer (Br)"
+MC 12b,[c:1]-!@[O:2]-[#6:3]>>[c:1]-[Br].[O:2]-[#6:3],Aryl ether by Buchwald C-O coupling (Br)
+MC 13b,[c:1]-!@[n:2]>>[c:1]-[Br].[nH:2],N-arylation of an azole (Br)
+MC 14b,[S:1](=O)(=O)-[N;H0;D3:2](-[#6:3])-[CX4:4]>>[S:1](=O)(=O)-[NH:2]-[#6:3].[CX4:4]-[Br],Sulfonamide N-alkylation (Br)
+MC 8c,[C:1](=O)-[N;H0;D3:2](-[#6:3])-[CX4:4]>>([C:1](=O)-[NH:2]-[#6:3]).([CX4:4]-[I]),Amide N-alkylation (I)
+MC 9c,[c:1]-!@[I]>>[c:1]-[NH2],"Aryl halide from an aniline, Sandmeyer (I)"
+MC 12c,[c:1]-!@[O:2]-[#6:3]>>[c:1]-[I].[O:2]-[#6:3],Aryl ether by Buchwald C-O coupling (I)
+MC 13c,[c:1]-!@[n:2]>>[c:1]-[I].[nH:2],N-arylation of an azole (I)
+MC 14c,[S:1](=O)(=O)-[N;H0;D3:2](-[#6:3])-[CX4:4]>>[S:1](=O)(=O)-[NH:2]-[#6:3].[CX4:4]-[I],Sulfonamide N-alkylation (I)
+MC 10,[c:1]-!@[F]>>[c:1]-[NH2],"Aryl fluoride from an aniline, Balz-Schiemann"
+MC 11,[c:1]-!@[C]#[N]>>([c:1]-[NH2]).(N#C[Cu]),"Aryl nitrile from an aniline, Sandmeyer"
+MC 15,[c:1]-!@[C:2](=[O:3])-[#6:4]>>[c:1].[C:2](=[O:3])(-[Cl])-[#6:4],Aryl ketone by Friedel-Crafts acylation
+MC 16,[C:1](=[O:2])-[Cl]>>([C:1](=[O:2])-[OH]).(O=S(Cl)Cl),Acid chloride from a carboxylic acid
+MC 18a,[c:1]-[B]([OH])[OH]>>([c:1]-[Cl]).(OB(O)B(O)O),Arylboronic acid by Miyaura borylation (Cl)
+MC 19a,[c:1]-[Sn](C)(C)C>>([c:1]-[Cl]).(C[Sn](C)(C)[Sn](C)(C)C),Aryl stannane from an aryl halide (Cl)
+MC 18b,[c:1]-[B]([OH])[OH]>>([c:1]-[Br]).(OB(O)B(O)O),Arylboronic acid by Miyaura borylation (Br)
+MC 19b,[c:1]-[Sn](C)(C)C>>([c:1]-[Br]).(C[Sn](C)(C)[Sn](C)(C)C),Aryl stannane from an aryl halide (Br)
+MC 18c,[c:1]-[B]([OH])[OH]>>([c:1]-[I]).(OB(O)B(O)O),Arylboronic acid by Miyaura borylation (I)
+MC 19c,[c:1]-[Sn](C)(C)C>>([c:1]-[I]).(C[Sn](C)(C)[Sn](C)(C)C),Aryl stannane from an aryl halide (I)
+MC 20,[S:1](=[O:2])(=[O:3])-[Cl]>>[S:1](=[O:2])(=[O:3])-[OH],Sulfonyl chloride from a sulfonic acid
+MC 21,[S:1](=[O])(=[O])(-[#6:2])-[#6:3]>>([S;H0:1](-[#6:2])-[#6:3]).(OOC(=O)c1cccc(Cl)c1),Sulfone by sulfide oxidation
+MC 22,[S:1](=[O])(-[#6:2])-[#6:3]>>([S;H0:1](-[#6:2])-[#6:3]).(OOC(=O)c1cccc(Cl)c1),Sulfoxide by sulfide oxidation
+MC 23,[C:1]1-[O:2]-[C:3]-[C:4]-1>>[C:1](-[Br])-[C:4]-[C:3]-[O:2],Oxetane by intramolecular Williamson
+MC 24,[C:1]1-[O:2]-[C:3]-[C:4]-[C:5]-1>>[C:1](-[Br])-[C:5]-[C:4]-[C:3]-[O:2],Tetrahydrofuran by intramolecular Williamson
+MC 25a,[#6:4]-[CH2;D2:1]-[N;H1;D2:3]-[CX4:5]>>[#6:4]-[CH1:1]=[O].[N;H2;D1:3]-[CX4:5].[BH4-].O,Secondary amine by reductive amination of an aldehyde
+MC 25b,[#6:4]-[CH2;D2:1]-[N;H1;D2:3]-[c:5]>>[#6:4]-[CH1:1]=[O].[N;H2;D1:3]-[c:5].[BH4-].O,Secondary arylamine by reductive amination of an aldehyde
+MC 26,[#6:4]-[CH2;D2:1]-[N;H0;D3:3](-[CX4:5])-[CX4:6]>>([#6:4]-[CH1:1]=[O]).([N;H1;D2:3](-[CX4:5])-[CX4:6]).([BH4-]).(O),Tertiary amine by reductive amination of an aldehyde
+MC 28,[n;a:3]:[c;H0:4](:[c:5])-[CH2;D2:1]-[#6:2]>>[n;a:3]:[cH;D2:4]:[c:5].[OH]-[C](=[O])-[CH2:1]-[#6:2],Minisci alkylation of an azine with a carboxylic acid
+MC 29a,[C:1](=[O:4])-[O:2]-[CH2;D2:3]>>[C:1](=[O:4])-[OH:2].[CH2;D2:3]-[Cl],Ester by O-alkylation of a carboxylic acid (Cl)
+MC 29b,[C:1](=[O:4])-[O:2]-[CH2;D2:3]>>[C:1](=[O:4])-[OH:2].[CH2;D2:3]-[Br],Ester by O-alkylation of a carboxylic acid (Br)
+MC 29c,[C:1](=[O:4])-[O:2]-[CH2;D2:3]>>[C:1](=[O:4])-[OH:2].[CH2;D2:3]-[I],Ester by O-alkylation of a carboxylic acid (I)
+MC 30a,[n:1]1:[c:2]:[cH:3]:[cH:4]:[c:5]2:[c:9]:[c:10]:[c:11]:[c:12]:[c:6]:2:1>>[NH2;D1:1]-[c:6]1:[c:12]:[c:11]:[c:10]:[c:9]:[c:5]:1-[CH1:4]=[O].[C:2](=[O])-[CH3:3],Friedlander quinoline from a 2-aminoaryl aldehyde and a methyl ketone
+MC 30b,[n:1]1:[c:2]:[c:3](-[#6:8]):[cH:4]:[c:5]2:[c:9]:[c:10]:[c:11]:[c:12]:[c:6]:2:1>>[NH2;D1:1]-[c:6]1:[c:12]:[c:11]:[c:10]:[c:9]:[c:5]:1-[CH1:4]=[O].[C:2](=[O])-[CH2:3]-[#6:8],Friedlander quinoline with a substituted C3
+MC 31,[OH:3]-[c:1]1:[n:2]:[cH:4]:[c:5]2:[c:9]:[c:10]:[c:11]:[c:12]:[c:6]:2:[n:7]:1>>[NH2;D1]-[C:1](-[NH2;D1:2])=[O:3].[O]=[CH1:4]-[c:5]1:[c:9]:[c:10]:[c:11]:[c:12]:[c:6]:1-[NH2;D1:7],Quinazolin-2-ol from a 2-aminoaryl aldehyde and urea
+MC 32,[C:1](=[NH])-[O:2]-[#6:3]>>[C:1]#[N].[OH:2]-[#6:3],Imidate from a nitrile and an alcohol (Pinner)
+MC 33,[#6:3]-[CH2;D2:1]-[N+](=[O])-[O-]>>([#6:3]-[CH2;D2:1]-[Br]).([O-]N=O),Primary nitroalkane from an alkyl bromide and nitrite
+MC 34a,[c:1]-!@[C]#[N]>>([c:1]-[Cl]).([C-]#N),Aryl nitrile by palladium cyanation of an aryl halide (Cl)
+MC 34b,[c:1]-!@[C]#[N]>>([c:1]-[Br]).([C-]#N),Aryl nitrile by palladium cyanation of an aryl halide (Br)
+MC 34c,[c:1]-!@[C]#[N]>>([c:1]-[I]).([C-]#N),Aryl nitrile by palladium cyanation of an aryl halide (I)
+MC 35a,[c:1]-!@[C](=[O])-[OH]>>([c:1]-[Cl]).([C-]#[O+]).(O),Aryl carboxylic acid by carbonylation of an aryl halide (Cl)
+MC 35b,[c:1]-!@[C](=[O])-[OH]>>([c:1]-[Br]).([C-]#[O+]).(O),Aryl carboxylic acid by carbonylation of an aryl halide (Br)
+MC 35c,[c:1]-!@[C](=[O])-[OH]>>([c:1]-[I]).([C-]#[O+]).(O),Aryl carboxylic acid by carbonylation of an aryl halide (I)
+MC 36,[c:1]-!@[C](=[O])-[OH]>>([c:1]-[CH3]).([O-][Mn](=O)(=O)=O),Aryl carboxylic acid by oxidation of an aryl methyl
+MC 37a,[c:1]-!@[CH1]=[O]>>([c:1]-[Cl]).([C-]#[O+]),Aryl aldehyde by formylation of an aryl halide (Cl)
+MC 37b,[c:1]-!@[CH1]=[O]>>([c:1]-[Br]).([C-]#[O+]),Aryl aldehyde by formylation of an aryl halide (Br)
+MC 37c,[c:1]-!@[CH1]=[O]>>([c:1]-[I]).([C-]#[O+]),Aryl aldehyde by formylation of an aryl halide (I)
+MC 38,[#6:3]-[CH1:1]=[O:2]>>([#6:3]-[CH2:1]-[OH:2]).([O-]Cl),Aldehyde by oxidation of a primary alcohol
+MC 39,[#6:3]-[C:1](=[O:2])-[#6:4]>>([#6:3]-[CH1:1](-[OH:2])-[#6:4]).([O-]Cl),Ketone by oxidation of a secondary alcohol
+MC 27a,[c:2]:[n;H0;D3:1](:[c:3])-[CX4:4]>>[c:2]:[nH;D2:1]:[c:3].[CX4:4]-[Cl],N-alkylation of an azole whose nitrogen sits between two carbons (Cl)
+MC 27b,[c:2]:[n;H0;D3:1](:[c:3])-[CX4:4]>>[c:2]:[nH;D2:1]:[c:3].[CX4:4]-[Br],N-alkylation of an azole whose nitrogen sits between two carbons (Br)
+MC 27c,[c:2]:[n;H0;D3:1](:[c:3])-[CX4:4]>>[c:2]:[nH;D2:1]:[c:3].[CX4:4]-[I],N-alkylation of an azole whose nitrogen sits between two carbons (I)
+MC 27d,[c:2]:[n;H0;D3:1](:[n:3])-[CX4:4]>>[c:2]:[nH;D2:1]:[n:3].[CX4:4]-[Cl],N-alkylation of an azole whose nitrogen sits between a carbon and a nitrogen (Cl)
+MC 27e,[c:2]:[n;H0;D3:1](:[n:3])-[CX4:4]>>[c:2]:[nH;D2:1]:[n:3].[CX4:4]-[Br],N-alkylation of an azole whose nitrogen sits between a carbon and a nitrogen (Br)
+MC 27f,[c:2]:[n;H0;D3:1](:[n:3])-[CX4:4]>>[c:2]:[nH;D2:1]:[n:3].[CX4:4]-[I],N-alkylation of an azole whose nitrogen sits between a carbon and a nitrogen (I)
+MC 27g,[n:2]:[n;H0;D3:1](:[n:3])-[CX4:4]>>[n:2]:[nH;D2:1]:[n:3].[CX4:4]-[Cl],N-alkylation of an azole whose nitrogen sits between two nitrogens (Cl)
+MC 27h,[n:2]:[n;H0;D3:1](:[n:3])-[CX4:4]>>[n:2]:[nH;D2:1]:[n:3].[CX4:4]-[Br],N-alkylation of an azole whose nitrogen sits between two nitrogens (Br)
+MC 27i,[n:2]:[n;H0;D3:1](:[n:3])-[CX4:4]>>[n:2]:[nH;D2:1]:[n:3].[CX4:4]-[I],N-alkylation of an azole whose nitrogen sits between two nitrogens (I)
+MC 40a,[OH]-[c:2]1:[cH:3]:[c:4]2:[c:6]:[c:7]:[c:8]:[c:9]:[c:5]:2:[nH:1]:1>>[NH2;D1:1]-[c:5]1:[c:9]:[c:8]:[c:7]:[c:6]:[c:4]:1-[CH2:3]-[C:2](=[O])-[OH],"Oxindole by cyclisation of a 2-aminoaryl acetic acid, benzo-fused"
+MC 40b,[OH]-[c:2]1:[cH:3]:[c:4]2:[n:6]:[c:7]:[c:8]:[c:9]:[c:5]:2:[nH:1]:1>>[NH2;D1:1]-[c:5]1:[c:9]:[c:8]:[c:7]:[n:6]:[c:4]:1-[CH2:3]-[C:2](=[O])-[OH],"Oxindole by cyclisation of a 2-aminoaryl acetic acid, aza at C4"
+MC 40c,[OH]-[c:2]1:[cH:3]:[c:4]2:[c:6]:[n:7]:[c:8]:[c:9]:[c:5]:2:[nH:1]:1>>[NH2;D1:1]-[c:5]1:[c:9]:[c:8]:[n:7]:[c:6]:[c:4]:1-[CH2:3]-[C:2](=[O])-[OH],"Oxindole by cyclisation of a 2-aminoaryl acetic acid, aza at C5"
+MC 40d,[OH]-[c:2]1:[cH:3]:[c:4]2:[c:6]:[c:7]:[n:8]:[c:9]:[c:5]:2:[nH:1]:1>>[NH2;D1:1]-[c:5]1:[c:9]:[n:8]:[c:7]:[c:6]:[c:4]:1-[CH2:3]-[C:2](=[O])-[OH],"Oxindole by cyclisation of a 2-aminoaryl acetic acid, aza at C6"
+MC 40e,[OH]-[c:2]1:[cH:3]:[c:4]2:[c:6]:[c:7]:[c:8]:[n:9]:[c:5]:2:[nH:1]:1>>[NH2;D1:1]-[c:5]1:[n:9]:[c:8]:[c:7]:[c:6]:[c:4]:1-[CH2:3]-[C:2](=[O])-[OH],"Oxindole by cyclisation of a 2-aminoaryl acetic acid, aza at C7"
+MC 41a,[c:1]-!@[Cl]>>([cH:1]).(ClN1C(=O)CCC1=O),Aryl halide by electrophilic aromatic halogenation (Cl)
+MC 41b,[c:1]-!@[Br]>>([cH:1]).(BrN1C(=O)CCC1=O),Aryl halide by electrophilic aromatic halogenation (Br)
+MC 41c,[c:1]-!@[I]>>([cH:1]).(IN1C(=O)CCC1=O),Aryl halide by electrophilic aromatic halogenation (I)
+MC 42,[c:1]-!@[N+](=[O])-[O-]>>([cH:1]).(O=[N+]([O-])O),Nitroarene by electrophilic aromatic nitration
+MC 43a,[C:1](=[O:2])-[OH]>>([C:1](=[O:2])-[O]-[CH3]).(O),Carboxylic acid by hydrolysis of its methyl ester
+MC 43b,[C:1](=[O:2])-[OH]>>([C:1](=[O:2])-[O]-[CH2][CH3]).(O),Carboxylic acid by hydrolysis of its ethyl ester
+MC 43c,[C:1](=[O:2])-[OH]>>[C:1](=[O:2])-[O]-[C]([CH3])([CH3])[CH3],Carboxylic acid by cleavage of its tert-butyl ester
+MC 44,[c:1]-[OH]>>([c:1]-[O]-[CH3]).(O),Phenol by demethylation of an aryl methyl ether
+MC 45,[#6:1]-[NH2;D1]>>([#6:1]-[N]=[N+]=[N-]).(c1ccc(P(c2ccccc2)c2ccccc2)cc1).(O),Primary amine by Staudinger reduction of an azide
+MC 46a,[#6:1]-[N]=[N+]=[N-]>>([#6:1]-[Cl]).([N-]=[N+]=[N-]),Alkyl azide by displacement of a chloride
+MC 46b,[#6:1]-[N]=[N+]=[N-]>>([#6:1]-[Br]).([N-]=[N+]=[N-]),Alkyl azide by displacement of a bromide
+MC 46c,[#6:1]-[N]=[N+]=[N-]>>([#6:1]-[I]).([N-]=[N+]=[N-]),Alkyl azide by displacement of an iodide
+MC 47a,[CX4:1]-[C]#[N]>>([CX4:1]-[Cl]).([C-]#N),Alkyl nitrile by cyanide displacement of a chloride
+MC 47b,[CX4:1]-[C]#[N]>>([CX4:1]-[Br]).([C-]#N),Alkyl nitrile by cyanide displacement of a bromide
+MC 47c,[CX4:1]-[C]#[N]>>([CX4:1]-[I]).([C-]#N),Alkyl nitrile by cyanide displacement of an iodide
+MC 48,[C:1](-[NH2;D1])=[NH]>>([C:1]#[N]).(N),Amidine from a nitrile
+MC 49,[C:1](-[NH2;D1])=[N]-[OH]>>([C:1]#[N]).(NO),Amidoxime from a nitrile and hydroxylamine
+MC 50,[C:1]=[N]-[OH]>>[C:1]=[O],Oxime from a ketone or aldehyde
+MC 51,[C:1](-[#7:2])=[S]>>[C:1](-[#7:2])=[O],Thioamide from an amide with Lawesson reagent
+MC 52,[C:1](=[O:2])-[NH:3]-[NH2;D1]>>[C:1](=[O:2])-[O][CH3].[NH2:3]-[NH2;D1],Acyl hydrazide from an ester and hydrazine
+MC 53,[C:1](=[O:2])-[NH:3]-[OH]>>[C:1](=[O:2])-[OH].[NH2:3]-[OH],Hydroxamic acid from an acid and hydroxylamine
+MC 54,[CX4:1]-[F]>>[CX4:1]-[OH],Alkyl fluoride by deoxyfluorination of an alcohol
+MC 55a,[c:1]-[B]1[O][C]([CH3])([CH3])[C]([CH3])([CH3])[O]1>>([c:1]-[Cl]).(CC1(C)OB(B2OC(C)(C)C(C)(C)O2)OC1(C)C),Pinacol boronate by Miyaura borylation (Cl)
+MC 55b,[c:1]-[B]1[O][C]([CH3])([CH3])[C]([CH3])([CH3])[O]1>>([c:1]-[Br]).(CC1(C)OB(B2OC(C)(C)C(C)(C)O2)OC1(C)C),Pinacol boronate by Miyaura borylation (Br)
+MC 56,[CX4:1]-[SH]>>[CX4:1]-[Br],Thiol by displacement of a bromide
+MC 57,[N:1]=[C:2](-[N:3])-[N:4]>>[N:1]=[C:2](-[N:3])-[S][CH3].[N:4],Guanidine from an S-methylisothiourea and an amine
+MC 58a,[CH3:4]-[O:3]-[CX4:2]>>[CH3:4]-[Cl].[O:3]-[C:2],Methyl ether by O-methylation of an alcohol (Cl)
+MC 58b,[CH3:4]-[O:3]-[CX4:2]>>[CH3:4]-[Br].[O:3]-[C:2],Methyl ether by O-methylation of an alcohol (Br)
+MC 58c,[CH3:4]-[O:3]-[CX4:2]>>[CH3:4]-[I].[O:3]-[C:2],Methyl ether by O-methylation of an alcohol (I)
+MC 59,[CH3]-[O:2]-[C:1]-[O:3]>>([OH:2]-[C:1]-[O:3]).(CO),Methyl glycoside by Fischer glycosidation of the free sugar
+MC 60a,[O]=[c]1:[nH:2]:[c:3]2:[c:6]:[c:7]:[c:8]:[c:9]:[c:4]:2:[nH:5]:1>>[NH2;D1:2]-[c:3]1:[c:6]:[c:7]:[c:8]:[c:9]:[c:4]:1-[NH2;D1:5],"Benzimidazolone from an ortho-diaminoarene and CDI, benzo-fused"
+MC 60b,[O]=[c]1:[nH:2]:[c:3]2:[n:6]:[c:7]:[c:8]:[c:9]:[c:4]:2:[nH:5]:1>>[NH2;D1:2]-[c:3]1:[n:6]:[c:7]:[c:8]:[c:9]:[c:4]:1-[NH2;D1:5],"Benzimidazolone from an ortho-diaminoarene and CDI, aza at C4"
+MC 60c,[O]=[c]1:[nH:2]:[c:3]2:[c:6]:[n:7]:[c:8]:[c:9]:[c:4]:2:[nH:5]:1>>[NH2;D1:2]-[c:3]1:[c:6]:[n:7]:[c:8]:[c:9]:[c:4]:1-[NH2;D1:5],"Benzimidazolone from an ortho-diaminoarene and CDI, aza at C5"
+MC 61a,[nH:1]1:[n]:[n:3]:[c:4]2:[c:6]:[c:7]:[c:8]:[c:9]:[c:5]:2:1>>[NH2;D1:1]-[c:5]1:[c:9]:[c:8]:[c:7]:[c:6]:[c:4]:1-[NH2;D1:3],"Benzotriazole from an ortho-diaminoarene and nitrous acid, benzo-fused"
+MC 61b,[nH:1]1:[n]:[n:3]:[c:4]2:[n:6]:[c:7]:[c:8]:[c:9]:[c:5]:2:1>>[NH2;D1:1]-[c:5]1:[c:9]:[c:8]:[c:7]:[n:6]:[c:4]:1-[NH2;D1:3],"Benzotriazole from an ortho-diaminoarene and nitrous acid, aza at C4"
+MC 61c,[nH:1]1:[n]:[n:3]:[c:4]2:[c:6]:[n:7]:[c:8]:[c:9]:[c:5]:2:1>>[NH2;D1:1]-[c:5]1:[c:9]:[c:8]:[n:7]:[c:6]:[c:4]:1-[NH2;D1:3],"Benzotriazole from an ortho-diaminoarene and nitrous acid, aza at C5"
+MC 62,[C:1]1-[O]-[C:2]-1>>([C:1]=[C:2]).(OOC(=O)c1cccc(Cl)c1),Epoxide by Prilezhaev epoxidation of an alkene
+MC 63,[#6:1]-[NH:2]-[S](=[O])-[C]([CH3])([CH3])[CH3]>>[#6:1]-[NH2;D1:2],Ellman tert-butanesulfinamide from a primary amine
+MC 64a,[c:1]-[S;D2:2]-[C:3]>>[c:1]-[Cl].[SH:2]-[C:3],Aryl thioether by S-arylation of a thiol (Cl)
+MC 64b,[c:1]-[S;D2:2]-[C:3]>>[c:1]-[Br].[SH:2]-[C:3],Aryl thioether by S-arylation of a thiol (Br)
+MC 64c,[c:1]-[S;D2:2]-[C:3]>>[c:1]-[I].[SH:2]-[C:3],Aryl thioether by S-arylation of a thiol (I)
+MC 65a,[c:1]-[S;D2:2]-[CX4:3]>>[c:1]-[SH:2].[CX4:3]-[Cl],Aryl thioether by S-alkylation of a thiophenol (Cl)
+MC 65b,[c:1]-[S;D2:2]-[CX4:3]>>[c:1]-[SH:2].[CX4:3]-[Br],Aryl thioether by S-alkylation of a thiophenol (Br)
+MC 65c,[c:1]-[S;D2:2]-[CX4:3]>>[c:1]-[SH:2].[CX4:3]-[I],Aryl thioether by S-alkylation of a thiophenol (I)
+MC 66a,[#6:1]-[C:2](-[OH:3])-[c:4]>>([#6:1]-[C:2]=[O:3]).([c:4]-[Cl]),Alcohol by addition of an aryl metal to a carbonyl (Cl)
+MC 66b,[#6:1]-[C:2](-[OH:3])-[c:4]>>([#6:1]-[C:2]=[O:3]).([c:4]-[Br]),Alcohol by addition of an aryl metal to a carbonyl (Br)
+MC 66c,[#6:1]-[C:2](-[OH:3])-[c:4]>>([#6:1]-[C:2]=[O:3]).([c:4]-[I]),Alcohol by addition of an aryl metal to a carbonyl (I)
+MC 67,[#6:2]-[N+;H0:1](-[#6:3])(-[#6:4])-[O-]>>([#6:2]-[N;H0;+0:1](-[#6:3])-[#6:4]).(OOC(=O)c1cccc(Cl)c1),Amine N-oxide by oxidation of a tertiary amine
+MC 68,[CX4:1]-[P](=[O])(-[O][CH2][CH3])-[O][CH2][CH3]>>([CX4:1]-[Br]).(CCOP(OCC)OCC),Phosphonate by Michaelis-Arbuzov reaction of an alkyl bromide
+MC 69,[#6:1]-[O:2]-[P](=[O])(-[O][CH2][CH3])-[O][CH2][CH3]>>[#6:1]-[OH:2],Phosphate ester from an alcohol
+MC 70a,[O]=[c]1:[nH:2]:[c:6](=[O:7]):[c:3]2:[c:8]:[c:9]:[c:10]:[c:11]:[c:4]:2:[nH:5]:1>>[NH2;D1:5]-[c:4]1:[c:11]:[c:10]:[c:9]:[c:8]:[c:3]:1-[C:6](=[O:7])-[OH].[NH3:2],"Quinazoline-2,4-dione from an anthranilic acid and an isocyanate, benzo-fused"
+MC 70b,[O]=[c]1:[nH:2]:[c:6](=[O:7]):[c:3]2:[n:8]:[c:9]:[c:10]:[c:11]:[c:4]:2:[nH:5]:1>>[NH2;D1:5]-[c:4]1:[c:11]:[c:10]:[c:9]:[n:8]:[c:3]:1-[C:6](=[O:7])-[OH].[NH3:2],"Quinazoline-2,4-dione from an anthranilic acid and an isocyanate, aza at C5"
+MC 70c,[O]=[c]1:[nH:2]:[c:6](=[O:7]):[c:3]2:[c:8]:[n:9]:[c:10]:[c:11]:[c:4]:2:[nH:5]:1>>[NH2;D1:5]-[c:4]1:[c:11]:[c:10]:[n:9]:[c:8]:[c:3]:1-[C:6](=[O:7])-[OH].[NH3:2],"Quinazoline-2,4-dione from an anthranilic acid and an isocyanate, aza at C6"
+MC 70d,[O]=[c]1:[nH:2]:[c:6](=[O:7]):[c:3]2:[c:8]:[c:9]:[n:10]:[c:11]:[c:4]:2:[nH:5]:1>>[NH2;D1:5]-[c:4]1:[c:11]:[n:10]:[c:9]:[c:8]:[c:3]:1-[C:6](=[O:7])-[OH].[NH3:2],"Quinazoline-2,4-dione from an anthranilic acid and an isocyanate, aza at C7"
+MC 70e,[O]=[c]1:[nH:2]:[c:6](=[O:7]):[c:3]2:[c:8]:[c:9]:[c:10]:[n:11]:[c:4]:2:[nH:5]:1>>[NH2;D1:5]-[c:4]1:[n:11]:[c:10]:[c:9]:[c:8]:[c:3]:1-[C:6](=[O:7])-[OH].[NH3:2],"Quinazoline-2,4-dione from an anthranilic acid and an isocyanate, aza at C8"
+FGI 1a,[CH2:1](-[CX4:2])-[Cl]>>([CH2:1](-[CX4:2])-[OH]).(O=S(Cl)Cl),Alkyl halide from a primary alcohol (Cl)
+FGI 1b,[CH2:1](-[CX4:2])-[Br]>>([CH2:1](-[CX4:2])-[OH]).(BrC(Br)(Br)Br).(c1ccc(P(c2ccccc2)c2ccccc2)cc1),Alkyl halide from a primary alcohol (Br)
+FGI 1c,[CH2:1](-[CX4:2])-[I]>>([CH2:1](-[CX4:2])-[OH]).(II).(c1ccc(P(c2ccccc2)c2ccccc2)cc1),Alkyl halide from a primary alcohol (I)
+FGI 2a,[CH2:1](-[c:2])-[Cl]>>([CH2:1](-[c:2])-[OH]).(O=S(Cl)Cl),Benzylic halide from a benzylic alcohol (Cl)
+FGI 2b,[CH2:1](-[c:2])-[Br]>>([CH2:1](-[c:2])-[OH]).(BrC(Br)(Br)Br).(c1ccc(P(c2ccccc2)c2ccccc2)cc1),Benzylic halide from a benzylic alcohol (Br)
+FGI 2c,[CH2:1](-[c:2])-[I]>>[CH2:1](-[c:2])-[OH],Benzylic halide from a benzylic alcohol (I)
+FGI 3a,[CH2:1](-[CX3:2]=[CX3:3])-[Cl]>>[CH2:1](-[CX3:2]=[CX3:3])-[OH],Allylic halide from an allylic alcohol (Cl)
+FGI 3b,[CH2:1](-[CX3:2]=[CX3:3])-[Br]>>[CH2:1](-[CX3:2]=[CX3:3])-[OH],Allylic halide from an allylic alcohol (Br)
+FGI 3c,[CH2:1](-[CX3:2]=[CX3:3])-[I]>>[CH2:1](-[CX3:2]=[CX3:3])-[OH],Allylic halide from an allylic alcohol (I)
+FGI 4a,[CH1:1](-[CX4:2])(-[CX4:3])-[Cl]>>([CH1:1](-[CX4:2])(-[CX4:3])-[OH]).(O=S(Cl)Cl),Alkyl halide from a secondary alcohol (Cl)
+FGI 4b,[CH1:1](-[CX4:2])(-[CX4:3])-[Br]>>([CH1:1](-[CX4:2])(-[CX4:3])-[OH]).(BrC(Br)(Br)Br).(c1ccc(P(c2ccccc2)c2ccccc2)cc1),Alkyl halide from a secondary alcohol (Br)
+FGI 4c,[CH1:1](-[CX4:2])(-[CX4:3])-[I]>>([CH1:1](-[CX4:2])(-[CX4:3])-[OH]).(II).(c1ccc(P(c2ccccc2)c2ccccc2)cc1),Alkyl halide from a secondary alcohol (I)
+FGI 5a,[C:1](=O)-[CH2:2]-[Cl]>>([C:1](=O)-[C:2]).(ClN1C(=O)CCC1=O),alpha-halo ketone from a methyl ketone (Cl)
+FGI 5b,[C:1](=O)-[CH2:2]-[Br]>>([C:1](=O)-[C:2]).(BrN1C(=O)CCC1=O),alpha-halo ketone from a methyl ketone (Br)
+FGI 5c,[C:1](=O)-[CH2:2]-[I]>>([C:1](=O)-[C:2]).(IN1C(=O)CCC1=O),alpha-halo ketone from a methyl ketone (I)
+FGI 6a,[C:1](=O)-[CH1:2](-[#6:3])-[Cl]>>([C:1](=O)-[C:2]-[#6:3]).(ClN1C(=O)CCC1=O),alpha-halo ketone from a ketone (Cl)
+FGI 6b,[C:1](=O)-[CH1:2](-[#6:3])-[Br]>>([C:1](=O)-[C:2]-[#6:3]).(BrN1C(=O)CCC1=O),alpha-halo ketone from a ketone (Br)
+FGI 6c,[C:1](=O)-[CH1:2](-[#6:3])-[I]>>([C:1](=O)-[C:2]-[#6:3]).(IN1C(=O)CCC1=O),alpha-halo ketone from a ketone (I)
+Cpl 1,[C:1](=O)-!@[N:2]-[#6:3]>>[C:1](=O)[OH].[N:2]-[#6:3].C1CCCCC1N=C=NC1CCCCC1,Amide coupling (carboxylic acid + amine)
+Cpl 2,[C:1](=O)-!@[N:2]-[#6:3]>>[C:1](=O)[O][CH3].[N:2]-[#6:3],Amide from methyl ester (aminolysis)
+Cyc 1,[C:1]1-[N:2]-[C:5]-[C:4]2(-[C:3]1)-[C:6](=[O:7])-[N:8]-[c:9]:[c:10]2>>[C:1]=O.[N:2]-[C:5].[C:3]=[C:4]2-[C:6](=[O:7])-[N:8]-[c:9]:[c:10]2,Azomethine ylide [3+2] onto an alkylideneoxindole (spiro-pyrrolidine oxindole)
+FGI 7a,[CH1:1](-[O:2])(-[C:3])-[Cl]>>[CH1:1](-[O:2])(-[C:3])-[OH],Glycosyl or alpha-alkoxy chloride from the free hemiacetal
+FGI 7b,[CH1:1](-[O:2])(-[C:3])-[Br]>>[CH1:1](-[O:2])(-[C:3])-[OH],Glycosyl or alpha-alkoxy bromide from the free hemiacetal
+FGI 7c,[CH1:1](-[O:2])(-[C:3])-[I]>>[CH1:1](-[O:2])(-[C:3])-[OH],Glycosyl or alpha-alkoxy iodide from the free hemiacetal
+MC 71,[#6:2]-[C:1](=[O])-[OH]>>([#6:2]-[C:1]#[N]).(O).(O),Carboxylic acid by hydrolysis of a nitrile
+MC 72,[#6:1]-[n;H0:2]1:[n:3]:[n:4]:[c:5](-[#6:6]):[c;H1:7]:1>>[#6:1]-[N;H0;+0:2]=[N;H0;+1:3]=[N;H0;-1:4].[C:5](-[#6:6])#[C;H1:7],"1,4-triazole by CuAAC of an organic azide and a terminal alkyne"
+MC 73a,[#6:1]-[O:2]-[S:3](=[O:4])(=[O:5])-[*:6]>>[#6:1]-[OH:2].[Cl]-[S:3](=[O:4])(=[O:5])-[*:6],"Sulfonate ester from an alcohol, any sulfonyl group (Ms, Ts, Tf)"
+MC 74a,[#6:1]-[N]=[N+]=[N-]>>([#6:1]-[O]-[S](=[O])(=[O])-[CH3]).([N-]=[N+]=[N-]),Alkyl azide by displacement of a mesylate
+MC 74b,[#6:1]-[N]=[N+]=[N-]>>([#6:1]-[O]-[S](=[O])(=[O])-[c]1[cH][cH][c](-[CH3])[cH][cH]1).([N-]=[N+]=[N-]),Alkyl azide by displacement of a tosylate
+MC 74c,[#6:1]-[N]=[N+]=[N-]>>([#6:1]-[O]-[S](=[O])(=[O])-[C](-[F])(-[F])-[F]).([N-]=[N+]=[N-]),Alkyl azide by displacement of a triflate
+MC 75,[C:1](=[O:2])-!@[O:3]-[#6:4]>>[C:1](=[O:2])-[OH].[OH:3]-[#6:4],Ester from a carboxylic acid and an alcohol
+Mac 1,"[C:1]=@[C:2]-@[#6,#7,#8:3]-@[#6,#7,#8:4]-@[#6,#7,#8:5]>>([C:1]=[CH2].[C:2](=[CH2])-[*:3]-[*:4]-[*:5])",Ring-closing metathesis (five-membered ring and larger)
+Mac 2,"[C:1]#@[C:2]-@[#6,#7,#8:3]-@[#6,#7,#8:4]-@[#6,#7,#8:5]-@[#6,#7,#8:6]-@[#6,#7,#8:7]-@[#6,#7,#8:8]>>([C:1]#[C]-[CH3].[C:2](#[C]-[CH3])-[*:3]-[*:4]-[*:5]-[*:6]-[*:7]-[*:8])",Ring-closing alkyne metathesis (eight-membered ring and larger)
+Mac 3a,[c:1]-@[c:2]>>([c:1]-[B]([OH])[OH].[c:2]-[Cl]),"Macrocyclic biaryl, intramolecular Suzuki (Cl)"
+Mac 3b,[c:1]-@[c:2]>>([c:1]-[B]([OH])[OH].[c:2]-[Br]),"Macrocyclic biaryl, intramolecular Suzuki (Br)"
+Mac 3c,[c:1]-@[c:2]>>([c:1]-[B]([OH])[OH].[c:2]-[I]),"Macrocyclic biaryl, intramolecular Suzuki (I)"
+Mac 4a,[c:1]-@[c:2]>>([c:1]-[Sn](C)(C)C.[c:2]-[Cl]),"Macrocyclic biaryl, intramolecular Stille (Cl)"
+Mac 4b,[c:1]-@[c:2]>>([c:1]-[Sn](C)(C)C.[c:2]-[Br]),"Macrocyclic biaryl, intramolecular Stille (Br)"
+Mac 4c,[c:1]-@[c:2]>>([c:1]-[Sn](C)(C)C.[c:2]-[I]),"Macrocyclic biaryl, intramolecular Stille (I)"
+Mac 5,"[C:1](=O)-@[N:2]-@[#6,#7,#8:3]-@[#6,#7,#8:4]-@[#6,#7,#8:5]>>([C:1](=O)[OH].[N:2]-[*:3]-[*:4]-[*:5])",Macrolactamisation (free acid + amine; five-membered ring and larger)
+MC 76a,[c:1]1(-[N:2]):[c:3](-[C:8]=[O:9]):[c:4]:[c:5]:[c:6]:[c:7]:1>>[c:1]1(-[F]):[c:3](-[C:8]=[O:9]):[c:4]:[c:5]:[c:6]:[c:7]:1.[N:2],SNAr with an amine on a benzene bearing an ortho carbonyl (F)
+MC 76b,[c:1]1(-[N:2]):[c:3](-[C:8]=[O:9]):[c:4]:[c:5]:[c:6]:[c:7]:1>>[c:1]1(-[Cl]):[c:3](-[C:8]=[O:9]):[c:4]:[c:5]:[c:6]:[c:7]:1.[N:2],SNAr with an amine on a benzene bearing an ortho carbonyl (Cl)
+MC 76c,[c:1]1(-[N:2]):[c:3]:[c:4]:[c:5](-[C:8]=[O:9]):[c:6]:[c:7]:1>>[c:1]1(-[F]):[c:3]:[c:4]:[c:5](-[C:8]=[O:9]):[c:6]:[c:7]:1.[N:2],SNAr with an amine on a benzene bearing a para carbonyl (F)
+MC 76d,[c:1]1(-[N:2]):[c:3]:[c:4]:[c:5](-[C:8]=[O:9]):[c:6]:[c:7]:1>>[c:1]1(-[Cl]):[c:3]:[c:4]:[c:5](-[C:8]=[O:9]):[c:6]:[c:7]:1.[N:2],SNAr with an amine on a benzene bearing a para carbonyl (Cl)
+MC 77a,[CH2:1]-[NH1:2]-[CX4:3]>>[C:1]-[O]-[S](=[O])(=[O])-[CH3].[N:2]-[CX4:3],Amine alkylation by a mesylate
+MC 77b,[CH2:1]-[NH1:2]-[CX4:3]>>[C:1]-[O]-[S](=[O])(=[O])-[c]1[cH][cH][c](-[CH3])[cH][cH]1.[N:2]-[CX4:3],Amine alkylation by a tosylate
+MC 78a,[c:2]:[n;H0;D3:1](:[c:3])-[C:4]=[O:5]>>[c:2]:[nH;D2:1]:[c:3].[C:4](=[O:5])-[OH],N-acylation of an azole whose nitrogen sits between two carbons
+MC 78b,[c:2]:[n;H0;D3:1](:[n:3])-[C:4]=[O:5]>>[c:2]:[nH;D2:1]:[n:3].[C:4](=[O:5])-[OH],N-acylation of an azole whose nitrogen sits between a carbon and a nitrogen
+MC 78c,[n:2]:[n;H0;D3:1](:[n:3])-[C:4]=[O:5]>>[n:2]:[nH;D2:1]:[n:3].[C:4](=[O:5])-[OH],N-acylation of an azole whose nitrogen sits between two nitrogens
+MC 79,"[CH1,CH2,CH3:1]-[CH1,CH2,CH3:2]>>[C:1]=[C:2]",Alkane by alkene hydrogenation
+MC 80,[CH1:1]=[CH1:2]>>[C:1]#[C:2],Alkene by alkyne semi-hydrogenation
+N 1,[C:5]-[N+;D3:1](-[C:6])-!@[CH2:2]-[CH:3]-[OH:4]>>[C:5]-[N;H1;+0:1]-[C:6].[CH2:2]1-[CH:3]-[O:4]1,Ammonium salt (secondary amine + epoxide)
+N 2a,[C:5]-[N+;D3:1](-[C:6])-!@[C:2]>>[C:5]-[N;H1;+0:1]-[C:6].[C:2]-[Cl],"Ammonium salt (secondary amine + alkyl halide, Cl)"
+N 2b,[C:5]-[N+;D3:1](-[C:6])-!@[C:2]>>[C:5]-[N;H1;+0:1]-[C:6].[C:2]-[Br],"Ammonium salt (secondary amine + alkyl halide, Br)"
+N 2c,[C:5]-[N+;D3:1](-[C:6])-!@[C:2]>>[C:5]-[N;H1;+0:1]-[C:6].[C:2]-[I],"Ammonium salt (secondary amine + alkyl halide, I)"
+N 3a,[C:5]-[N+;D4;H0:1](-[C:6])(-[C:7])-!@[C:2]>>[C:5]-[N;H0;+0:1](-[C:6])-[C:7].[C:2]-[Cl],"Quaternary ammonium, Menshutkin (Cl)"
+N 3b,[C:5]-[N+;D4;H0:1](-[C:6])(-[C:7])-!@[C:2]>>[C:5]-[N;H0;+0:1](-[C:6])-[C:7].[C:2]-[Br],"Quaternary ammonium, Menshutkin (Br)"
+N 3c,[C:5]-[N+;D4;H0:1](-[C:6])(-[C:7])-!@[C:2]>>[C:5]-[N;H0;+0:1](-[C:6])-[C:7].[C:2]-[I],"Quaternary ammonium, Menshutkin (I)"
+S 1,[C:5]-[S+;D3:1](-[C:6])-!@[CH2:2]-[CH:3]-[OH:4]>>[C:5]-[S;H0;+0:1]-[C:6].[CH2:2]1-[CH:3]-[O:4]1,Sulfonium salt (sulfide + epoxide)
+S 2a,[C:5]-[S+;D3:1](-[C:6])-!@[C:2]>>[C:5]-[S;H0;+0:1]-[C:6].[C:2]-[Cl],"Sulfonium salt (sulfide + alkyl halide, Cl)"
+S 2b,[C:5]-[S+;D3:1](-[C:6])-!@[C:2]>>[C:5]-[S;H0;+0:1]-[C:6].[C:2]-[Br],"Sulfonium salt (sulfide + alkyl halide, Br)"
+S 2c,[C:5]-[S+;D3:1](-[C:6])-!@[C:2]>>[C:5]-[S;H0;+0:1]-[C:6].[C:2]-[I],"Sulfonium salt (sulfide + alkyl halide, I)"
+S 3a,[C:1]-@[S;D2:2]-@[C:3]>>([C:1]-[Cl].[C:3]-[Cl]).([SH2:2]),"Cyclic sulfide from a 1,4-dihalide + sulfide (Cl)"
+S 3b,[C:1]-@[S;D2:2]-@[C:3]>>([C:1]-[Br].[C:3]-[Br]).([SH2:2]),"Cyclic sulfide from a 1,4-dihalide + sulfide (Br)"
+S 3c,[C:1]-@[S;D2:2]-@[C:3]>>([C:1]-[I].[C:3]-[I]).([SH2:2]),"Cyclic sulfide from a 1,4-dihalide + sulfide (I)"
+MC 81,[#6:1]-[N:2](-[#6:3])-[N:4]=[O:5]>>[#6:1]-[N:2]-[#6:3].[O:5]=[N:4]-O,N-nitrosamine from a secondary amine (nitrous acid; genotoxic -- see README)
+Cyc 2,[nH:1]1[c:2](=[O:6])[nH:3][c:4](=[O:5])[c;x3:7][c;x3:8]1>>[NH2:1]-[c:8]:[c:7]-[C:4](=[O:5])-O.[NH2:3]-[C:2](=[O:6])-N,"Fused pyrimidine-2,4-dione from an ortho-amino arenecarboxylic acid + urea"
+Cyc 2b,[nH:1]1[c:2](=[O:6])[nH:3][c:4](=[O:5])[c;x3:7][c;x3:8]1>>[NH2:1]-[c:8]:[c:7]-[C:4](=[O:5])-OCC.[NH2:3]-[C:2](=[O:6])-N,"Fused pyrimidine-2,4-dione from an ortho-amino arenecarboxylate ester + urea"
+MC 82a,[c:1](-[Cl]):[n:2]>>([c:1](-[OH]):[n:2]).(O=P(Cl)(Cl)Cl),Chloroazine from the hydroxy heteroarene (POCl3)
+MC 82b,[c:1](-[Cl]):[n;H0:2]>>([c:1](=[O]):[nH:2]).(O=P(Cl)(Cl)Cl),Chloroazine from the ring-oxo tautomer (POCl3)
+MC 82c,[c:1](-[Cl]):[n;H0:2]>>([cH1:1]:[n+;H0:2]-[O-]).(O=P(Cl)(Cl)Cl),Chloroazine from the heteroarene N-oxide (POCl3)
+MC 83,[c:1]-!@[CH](=[O])>>([cH:1]).(CN(C)C=O),Aryl aldehyde by Vilsmeier-Haack formylation
+MC 84a,[c:2]-[CH2:1]-[Br]>>([c:2]-[CH3:1]).(BrN1C(=O)CCC1=O),"Benzylic bromide from a methylarene (NBS, Wohl-Ziegler)"
+MC 84b,[c:2]-[CH1:1](-[Br])-[#6:3]>>([c:2]-[CH2:1]-[#6:3]).(BrN1C(=O)CCC1=O),"Secondary benzylic bromide (NBS, Wohl-Ziegler)"
+MC 85a,[CH2:1](-[#6:3])-[OH:2]>>([C:1](-[#6:3])(=[O:2])-[O][CH3]).([AlH4-]).(O),Primary alcohol by reduction of a methyl ester (aluminium hydride; scope reaches ketone and aldehyde)
+MC 85b,[CH2:1](-[#6:3])-[OH:2]>>([C:1](-[#6:3])(=[O:2])-[O][CH2][CH3]).([AlH4-]).(O),Primary alcohol by reduction of an ethyl ester (aluminium hydride; scope reaches ketone and aldehyde)
+MC 86,[#6:3]-[CH2:1]-[N:2]>>([#6:3]-[C:1](=[O])-[N:2]).([AlH4-]),Amine by reduction of an amide
+MC 87,[CH2:1]-[NH2;D1:2]>>([C:1]#[N:2]).([AlH4-]).(O),Primary amine by reduction of a nitrile
+MC 88,[C:1]#[N:2]>>[C:1](=[O])-[NH2:2],Nitrile by dehydration of a primary amide
+MC 89,[CH2:1]-[c:2]>>[CH1:1](-[OH])-[c:2],Benzylic deoxygenation by hydrogenolysis (high retro fan-out)
+MC 90a,[S;D2;H0:1](-[#6:2])-[#6:3]>>([S;H0:1](=[O])(-[#6:2])-[#6:3]).(c1ccc(P(c2ccccc2)c2ccccc2)cc1),Sulfide by reduction of a sulfoxide (high retro fan-out)
+MC 90b,[n;H0;+0:1]>>([n+;H0:1]-[O-]).(c1ccc(P(c2ccccc2)c2ccccc2)cc1),Azine by reduction of its N-oxide (high retro fan-out)
+MC 91a,[c:1]-@[CH2:2]>>([c:1].[CH2:2]-Cl),"Intramolecular Friedel-Crafts alkylation closing a ring (Cl, high retro fan-out)"
+MC 91b,[c:1]-@[CH2:2]>>([c:1].[CH2:2]-Br),"Intramolecular Friedel-Crafts alkylation closing a ring (Br, high retro fan-out)"
+MC 91c,[c:1]-@[CH2:2]>>([c:1].[CH2:2]-I),"Intramolecular Friedel-Crafts alkylation closing a ring (I, high retro fan-out)"
+MC 92,[c:1]-@[C:2](=[O:3])-[#6:4]>>([c:1].[#6:4]-[C:2](=[O:3])-[OH]),Intramolecular Friedel-Crafts acylation closing a ring (high retro fan-out); the acyl carbon must bear carbon, or a fused lactam disconnects to a carbamic acid
+MC 93,[cH:1]:[n:3]>>[c:1](-[C](=[O])-[OH]):[n:3],Azine by decarboxylation of a ring-nitrogen-activated acid
+MC 94,[OH:1]-[#6:2]>>([O:1](-[CH3])-[#6:2]).(O),Alcohol or phenol by O-demethylation (high retro fan-out)
+MC 95,[c:1](=[O]):[nH;D2:2]>>([c:1](-[O][CH3]):[n;H0:2]).(O),Ring-oxo azine by demethylation of its methyl ether
+MC 96,[C:1](=[O:2])-[NH:3]-[N:4]=[C:5]>>[C:1](=[O:2])-[NH:3]-[NH2:4].[C:5]=[O],Acylhydrazone from a hydrazide and a ketone or aldehyde
+MC 97a,"[c:1](-[Cl]):[c:2]-[F,Cl:3]>>([cH:1]:[c:2]-[*:3]).(ClN1C(=O)CCC1=O)",Aryl halide by directed metalation ortho to a ring halogen (Cl)
+MC 97b,"[c:1](-[Br]):[c:2]-[F,Cl:3]>>([cH:1]:[c:2]-[*:3]).(BrN1C(=O)CCC1=O)",Aryl halide by directed metalation ortho to a ring halogen (Br)
+MC 97c,"[c:1](-[I]):[c:2]-[F,Cl:3]>>([cH:1]:[c:2]-[*:3]).(II)",Aryl halide by directed metalation ortho to a ring halogen (I)
+MC 98a,[c:1]1(-[Cl]):[c:2]:[c:3]:[n:4]:[c:5]:[c:6]:1>>([c:1]1(-[OH]):[c:2]:[c:3]:[n:4]:[c:5]:[c:6]:1).(O=P(Cl)(Cl)Cl),Chloroazine from the gamma hydroxy heteroarene (POCl3)
+MC 98b,[c:1]1(-[Cl]):[c:2]:[c:3]:[n;H0:4]:[c:5]:[c:6]:1>>([c:1]1(=[O]):[c:2]:[c:3]:[nH:4]:[c:5]:[c:6]:1).(O=P(Cl)(Cl)Cl),Chloroazine from the gamma ring-oxo tautomer (POCl3)
+MC 99,[C:4]-[CH2:1]-[N:3](-[C:7])-[C:5]>>([C:4]-[CH:1]=O.[NH:3](-[C:7])-[C:5]).([BH4-]).(O),Intramolecular reductive amination closing a ring (sibling of Hartenfeller 30c)
+MC 100a,[CH2:4]-[O:3]-[CX4:2]>>([C:4]-[Cl].[O:3]-[C:2]),Intramolecular Williamson etherification closing a cyclic ether (Cl)
+MC 100b,[CH2:4]-[O:3]-[CX4:2]>>([C:4]-[Br].[O:3]-[C:2]),Intramolecular Williamson etherification closing a cyclic ether (Br)
+MC 100c,[CH2:4]-[O:3]-[CX4:2]>>([C:4]-[I].[O:3]-[C:2]),Intramolecular Williamson etherification closing a cyclic ether (I)
+MC 101a,[C:1](=O)-[N;H0;D3:2](-[#6:3])-[CX4:4]>>([C:1](=O)-[NH:2]-[#6:3].[CX4:4]-[Cl]),Intramolecular amide N-alkylation closing a lactam (Cl)
+MC 101b,[C:1](=O)-[N;H0;D3:2](-[#6:3])-[CX4:4]>>([C:1](=O)-[NH:2]-[#6:3].[CX4:4]-[Br]),Intramolecular amide N-alkylation closing a lactam (Br)
+MC 101c,[C:1](=O)-[N;H0;D3:2](-[#6:3])-[CX4:4]>>([C:1](=O)-[NH:2]-[#6:3].[CX4:4]-[I]),Intramolecular amide N-alkylation closing a lactam (I)
+MC 102,[C:1](=O)-[N:2]-[#6:3]>>([C:1](=O)[Cl].[N:2]-[#6:3]),Lactam by intramolecular Schotten-Baumann amide formation
+MC 103,[#6:4]-[CH2;D2:1]-[N;H0;D3:3](-[CX4:5])-[CX4:6]>>([#6:4]-[CH1:1]=[O].[N;H1;D2:3](-[CX4:5])-[CX4:6]).([BH4-]).(O),Cyclic tertiary amine by intramolecular reductive amination of an aldehyde
+MC 104,[C:1](=[O:2])-@[O:3]-[#6:4]>>([C:1](=[O:2])-[OH].[OH:3]-[#6:4]),Lactone by intramolecular esterification of a hydroxy acid
+MC 105a,[C:1](=[O:2])-!@[O:3]-[CX4:4]>>([C:1](=[O:2])-[Cl]).([OH:3]-[CX4:4]),Ester from an acyl chloride and an alcohol
+MC 105b,[C:1](=[O:2])-!@[O:3]-[c:4]>>([C:1](=[O:2])-[Cl]).([OH:3]-[c:4]),Aryl ester from an acyl chloride and a phenol
+MC 106a,[CX4:1]-[N;H0;D3;+0:2](-[CX4:3])-!@[CX4;H2:4]>>([CX4:1]-[NH1:2]-[CX4:3]).([CX4:4]-[Cl]),Tertiary amine by N-alkylation of a dialkylamine (Cl)
+MC 106b,[CX4:1]-[N;H0;D3;+0:2](-[CX4:3])-!@[CX4;H2:4]>>([CX4:1]-[NH1:2]-[CX4:3]).([CX4:4]-[Br]),Tertiary amine by N-alkylation of a dialkylamine (Br)
+MC 106c,[CX4:1]-[N;H0;D3;+0:2](-[CX4:3])-!@[CX4;H2:4]>>([CX4:1]-[NH1:2]-[CX4:3]).([CX4:4]-[I]),Tertiary amine by N-alkylation of a dialkylamine (I)
+MC 106d,[c:1]-[N;H0;D3;+0:2](-[CX4:3])-!@[CX4;H2:4]>>([c:1]-[NH1:2]-[CX4:3]).([CX4:4]-[Cl]),Tertiary amine by N-alkylation of an N-alkylaniline (Cl)
+MC 106e,[c:1]-[N;H0;D3;+0:2](-[CX4:3])-!@[CX4;H2:4]>>([c:1]-[NH1:2]-[CX4:3]).([CX4:4]-[Br]),Tertiary amine by N-alkylation of an N-alkylaniline (Br)
+MC 106f,[c:1]-[N;H0;D3;+0:2](-[CX4:3])-!@[CX4;H2:4]>>([c:1]-[NH1:2]-[CX4:3]).([CX4:4]-[I]),Tertiary amine by N-alkylation of an N-alkylaniline (I)
+MC 107,[c:5]-[C;H0:1]=[CH1:2]>>[c:5]-[C:1](-[OH])-[CH2:2],Alkene by dehydration of a tertiary benzylic alcohol
+MC 108a,[c:1](-[Br]):[n:2]>>([c:1](-[OH]):[n:2]).(O=P(Br)(Br)Br),Bromoazine from the hydroxy heteroarene (POBr3)
+MC 108b,[c:1](-[Br]):[n;H0:2]>>([c:1](=[O]):[nH:2]).(O=P(Br)(Br)Br),Bromoazine from the ring-oxo tautomer (POBr3)
+MC 108c,[c:1](-[Br]):[n;H0:2]>>([cH1:1]:[n+;H0:2]-[O-]).(O=P(Br)(Br)Br),Bromoazine from the heteroarene N-oxide (POBr3)
+MC 109a,[c:1]1(-[Cl]):[c:2]:[c:3]:[n:4]:[n:5]:[c:6]:1>>([c:1]1(-[OH]):[c:2]:[c:3]:[n:4]:[n:5]:[c:6]:1).(O=P(Cl)(Cl)Cl),"Chloroazine from the gamma hydroxy 1,2-diazine (POCl3)"
+MC 109b,[c:1]1(-[Cl]):[c:2]:[c:3]:[n;H0:4]:[n:5]:[c:6]:1>>([c:1]1(=[O]):[c:2]:[c:3]:[nH:4]:[n:5]:[c:6]:1).(O=P(Cl)(Cl)Cl),"Chloroazine from the gamma ring-oxo 1,2-diazine (POCl3)"
+MC 109c,[c:1]1(-[Br]):[c:2]:[c:3]:[n:4]:[n:5]:[c:6]:1>>([c:1]1(-[OH]):[c:2]:[c:3]:[n:4]:[n:5]:[c:6]:1).(O=P(Br)(Br)Br),"Bromoazine from the gamma hydroxy 1,2-diazine (POBr3)"
+MC 109d,[c:1]1(-[Br]):[c:2]:[c:3]:[n;H0:4]:[n:5]:[c:6]:1>>([c:1]1(=[O]):[c:2]:[c:3]:[nH:4]:[n:5]:[c:6]:1).(O=P(Br)(Br)Br),"Bromoazine from the gamma ring-oxo 1,2-diazine (POBr3)"
+MC 109e,[c:1]1(-[Br]):[c:2]:[c:3]:[n:4]:[c:5]:[c:6]:1>>([c:1]1(-[OH]):[c:2]:[c:3]:[n:4]:[c:5]:[c:6]:1).(O=P(Br)(Br)Br),Bromoazine from the gamma hydroxy azine (POBr3)
+MC 109f,[c:1]1(-[Br]):[c:2]:[c:3]:[n;H0:4]:[c:5]:[c:6]:1>>([c:1]1(=[O]):[c:2]:[c:3]:[nH:4]:[c:5]:[c:6]:1).(O=P(Br)(Br)Br),Bromoazine from the gamma ring-oxo azine (POBr3)

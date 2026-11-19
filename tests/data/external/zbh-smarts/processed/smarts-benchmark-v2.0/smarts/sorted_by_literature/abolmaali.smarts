@@ -1,0 +1,42 @@
+#Abolmaali2003
+#S. F. B. Abolmaali, J. K. Wegner, and A. Zell. The compressed feature matrix – a
+#fast method for feature based substructure search. J. Mol. Model., 9:235–241,
+#2003.
+# SMARTS pattern for substructure/subgraph description
+# in the development of a compressed feature matrix in 
+# substructure search or similarity search
+#SMARTS pattern: 32
+#not daylight conform: 14
+[CH3,CQ1H2,CQ1H1]   abolmaali.smarts_0
+[$([NH2]-c),NQ1H3,NQ2H2,NQ3H1,NQ2H1,$(Cl-*),$(Br-*),$(I-*)]   abolmaali.smarts_1
+[OQ1X1,OQ2X2,NQ3X3,NQ2X2,NQ1X1]   abolmaali.smarts_2
+[$([NH2]-C),$([OH]-*)]   abolmaali.smarts_3
+[+,++,+++]   abolmaali.smarts_4
+[-,--,---]   abolmaali.smarts_5
+*1**1   abolmaali.smarts_6
+*1***1   abolmaali.smarts_7
+*1****1   abolmaali.smarts_8
+*1*****1   abolmaali.smarts_9
+*1******1   abolmaali.smarts_10
+*1*******1   abolmaali.smarts_11
+a1aa1   abolmaali.smarts_12
+a1aaaa1   abolmaali.smarts_13
+a1aaaaa1   abolmaali.smarts_14
+C~C~O   abolmaali.smarts_15
+C~C(~O)~O   abolmaali.smarts_16
+N~C(~O)~N   abolmaali.smarts_17
+N~C~C(~O)~O   abolmaali.smarts_18
+c1cncc1   abolmaali.smarts_19
+c12ccccc1ccn2   abolmaali.smarts_20
+[CQ1X4]~[CQ2X4]~[OQ1X2]   abolmaali.smarts_21
+[CQ1X4]~[CQ3X3](~[OQ1X1])~[OQ1X2]   abolmaali.smarts_22
+[NQ1X3]~[CQ3X3](~[OQ1X1])~[NQ1X3]   abolmaali.smarts_23
+[NQ1X3]~[CQ2X4]~[CQ3X3](~[OQ1X1])~[OQ1X2]   abolmaali.smarts_24
+c1cncc1   abolmaali.smarts_25
+c12ccccc1ccn2   abolmaali.smarts_26
+[CH3,cH3,CQ1H2,cQ1H2,CQ1H1,cQ1H1]~*~[$([NH2]-A),$([OH]-*);!+;!-]   abolmaali.smarts_27
+[CH3,cH3,CQ1H2,cQ1H2,CQ1H1,cQ1H1]~*(~[OQ1X1,oQ1X1,OQ2-X2,oQ2X2,NQ3X3,nQ3X3,NQ2X2,nQ2X2,NQ1X1,nQ1X1])~[$([NH2]-A),$([OH]-*);!+;!-]   abolmaali.smarts_28
+[$([NH2]-A),$([OH]-*);!+;!-]~*(~[OQ1X1,oQ1X1,OQ2X2,oQ2X2,NQ3X3,nQ3X3,NQ2X2,nQ2X2,NQ1X1,nQ1X1;!+;!-])~[$([NH2]-A),$([OH]-*);!+;!-]   abolmaali.smarts_29
+*(~[OQ1X1,oQ1X1,OQ2X2,oQ2X2,NQ3X3,nQ3X3,NQ2X2,nQ2X2,NQ1X1,nQ1X1])(~[$([NH2]-A),$([OH]-*);!+;!-])~*~[$([NH2]-A),$([OH]-*);!+;!-]   abolmaali.smarts_30
+a1a[$([NH2]-a),NQ1H3,NQ2H2,NQ3H1,NQ2H1,nQ1H3,nQ2H2,nQ3H1,   abolmaali.smarts_31
+a12aaaaa1aa[$([NH2]-a),NQ1H3,NQ2H2,NQ3H1,NQ2H1,nQ1H3,nQ2H2,nQ3H1,nQ2H1,$(Cl-*),$(Br-*),$(I-*);!+]2   abolmaali.smarts_32

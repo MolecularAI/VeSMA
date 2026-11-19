@@ -1,0 +1,212 @@
+{
+    "machine_info": {
+        "node": "Annas-BigMac.local",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 22.1.3 ",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.14.5",
+        "python_version": "3.14.5",
+        "python_build": [
+            "main",
+            "May 10 2026 19:20:57"
+        ],
+        "release": "25.4.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.14.5.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 18,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M5 Pro"
+        },
+        "cpu_detail": {
+            "model": "Apple M5 Pro",
+            "physical_cores": 18,
+            "logical_cores": 18,
+            "usable_cores": 18,
+            "core_breakdown": "6 Super and 12 Performance",
+            "label": "Apple M5 Pro, 18 CPU cores",
+            "total_ram_bytes": 68719476736
+        },
+        "cuda": {
+            "available": false
+        },
+        "metal": {
+            "available": true,
+            "backend_type": "Metal",
+            "device_name": "Apple M5 Pro",
+            "vendor": "Apple",
+            "description": "max_threads_per_threadgroup=1024",
+            "gpu_core_count": 20,
+            "label": "Apple M5 Pro, 20 GPU cores"
+        },
+        "software": {
+            "vesma": "0.1.0",
+            "numpy": "2.5.0",
+            "pytest": "9.1.1",
+            "pytest_benchmark": "5.2.3",
+            "rdkit": {
+                "available": true,
+                "version": "2025.09.3",
+                "rdkit_version": "2025.09.3"
+            }
+        },
+        "host_type": "m5-pro"
+    },
+    "commit_info": {
+        "id": "73f2d14b34eb96675037f35f15e8904f771862c5",
+        "time": "2026-11-14T20:27:50+01:00",
+        "author_time": "2026-11-14T20:27:50+01:00",
+        "dirty": false,
+        "project": "vesma",
+        "branch": "fix/cuda-chemistry-parity",
+        "clean_scope": "src,tests",
+        "source_trees": {
+            "src": "1440eaa298d0dfb9b94d6a4632a22bd288664c1b",
+            "tests": "07ebb37dd9ee4dd1411c80ba31cd381241f264e5"
+        }
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_reaction_application[100-metal]",
+            "fullname": "tests/vesma/bench_reaction_application.py::test_reaction_application[100-metal]",
+            "params": {
+                "size": 100,
+                "backend": "metal"
+            },
+            "param": "100-metal",
+            "extra_info": {
+                "experiment": "reaction-application",
+                "contract": "streamed-unkeyed-host-v1",
+                "chemistry_fingerprint": "fd85e7c5e98540c3",
+                "backend": "metal",
+                "size": 100,
+                "molecules": 100,
+                "rules": 42554,
+                "positive_pairs": 21264,
+                "pair_sha256": "8e1ca00acbd0aa4eca85d94fd935c6f09023d0a82499c0ec8d3ca40eb23845dd",
+                "smiles_sha256": "e2e96a78ff7d49ffd6d0c47d3d47516050a52a18e2299af86ad6efb7f5944fa2",
+                "templates_sha256": "93bf26de03cb6220139a498a9d45e6b35a4329de322f08b55311bbadb03af4ed",
+                "precursor_identity": "none",
+                "delivery": "host-batches-released",
+                "compile_seconds": 2.7378894589928677,
+                "pairs_per_batch": null,
+                "pairs_per_batch_limit": null,
+                "workers": 0,
+                "worker_lifetime": "none",
+                "precursor_atom_cap": 64,
+                "reaction_processing": {
+                    "before_match": [],
+                    "after_split": [
+                        "aromaticity",
+                        "ring-connectivity",
+                        "ring-membership"
+                    ]
+                },
+                "diagnostics": {
+                    "component_overflow_assignments": 0,
+                    "precursor_atom_overflow_components": 8,
+                    "precursor_atom_overflow_assignments": 8,
+                    "edited_atom_overflow_assignments": 0,
+                    "match_seconds": 0.03391108299547341,
+                    "predicate_seconds": 2.0000006770715117e-06,
+                    "match_buffer_seconds": 0.000365792,
+                    "match_dispatch_seconds": 0.027760583,
+                    "match_kernel_seconds": 0.022249958317843266,
+                    "match_copyback_seconds": 0.005365834,
+                    "match_other_host_seconds": 0.0002762080081047339,
+                    "match_template_upload_bytes": 0,
+                    "match_molecule_upload_bytes": 1639200,
+                    "match_pair_upload_bytes": 191080,
+                    "match_output_copyback_bytes": 23435984,
+                    "match_assignment_count": 69086,
+                    "match_positive_pairs": 21264,
+                    "match_reserved_slots": 841088,
+                    "match_retry_pairs": 2621,
+                    "assignment_collect_seconds": 0.006086332999984734,
+                    "retro_seconds": 0.2862015430291649,
+                    "retro_construct_kernel_seconds": 0.25093020833446644,
+                    "wl_kernel_seconds": 0.0,
+                    "precursor_gather_seconds": 0.037782041006721556,
+                    "rejections": [
+                        0,
+                        24,
+                        0,
+                        53,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        773,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "undescribed_components": 42,
+                    "inconsistent_assignments": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "orphaned_components": 42,
+                    "grouping_violations": 0,
+                    "precursor_concat_seconds": 0.0,
+                    "consumer_seconds": 1.9455983419902623e-05,
+                    "total_seconds": 0.3835555030236719
+                },
+                "peak_parent_rss_bytes": 8191197184,
+                "rss_scope": "parent-process-high-water-including-setup; not-total-process-tree-or-device-memory",
+                "precursors": 91130,
+                "hits": 91130,
+                "batches": 18,
+                "max_batch_precursors": 5956
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.3731737079942832,
+                "max": 0.3928885000059381,
+                "mean": 0.38322399999985163,
+                "stddev": 0.00986305645405376,
+                "rounds": 3,
+                "median": 0.38360979199933354,
+                "iqr": 0.014786094008741202,
+                "q1": 0.37578272899554577,
+                "q3": 0.39056882300428697,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.3731737079942832,
+                "hd15iqr": 0.3928885000059381,
+                "ops": 2.609439909818767,
+                "total": 1.1496719999995548,
+                "data": [
+                    0.3731737079942832,
+                    0.3928885000059381,
+                    0.38360979199933354
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2026-11-14T19:44:05.531662+00:00",
+    "version": "5.2.3"
+}

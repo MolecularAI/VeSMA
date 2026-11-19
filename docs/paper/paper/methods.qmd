@@ -1,0 +1,136 @@
+# Methods
+
+In this section we follow a reaction template through the complete {{< meta libname >}} application pipeline. Then we describe how the generated precursors and provenance records can be used for multi-step expansion and route analysis.
+
+## Reaction-template application pipeline
+
+The complete reaction-template application workflow is summarized in @fig-pipeline. {{< meta libname >}} exposes this workflow through a common `ReactionMatcher` interface shared by the parallel CPU backend and the GPU backends implemented with NVIDIA CUDA and Apple Metal. For a collection of retrosynthetic templates and a batch of product molecules, the matcher returns the generated precursors together with records identifying their source product, template, and reaction application. Templates are also referred to as rules in the software; we use the two terms interchangeably.
+
+![**Reaction-template application in {{< meta libname >}}.** Reaction templates and input molecules are parsed and encoded on the CPU, and an optional fingerprint prefilter removes product–template pairs that cannot match. The selected CPU or GPU backend then enumerates atom mappings, applies graph edits, separates precursor components, and updates hydrogen counts, aromaticity, and ring descriptors. The matcher returns a precursor batch with provenance records linking each precursor to its source product, template, and reaction application.](figures/vesma-pipeline.svg){#fig-pipeline width=100%}
+
+Reaction rules are parsed and compiled once on the CPU and reused for every product batch. Compilation produces a product query graph describing the pattern to match, a precursor construction graph describing the molecules to generate, and an edit plan derived from the atom-map labels.
+
+Product molecules may be parsed from SMILES or fully specified SMARTS, imported from RDKit `Mol` objects, supplied as {{< meta libname >}} `CMol` graphs, or reused from a precursor batch returned by an earlier call. The CUDA and Metal backends receive packed molecular graphs prepared on the CPU, while previously generated precursor batches can be passed directly to a subsequent expansion step without rebuilding individual molecular objects.
+
+For each batch, reaction application proceeds in the following stages:
+
+1. **Build the work list.** By default, every product is paired with every rule. The caller may instead provide selected product–rule pairs. An optional fingerprint prefilter removes pairs that cannot match.
+2. **Find matching atom assignments.** For each pair, the matcher finds every compatible placement of the product query in the product molecule. Each placement maps query atoms to distinct product atoms.
+3. **Edit the molecular graph.** The edit plan removes atoms that are not retained, adds new atoms, changes charge or hydrogen states where specified, and removes, adds, or changes bonds.
+4. **Construct the precursors.** The matcher separates the edited graph into connected components and returns each component as a precursor. One atom assignment can therefore generate several co-precursors.
+5. **Compute molecular properties.** Hydrogen counts, aromaticity, and ring descriptors are updated for each precursor before it is keyed or reused in a later expansion step.
+
+Each accepted atom assignment defines one reaction application. Co-precursors from the same application share product, rule, and application identifiers. The application identifier groups outputs within one matcher call and has no persistent chemical meaning. The caller may also request a molecular key for each precursor. Compact keys support stock lookup and frontier deduplication, while readable keys such as canonical SMILES support inspection and user-facing reporting.
+
+## SMARTS parsing and supported features
+
+{{< meta libname >}} represents molecules as `CMol` graphs, in which each atom and bond has one value, and reaction queries as `GMol` graphs, which combine fixed-width masks of allowed property values with Boolean atom predicates. This representation supports the atom and bond features commonly used in retrosynthetic templates, including element, aromatic or aliphatic state, formal charge, degree, hydrogen count, valence, connectivity, and the principal bond types. Parentheses around dot-separated fragments can also state whether fragments must match within the same molecule or in separate molecules. Chirality and directional bond notation are accepted without contributing to matching, precursor construction, or molecular identity. A complete comparison with Daylight SMARTS is provided in Supplimentary Information (SI) [@daylight_smarts].
+
+Independent property constraints are evaluated as allowed-value masks. Correlated atom alternatives, such as `[#7&+1,#8&-1]`, retain their Boolean relationships in residual predicates. Recursive SMARTS `$()` are evaluated as subgraph queries rooted at the atom being tested, with nested queries evaluated from the innermost level outward. These constructs are supported by the CPU, CUDA, and Metal backends.
+
+Ring and chain bond queries (`@` and `!@`) identify non-bridge bonds, and ring connectivity (`x`) counts those incident to an atom. For atom-level ring descriptors, all three backends use relevant cycles: the union of all minimum cycle bases [@vismara1997]. Horton-style shortest-path candidates, including tied shortest paths, are tested in increasing length using elimination over the binary field GF(2) [@horton1987]. `R` counts the relevant cycles containing an atom, and `r` is the length of its smallest cycle. Both descriptors are computed together and are independent of atom ordering. Supplimentary Information (SI) gives the exact selection rule, numeric representation, and execution bounds.
+
+For cross-tool comparisons, the same matcher interface wraps RDKit and RDChiral. The RDKit wrapper applies each reaction SMARTS with `ChemicalReaction.RunReactants`, while RDChiral adds its native post-processing and outcome deduplication. The benchmark converts their precursors into the same stereochemistry-stripped canonical-SMILES space before comparing the outcome sets for each molecule–template pair.
+
+## Fingerprint prefilter
+
+A product can match a reaction rule only if it contains the atoms and paths required by the product query. {{< meta libname >}} encodes these necessary conditions in a molecular fingerprint and uses them to discard impossible product–rule pairs before subgraph matching. The fingerprint contains exact elements and short paths between them. For example, `C-C-O` contributes features for carbon, oxygen, `C-C`, `C-O`, and `C-C-O`. Paths are independent of direction, and bond orders are represented only as connectivity. A feature is generated only when the rule specifies an exact element; ambiguous atoms such as `[C,N]` do not impose a fingerprint constraint.
+
+Simple paths are folded into a 2,048-bit fingerprint. Product fingerprints are generated for each input batch and compared with the previously compiled rule fingerprints. A pair is retained only when the product contains at least as many atoms as the query and its fingerprint includes all features required by the rule. Hash collisions and the absence of feature counts may allow some impossible pairs to reach the full matcher, but the prefilter does not remove valid pairs. The graph matcher determines the final result.
+
+## Subgraph matching and atom-mapping enumeration
+
+For each product–rule pair, the matcher finds the compatible placements of the rule's product query in the product graph. Reaction application requires the corresponding atom-to-atom assignments rather than a yes-or-no substructure result, because each assignment determines where the transformation is applied.
+
+{{< meta libname >}} uses Ullmann-style candidate refinement [@ullmann1976; @ullmann2011bitvector]. Potential atom matches are represented by a Boolean table with one row per query atom and one column per product atom. The GPU backends pack each candidate row and graph-adjacency row into a 64-bit mask, allowing neighborhood-support tests to be performed with compact bitwise operations. Refinement removes candidates that lack the required neighboring atoms, and a depth-first search explores the remaining assignments. Before accepting an assignment, the matcher verifies that each query atom maps to a distinct product atom and that all atom, bond, connectivity, component-grouping, and ring conditions are satisfied. The CPU uses vectorized arrays and can distribute product–rule pairs across processes, while CUDA and Metal use custom compute kernels.
+
+## Graph edits and precursor construction
+
+An accepted atom mapping identifies where a compiled reaction rule acts on the product graph. Atom-map labels link atoms in the product query to atoms in the precursor construction graph. Atoms present in both graphs are retained, atoms found only in the product query are removed, and atoms found only in the construction graph are added. The edit plan also specifies changes to charge, total hydrogen, and bonds.
+
+The precursor construction graph acts as a rewrite instruction rather than a second pattern to match. A mapped atom retains its element, while its charge, total hydrogen count, and bonding may change. Properties derived from the completed structure, including aromaticity, degree, connectivity, valence, and ring descriptors, are recalculated after the transformation. Values written for these derived properties on the precursor side are recorded for template diagnostics rather than used to force or reject the generated structure. Implicit-hydrogen query notation constrains matching, whereas only an explicitly specified total hydrogen count changes the molecular state.
+
+Each accepted mapping is transformed independently and defines one reaction application. Hydrogen counts are reconstructed while the atom's original environment remains available. The edited graph is then separated into connected components, each of which becomes a precursor molecule. Components generated from the same mapping retain shared application provenance, and ring and aromaticity perception are performed on each precursor after separation.
+
+## Hydrogen reconstruction and aromaticity perception
+
+Graph edits can invalidate the product's previous hydrogen counts and aromaticity. {{< meta libname >}} therefore reconstructs hydrogen during the local edit and perceives aromaticity on each connected precursor before that precursor is keyed or reused in a later expansion step. Both operations use a declarative table of closed-shell atom configurations. Each configuration specifies the number of sigma attachments, graph valence, and possible contribution to a delocalized circuit. Missing or ambiguous states are reported rather than resolved by choosing an arbitrary valence.
+
+### Hydrogen reconstruction
+
+An explicitly written total hydrogen count is retained exactly. For a new atom without such a count, {{< meta libname >}} selects the declared configuration requiring the fewest non-negative hydrogen atoms that is consistent with the written bonding. Concrete bonds are evaluated by bond-order sum, while an orderless-delocalized atom is evaluated from its sigma framework.
+
+A surviving mapped atom follows the state established before the edit. If neither charge nor incident bond types change, its hydrogen count is copied. If bonding changes without a charge change, the atom retains its original configuration and gains or loses the unique number of hydrogen atoms required by the edited bonding. If charge changes while hydrogen remains unspecified, the application is rejected because the previous configuration no longer determines the new state. Supplimentary Information (SI) gives the complete configuration and refusal rules.
+
+### Aromaticity perception
+
+{{< meta libname >}} perceives aromaticity directly from the molecular graph without first selecting a Kekulé form. Automatic perception examines simple cycles containing three to eight atoms and groups cycles that share an edge. For each candidate, the configuration table determines whether every atom can participate and whether it contributes zero, one, or two π electrons. A circuit is accepted when the electron count satisfies the Hückel $4n+2$ rule [@iupac_huckel]. Delocalized bonds are then assigned from the accepted circuits, allowing fused systems to retain concrete interior bonds when only the outer circuit is accepted.
+
+The size bound applies to automatic discovery. An explicitly delocalized simple circuit can be followed and evaluated at any represented size. If the eligible cycle space contains a larger circuit that was written only with localized bonds, {{< meta libname >}} requests explicit delocalized annotation rather than returning a representation-dependent aliphatic result. The model is topological and does not assess geometry, planarity, ring currents, or degrees of aromaticity. Supplimentary Information (SI) gives the exact circuit, bond-classification, and refusal rules.
+
+## Molecular deduplication
+
+Retrosynthetic expansion often generates the same molecule through different templates or routes. {{< meta libname >}} assigns each precursor a compact molecular key so repeated structures can be recognized during stock lookup and frontier deduplication.
+
+The default key assigns a common class to every non-triple bond in a ring containing three to eight atoms. Bonds outside these rings retain their order, and triple bonds are preserved. This normalization does not depend on the perceived aromaticity state and makes the key less sensitive to localized and delocalized representations of common aromatic rings. Each atom is initially described by its element, formal charge, total hydrogen count, and number of heavy-atom neighbors. Eight rounds of Morgan-like Weisfeiler–Lehman refinement (WL) update the atom labels using neighboring labels and bond classes [@morgan1965; @weisfeiler1968]. The sorted labels, atom count, and bond count are then hashed into a 128-bit key.
+
+The default key omits isotope and stereochemical state and discards some bond-order detail in short rings. Additional CPU key families provide an aromaticity-aware WL key, {{< meta libname >}} canonicalized SMILES, and RDKit-backed canonical SMILES, InChI, and InChIKey. CUDA and Metal generate the short-ring WL key directly. Because any compact identity scheme can merge distinct structures or separate equivalent representations, Supplimentary Information (SI) reports an empirical comparison with normalized RDKit canonical-SMILES grouping.
+
+## Execution stages and data residency
+
+The natural unit of work changes during reaction-template application. Matching begins with product–rule pairs and produces compatible atom assignments. Each assignment defines a graph transformation that may generate one or more precursor components. Hydrogen reconstruction, aromaticity perception, molecular-key generation, and deduplication then operate on the generated precursors. These successive levels provide natural units for parallel execution and can guide future optimization of workload distribution and memory use. The stages may be grouped differently according to the hardware and workload while preserving the same reaction-application result.
+
+CUDA provides two data-residency modes for multi-step expansion. In host-frontier mode, generated precursor graphs are transferred to host memory after each layer, reducing the GPU memory required for large frontiers. In device-frontier mode, the precursor graphs remain on the GPU and can be reused directly in the next layer, reducing data transfer when sufficient device memory is available. CPU and Metal return reusable host-side molecular batches. All backends report capacity events explicitly, and an application is retained only when its complete set of co-precursors can be returned. Backend capacities are listed in Supplimentary Information (SI).
+
+## {{< meta libname >}}-Retrosynthesis integration and stress test
+
+{{< meta libname >}} performs reaction-template application, while a retrosynthetic system must also manage molecules across expansion layers, identify repeated structures, record alternative disconnections, and recover complete routes to stock. We developed {{< meta libname >}}-Retrosynthesis (VeRTSY) as a reference implementation of these surrounding operations. It demonstrates how {{< meta libname >}} can be incorporated into a search workflow and provides an expansion-graph storage model that can be adapted for other retrosynthetic planners.
+
+In this study, VeRTSY performs depth-bounded exhaustive expansion. It evaluates every molecule in the current frontier against every eligible template after fingerprint prefiltering. This produces a transparent workload that is independent of a reaction-ranking or route-selection policy. With the PaRoutes templates [@genheden2022paroutes], frontier growth provides a demanding end-to-end test of {{< meta libname >}} and exposes the practical limits of exhaustive enumeration. VeRTSY therefore serves both as an implementation example and as a controlled framework for measuring reaction application, molecular deduplication, graph storage, and route recovery.
+
+### Molecules, keys, and expansion-graph storage
+
+VeSMA-Retrosynthesis distinguishes three molecular representations: the molecular graph ($M$), a molecular key ($K$), and an integer storage identifier ($I$). Template application operates on molecular graphs, whereas keys support stock lookup and deduplication, and storage identifiers provide compact references within the expansion graph. A keyer computes a key from a molecular graph ($M \to K$); this transformation is generally not reversible for compact Weisfeiler–Lehman (WL) keys. An interner assigns a unique storage identifier to each distinct key and maintains the reverse mapping ($K \leftrightarrow I$). Molecular graphs are retained only for molecules that may require expansion, while storage identifiers are local to the expansion store.
+
+Generated reactions are represented as an AND/OR graph, in which molecules are OR nodes (alternative disconnections) and reaction applications are AND nodes (all precursors are required). The graph is stored in two append-only relations:
+
+$$
+(\text{product identifier},\ \text{application identifier},\ \text{precursor identifier})
+$$
+
+$$
+(\text{product identifier},\ \text{application identifier},\ \text{template identifier}).
+$$
+
+Each application identifier denotes a set of distinct precursors generated from a product. Applications yielding the same precursor set are merged, regardless of the atom mapping or template that produced them, while all contributing templates are retained as provenance. Repeated occurrences of the same precursor are collapsed, since route search considers whether each required molecule can be synthesized, rather than the quantities needed. This eliminates redundant branches without losing template provenance.
+
+Molecule expansion status is maintained separately. Stock molecules are initialized as solved leaves. A reaction application becomes solved when all its precursors are solved, and a molecule becomes solved when at least one of its applications is solved. Propagating these conditions to a fixed point identifies molecules for which a complete route to stock exists.
+
+### Depth-bounded exhaustive expansion
+
+Each layer begins with the unique molecules in the current frontier. VeRTSY removes molecules already present in stock or previously expanded, then evaluates every remaining molecule against the selected template collection. The fingerprint prefilter removes pairs that cannot match. {{< meta libname >}} then enumerates atom mappings, applies the graph transformations, separates precursor components, and reconstructs their molecular properties.
+
+VeRTSY computes a molecular key for every precursor and interns these keys to storage identifiers. It adds the resulting disconnections to the expansion graph, collapsing applications that produce the same precursor multiset. From the generated batch, it retains one molecular representation for each previously unseen, non-stock identifier. These molecules form the next frontier, while the graph preserves all recorded routes by which they were generated.
+
+Expansion continues until the selected depth is reached or the frontier becomes empty. Here, exhaustive expansion means that every eligible product–template pair is considered within the chosen template collection, stock, depth, supported reaction semantics, and backend capacities. For each layer, VeRTSY records the input frontier, product–template pairs, reaction applications, raw precursors, and unique molecules promoted to the next frontier. These measurements connect reaction-level output to frontier growth and provide an end-to-end stress test of {{< meta libname >}} under multi-step use.
+
+### Route replay and comparison
+
+Route replay is a restricted form of retrosynthetic search in which information from a reference route constrains the expansions that are explored. Depending on which template and molecular identities are held fixed, replay can test reaction-engine compatibility, compare template collections, recover readable molecular representations, or determine whether alternative transformations connect a target to the same starting materials.
+
+When template identities are fixed, replay applies the recorded template at each node to the molecule generated in the preceding step. It passes the generated precursors directly to the next reaction layer rather than replacing them with reference intermediates. A template may have several valid applications to the same molecule, so replay retains every generated branch consistent with the available reference information. This tests whether the engine produces molecules that remain usable throughout the route and whether the recorded templates reproduce the reference chemistry.
+
+Replay can also reconstruct routes stored with non-readable molecular keys. It starts from the original target, applies the selected template tree again, and assigns readable keys such as canonical SMILES to the generated molecules. This procedure reconstructs the route rather than attempting to reverse a compact hash. Because the original route may not identify which valid template application produced an intermediate, every compatible reconstruction is retained.
+
+The available template and molecular identities determine the comparison, which are summarizied in @tbl-route-replay-and-comparison. As template and molecular constraints are progressively released, route replay approaches the depth-bounded exhaustive expansion.
+
+| Comparison | Templates held fixed | Molecular identities compared | Question addressed |
+|---|---|---|---|
+| Complete route agreement | Yes | Target, intermediates, and stock | Does replay reproduce the complete reference route? |
+| Template-and-stock agreement | Yes | Target and stock | Do the same templates connect the target to the same stock when intermediate identities cannot be compared? |
+| Template-only agreement | Yes | Target | Can the same arrangement of transformations produce a complete route while the generated molecules vary? |
+| Molecule-resolved agreement | No | Target, intermediates, and stock | Can another template or collection reproduce the same precursor sets? |
+| Starting-material agreement | No | Target and stock | Can another set of transformations connect the target to the same starting materials? |
+| Unrestricted route discovery | No | Target | Can the collection find any stock-terminating route within the selected depth? |
+
+: Route replay and route comparison types {#tbl-route-replay-and-comparison}

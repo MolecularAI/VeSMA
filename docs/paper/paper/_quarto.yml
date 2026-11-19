@@ -1,0 +1,26 @@
+project:
+  type: default
+  execute-dir: project
+  output-dir: _manuscript
+  render:
+    - index.qmd
+    - si.qmd
+
+format:
+  typst:
+    toc: false
+    template-partials:
+      - typst-template.typ
+
+execute:
+  freeze: false
+  echo: false       # hide code globally
+  keep-md: true
+
+number-sections: true
+
+bibliography: references.bib
+
+project-url: https://github.com/alexvoronov/VeSMA/
+
+jupyter: python3

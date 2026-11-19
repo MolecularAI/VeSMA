@@ -1,0 +1,27 @@
+{
+  "files": [
+    "raw68k-classified.tsv.gz",
+    "class-mapping.tsv"
+  ],
+  "projections": "raw68k-<verdict>.tsv.gz, rebuilt by filter_curated.py; not committed",
+  "sources": {
+    "templates": "../../paroutes/processed/raw68k-templates.tsv.gz",
+    "reactionclassifier": "vendored/reactionclassifier-labels.json.gz",
+    "rxn_insight": "vendored/rxn-insight-labels.json.gz",
+    "published_corpus": "vendored/zenodo-labels.tsv.gz",
+    "overrides": "manual-overrides.tsv"
+  },
+  "mapping_depth": 2,
+  "counts": {
+    "smarts": 67557,
+    "hashes": 42554,
+    "labelled_hashes": 42554,
+    "confirmed_hashes": 30073,
+    "agree_hashes": 25284,
+    "agree_smarts": 42737,
+    "agree_occurrence": 0.7458,
+    "manual": 4,
+    "mapping_classes": 70,
+    "mapping_purity": 0.8444
+  }
+}

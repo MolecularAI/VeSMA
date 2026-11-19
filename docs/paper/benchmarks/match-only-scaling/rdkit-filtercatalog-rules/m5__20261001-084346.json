@@ -1,0 +1,350 @@
+{
+    "machine_info": {
+        "node": "sef0627my2v3DD",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 22.1.3 ",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.14.7",
+        "python_version": "3.14.7",
+        "python_build": [
+            "main",
+            "Aug 25 2026 13:50:14"
+        ],
+        "release": "25.6.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.14.7.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 10,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M5"
+        },
+        "cpu_detail": {
+            "model": "Apple M5",
+            "physical_cores": 10,
+            "logical_cores": 10,
+            "usable_cores": 10,
+            "core_breakdown": "4 Super and 6 Efficiency",
+            "label": "Apple M5, 10 CPU cores",
+            "total_ram_bytes": 17179869184
+        },
+        "cuda": {
+            "available": false
+        },
+        "metal": {
+            "available": null,
+            "probe_skipped": true,
+            "device_name": "Apple M5",
+            "gpu_core_count": 8,
+            "label": "Apple M5, 8 GPU cores"
+        },
+        "software": {
+            "vesma": "0.1.0",
+            "numpy": "2.5.0",
+            "pytest": "9.1.1",
+            "pytest_benchmark": "5.2.3",
+            "rdkit": {
+                "available": true,
+                "version": "2025.09.3",
+                "rdkit_version": "2025.09.3"
+            }
+        },
+        "host_type": "m5"
+    },
+    "commit_info": {
+        "id": "64232d9a928ea4efbdd4e7b2f9c842e9d3553b2f",
+        "time": "2026-09-30T12:46:23+02:00",
+        "author_time": "2026-09-30T12:46:23+02:00",
+        "dirty": true,
+        "project": "vesma",
+        "branch": "main",
+        "clean_scope": "src,tests"
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_match_only_scaling[1-rdkit-filtercatalog-rules]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[1-rdkit-filtercatalog-rules]",
+            "params": {
+                "size": 1,
+                "match_only_backend": "rdkit-filtercatalog-rules"
+            },
+            "param": "1-rdkit-filtercatalog-rules",
+            "extra_info": {
+                "matches": 146,
+                "molecules": 1,
+                "rules": 42554,
+                "pairs": 42554,
+                "path": "FilterCatalog rules -> frontier SMILES",
+                "build_seconds": 0.15220999999974083,
+                "experiment": "match-only",
+                "backend": "rdkit-filtercatalog-rules",
+                "size": 1,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.02708824999990611,
+                "max": 0.02757758300003843,
+                "mean": 0.02726675000000493,
+                "stddev": 0.0002701771889120343,
+                "rounds": 3,
+                "median": 0.027134417000070243,
+                "iqr": 0.00036699975009923946,
+                "q1": 0.027099791749947144,
+                "q3": 0.027466791500046384,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.02708824999990611,
+                "hd15iqr": 0.02757758300003843,
+                "ops": 36.67470453940493,
+                "total": 0.08180025000001478,
+                "data": [
+                    0.027134417000070243,
+                    0.02757758300003843,
+                    0.02708824999990611
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[10-rdkit-filtercatalog-rules]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[10-rdkit-filtercatalog-rules]",
+            "params": {
+                "size": 10,
+                "match_only_backend": "rdkit-filtercatalog-rules"
+            },
+            "param": "10-rdkit-filtercatalog-rules",
+            "extra_info": {
+                "matches": 1282,
+                "molecules": 10,
+                "rules": 42554,
+                "pairs": 425540,
+                "path": "FilterCatalog rules -> frontier SMILES",
+                "build_seconds": 0.13546533299995644,
+                "experiment": "match-only",
+                "backend": "rdkit-filtercatalog-rules",
+                "size": 10,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.04957141600016257,
+                "max": 0.05470591699986471,
+                "mean": 0.05238812499995523,
+                "stddev": 0.0026033562488766092,
+                "rounds": 3,
+                "median": 0.0528870419998384,
+                "iqr": 0.0038508757497766055,
+                "q1": 0.05040032250008153,
+                "q3": 0.054251198249858135,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.04957141600016257,
+                "hd15iqr": 0.05470591699986471,
+                "ops": 19.08829529594454,
+                "total": 0.15716437499986569,
+                "data": [
+                    0.04957141600016257,
+                    0.05470591699986471,
+                    0.0528870419998384
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[100-rdkit-filtercatalog-rules]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[100-rdkit-filtercatalog-rules]",
+            "params": {
+                "size": 100,
+                "match_only_backend": "rdkit-filtercatalog-rules"
+            },
+            "param": "100-rdkit-filtercatalog-rules",
+            "extra_info": {
+                "matches": 21264,
+                "molecules": 100,
+                "rules": 42554,
+                "pairs": 4255400,
+                "path": "FilterCatalog rules -> frontier SMILES",
+                "build_seconds": 0.13970179199986887,
+                "experiment": "match-only",
+                "backend": "rdkit-filtercatalog-rules",
+                "size": 100,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.5380133749999914,
+                "max": 0.5413417499999014,
+                "mean": 0.5392634166666236,
+                "stddev": 0.0018122004162846477,
+                "rounds": 3,
+                "median": 0.5384351249999781,
+                "iqr": 0.0024962812499325082,
+                "q1": 0.538118812499988,
+                "q3": 0.5406150937499206,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.5380133749999914,
+                "hd15iqr": 0.5413417499999014,
+                "ops": 1.8543813080838134,
+                "total": 1.6177902499998709,
+                "data": [
+                    0.5384351249999781,
+                    0.5380133749999914,
+                    0.5413417499999014
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[1000-rdkit-filtercatalog-rules]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[1000-rdkit-filtercatalog-rules]",
+            "params": {
+                "size": 1000,
+                "match_only_backend": "rdkit-filtercatalog-rules"
+            },
+            "param": "1000-rdkit-filtercatalog-rules",
+            "extra_info": {
+                "matches": 261543,
+                "molecules": 1000,
+                "rules": 42554,
+                "pairs": 42554000,
+                "path": "FilterCatalog rules -> frontier SMILES",
+                "build_seconds": 0.12337737499956347,
+                "experiment": "match-only",
+                "backend": "rdkit-filtercatalog-rules",
+                "size": 1000,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 5.874134334000246,
+                "max": 6.189120500000172,
+                "mean": 6.0330801806668815,
+                "stddev": 0.15751318281225493,
+                "rounds": 3,
+                "median": 6.035985708000226,
+                "iqr": 0.2362396244999445,
+                "q1": 5.914597177500241,
+                "q3": 6.150836802000185,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 5.874134334000246,
+                "hd15iqr": 6.189120500000172,
+                "ops": 0.1657528111767052,
+                "total": 18.099240542000643,
+                "data": [
+                    5.874134334000246,
+                    6.035985708000226,
+                    6.189120500000172
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_match_only_scaling[2881-rdkit-filtercatalog-rules]",
+            "fullname": "tests/vesma/bench_match_scaling.py::test_match_only_scaling[2881-rdkit-filtercatalog-rules]",
+            "params": {
+                "size": 2881,
+                "match_only_backend": "rdkit-filtercatalog-rules"
+            },
+            "param": "2881-rdkit-filtercatalog-rules",
+            "extra_info": {
+                "matches": 768015,
+                "molecules": 2881,
+                "rules": 42554,
+                "pairs": 122598074,
+                "path": "FilterCatalog rules -> frontier SMILES",
+                "build_seconds": 0.1465415830002712,
+                "experiment": "match-only",
+                "backend": "rdkit-filtercatalog-rules",
+                "size": 2881,
+                "frontier": "n1-d2-f0",
+                "template_source": "uspto42k-compat"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 17.664379917000133,
+                "max": 18.67285745800018,
+                "mean": 18.203746527666834,
+                "stddev": 0.5078962818722954,
+                "rounds": 3,
+                "median": 18.274002208000184,
+                "iqr": 0.7563581557500356,
+                "q1": 17.816785489750146,
+                "q3": 18.57314364550018,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 17.664379917000133,
+                "hd15iqr": 18.67285745800018,
+                "ops": 0.05493374665924716,
+                "total": 54.6112395830005,
+                "data": [
+                    17.664379917000133,
+                    18.274002208000184,
+                    18.67285745800018
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2026-10-01T08:45:33.050909+00:00",
+    "version": "5.2.3"
+}
