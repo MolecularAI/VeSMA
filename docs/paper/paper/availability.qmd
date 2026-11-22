@@ -2,17 +2,14 @@
 
 - **Project name:** VeSMA
 - **Project home page:** [https://github.com/MolecularAI/VeSMA](https://github.com/MolecularAI/VeSMA)
-- **Archived version:** `ZENODO_DOI_PENDING_RELEASE`
+- **Archived version:** `10.5281/zenodo.24397958`
 - **Operating systems:** Linux for CPU and CUDA; macOS for CPU and Metal; other CPU platforms may work but are not claimed by the release validation
 - **Programming language:** Python 3.14 or later; CUDA C++ and Metal Shading Language for the corresponding backends
 - **Other requirements:** NumPy and the dependencies declared in `pyproject.toml`; RDKit and RDChiral for interoperability and reference-validation extras; CuPy/CUDA 12 for NVIDIA execution; Apple Metal tooling for the Metal extension
-- **License:** MIT
+- **License:** Apache-2.0
 - **Restrictions for non-academic use:** none
 
-The release source includes the benchmark harness, retained raw `pytest-benchmark` JSON, paper source, Supplimentary Information (SI), and reproduction commands. Large upstream PaRoutes inputs are obtained or regenerated through documented dataset targets and retain source checksums in benchmark metadata.
-
-## Availability of data and materials
-The VeSMA source, retained benchmark records, and manuscript sources will be available at https://github.com/MolecularAI/VeSMA/ and archived under ZENODO_DOI_PENDING_RELEASE. PaRoutes data used in the evaluation are described by Genheden and Bjerrum [@genheden2022paroutes], and their provenance is recorded in the distributed benchmark metadata.
+The release source includes the benchmark harness, retained raw benchmark JSON, paper source, Supplimentary Information (SI), and reproduction commands. Large upstream PaRoutes inputs are obtained or regenerated through documented dataset targets and retain source checksums in benchmark metadata.
 
 ## Competing interests
 

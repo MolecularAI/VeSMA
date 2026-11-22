@@ -11,11 +11,11 @@ authors:
   - family-names: Reymer
     given-names: Anna
     orcid: "https://orcid.org/0000-0001-8458-7918"
-repository-code: PROJECT_URL_PENDING_AZ
-license: MIT
+repository-code: https://github.com/MolecularAI/VeSMA
+license: Apache-2.0
 identifiers:
   - type: doi
-    value: ZENODO_DOI_PENDING_RELEASE
+    value: 10.5281/zenodo.24397958
 abstract: >-
   CPU- and GPU-native reaction-template application for retrosynthetic expansion,
   including matching, bond edits, precursor construction, and WL deduplication keys.

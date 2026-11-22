@@ -169,8 +169,9 @@ If you use VeSMA, please cite the accompanying paper:
 Alexey Voronov and Anna Reymer. *VeSMA: GPU-native library for retrosynthetic expansion and beyond*. ChemRxiv, 2026.
 
 - Preprint: `CHEMRXIV_URL_PENDING_RELEASE`
-- DOI: `CHEMRXIV_DOI_PENDING_RELEASE`
+- Preprint DOI: `CHEMRXIV_DOI_PENDING_RELEASE`
+- Zenodo code deposition DOI: [10.5281/zenodo.24397958](https://doi.org/10.5281/zenodo.24397958)
 
 ## License
 
-VeSMA is released under the [MIT License](LICENSE).
+VeSMA is released under the [Apache-2.0 License](LICENSE).
