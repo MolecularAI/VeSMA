@@ -23,7 +23,6 @@ authors:
     corresponding: false
     orcid: 0000-0001-8458-7918
     email: anna.reymer@inserm.fr
-bibliography: references.bib
 keywords:
   - Retrosynthesis
   - reaction-template application

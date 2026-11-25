@@ -1,7 +1,7 @@
 project:
   type: default
   execute-dir: project
-  output-dir: _manuscript
+  output-dir: _output
   render:
     - index.qmd
     - si.qmd
@@ -11,6 +11,7 @@ format:
     toc: false
     template-partials:
       - typst-template.typ
+  docx: default
 
 execute:
   freeze: false
@@ -20,6 +21,8 @@ execute:
 number-sections: true
 
 bibliography: references.bib
+
+csl: springer-basic-brackets.csl
 
 project-url: https://github.com/alexvoronov/VeSMA/
 
