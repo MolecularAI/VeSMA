@@ -1,19 +1,14 @@
-"""Plotting helpers for benchmark papers: counts that span orders of magnitude on a log axis.
+"""Plotting helpers for benchmark papers: counts spanning orders of magnitude on a log axis.
 
-Nothing here knows about one particular figure. Data arrive as pandas objects, and a
-figure-specific chunk in the paper composes these helpers.
-
-Text is sized to sit beside the paper's own text, so a panel is drawn at the size it is printed:
-each panel carries its own size, and ``qfigure`` places the panels in the document as inline
-boxes inside one captioned figure, which the renderer wraps onto separate lines when the page is
-too narrow to hold them side by side.
+Nothing here knows about one particular figure or output backend. Panel drawers take a
+Matplotlib ``Axes`` and draw onto it; ``multipanel`` composes any sequence of drawers
+into one aligned Matplotlib ``Figure`` that Quarto renders natively to SVG (Typst),
+PDF (LaTeX), or PNG (DOCX).
 """
 
 from __future__ import annotations
 
-import io
 from collections.abc import Callable, Hashable, Iterable, Sequence
-from dataclasses import dataclass
 from itertools import cycle, islice
 from math import ceil, floor, log10
 from typing import Any
@@ -29,18 +24,22 @@ from matplotlib.typing import RcKeyType
 
 __all__ = [
     "STYLE",
+    "SERIES",
+    "LABEL_SIZE",
+    "SMALL_SIZE",
+    "PanelDrawer",
     "series_colors",
     "growth",
     "decade_limits",
     "compact_count",
     "log_axis",
     "annotate_all",
-    "Margins",
-    "MARGINS",
-    "trend_panel",
-    "profile_panel",
-    "qfigure",
+    "plot_trend",
+    "plot_profiles",
+    "multipanel",
 ]
+
+type PanelDrawer = Callable[[Axes], None]
 
 # Where a point's value goes, in points from the point. The first point sits at the left edge,
 # where the line leaves steeply, so its label goes beside it; later points are labelled above and
@@ -77,56 +76,6 @@ STYLE: dict[RcKeyType, Any] = {
 }
 
 
-@dataclass(frozen=True)
-class Margins:
-    """Room around the axes, in inches. Text is sized in points, so the room it needs is absolute.
-
-    Panels drawn with the same margins at the same figure size have identical plot areas, so a
-    shared y range lines up across panels.
-    """
-
-    left: float = 0.8  # tick labels and a two-line axis label
-    bottom: float = 1.0  # rotated stage names
-    right: float = 0.1
-    top: float = 0.4  # legend row, clear of the labels above the highest point
-
-    def rect(self, fig: Figure) -> tuple[float, float, float, float]:
-        """The axes rectangle in figure fractions: left, bottom, width, height."""
-        width, height = fig.get_size_inches()
-        return (
-            self.left / width,
-            self.bottom / height,
-            1 - (self.left + self.right) / width,
-            1 - (self.bottom + self.top) / height,
-        )
-
-
-MARGINS = Margins()
-
-
-def new_panel(
-    margins: Margins, size: tuple[float, float] | None, tag: str | None
-) -> tuple[Figure, Axes]:
-    """A figure of ``size`` inches (default: the current frame) with its axes and corner tag.
-
-    Call inside ``plt.rc_context(STYLE)``.
-    """
-    fig = plt.figure(figsize=size)
-    ax = fig.add_axes(margins.rect(fig))
-    if tag is not None:
-        width, height = fig.get_size_inches()
-        fig.text(
-            0.02 / width,
-            1 - 0.03 / height,
-            tag,
-            ha="left",
-            va="top",
-            fontweight="bold",
-            fontsize=LABEL_SIZE,
-        )
-    return fig, ax
-
-
 def series_colors(count: int) -> list[str]:
     """One colour per series, in a fixed order, repeating when there are more series than colours."""
     return list(islice(cycle(SERIES), count))
@@ -155,9 +104,8 @@ def log_axis(ax: Axes, limits: tuple[float, float], max_labels: int = 3) -> None
     """Logarithmic y axis with the usual log-spaced ticks and no more than ``max_labels`` labels.
 
     ``limits`` are whole powers of ten (see ``decade_limits``). There is a tick at every decade
-    and minor ticks at 2 to 9 times each decade, which bunch towards the next decade as on any
-    logarithmic scale; only ``max_labels`` evenly spaced decades are labelled, so the labels
-    stay readable at body-text size.
+    and minor ticks at 2 to 9 times each decade; only ``max_labels`` evenly spaced decades are
+    labelled so labels stay readable at body-text size.
     """
     low, high = (round(log10(limit)) for limit in limits)
     decades = range(low, high + 1)
@@ -185,69 +133,66 @@ def annotate_all(
         ax.annotate(text, (x, y), textcoords="offset points", **style)
 
 
-def trend_panel(
+def plot_trend(
+    ax: Axes,
     sizes: pd.Series,
     *,
     limits: tuple[float, float],
     xlabel: str,
     ylabel: str,
-    margins: Margins = MARGINS,
-    size: tuple[float, float] | None = None,
-    tag: str | None = None,
-) -> Figure:
-    """One count per step on a log axis, each point valued and each step marked with its multiplier.
+) -> None:
+    """Plot one count per step on a log axis, valuing each point and marking each step's multiplier.
 
     ``sizes`` is indexed by the step's name; any number of steps works.
     """
     values = sizes.to_numpy()
     steps = np.arange(len(values))
-    # the visual midpoint of a step on a log axis
     log_midpoints = np.sqrt(values[:-1] * values[1:])
-    with plt.rc_context(STYLE):
-        fig, ax = new_panel(margins, size, tag)
-        ax.plot(steps, values, "-o", color=FOCAL, mec="white", ms=8, lw=2, zorder=3)
-        log_axis(ax, limits)
-        ax.set(
-            xticks=steps,
-            xticklabels=[str(name) for name in sizes.index],
-            xlabel=xlabel,
-            ylabel=ylabel,
-        )
-        ax.set_xlim(steps[0] - 0.4, steps[-1] + 0.15)
-        texts = list(map(compact_count, values))
-        annotate_all(  # the first point: beside it, as in a profile panel
-            ax,
-            steps[:1],
-            values[:1],
-            texts[:1],
-            color=FOCAL,
-            fontweight="bold",
-            **FIRST_LABEL,
-        )
-        annotate_all(  # later points: above and left, which is above the rising line
-            ax,
-            steps[1:],
-            values[1:],
-            texts[1:],
-            xytext=(-8, 6),
-            ha="right",
-            color=FOCAL,
-            fontweight="bold",
-        )
-        annotate_all(  # above the line, left of its midpoint
-            ax,
-            steps[:-1] + 0.5,
-            log_midpoints,
-            (f"×{g:.0f}" for g in growth(values)),
-            xytext=(-6, 6),
-            ha="right",
-            color=GREY,
-            fontweight="bold",
-        )
-    return fig
+
+    ax.plot(steps, values, "-o", color=FOCAL, mec="white", ms=8, lw=2, zorder=3)
+    log_axis(ax, limits)
+    ax.set(
+        xticks=steps,
+        xticklabels=[str(name) for name in sizes.index],
+        xlabel=xlabel,
+        ylabel=ylabel,
+    )
+    ax.set_xlim(steps[0] - 0.4, steps[-1] + 0.15)
+
+    texts = list(map(compact_count, values))
+    annotate_all(
+        ax,
+        steps[:1],
+        values[:1],
+        texts[:1],
+        color=FOCAL,
+        fontweight="bold",
+        **FIRST_LABEL,
+    )
+    annotate_all(
+        ax,
+        steps[1:],
+        values[1:],
+        texts[1:],
+        xytext=(-8, 6),
+        ha="right",
+        color=FOCAL,
+        fontweight="bold",
+    )
+    annotate_all(
+        ax,
+        steps[:-1] + 0.5,
+        log_midpoints,
+        (f"×{g:.0f}" for g in growth(values)),
+        xytext=(-6, 6),
+        ha="right",
+        color=GREY,
+        fontweight="bold",
+    )
 
 
-def profile_panel(
+def plot_profiles(
+    ax: Axes,
     profiles: pd.DataFrame,
     *,
     limits: tuple[float, float],
@@ -256,126 +201,130 @@ def profile_panel(
     guide: tuple[float, str] | None = None,
     labelled: pd.DataFrame | None = None,
     xtick_rotation: float = 0.0,
-    margins: Margins = MARGINS,
-    size: tuple[float, float] | None = None,
-    tag: str | None = None,
-) -> Figure:
-    """One line per row across the ordered columns, on a log axis, points valued.
+) -> None:
+    """Plot one line per row across the ordered columns on a log axis, with valued points.
 
     Rows are series (labelled in the legend by ``label(row index)``), columns are the stages
-    they pass through, and missing values (NaN) are left out. Every point is valued unless the
+    they pass through, and missing values (NaN) are omitted. Every point is valued unless the
     boolean frame ``labelled`` (same shape as ``profiles``) says otherwise. ``guide`` draws a
-    dashed horizontal reference line at a level, with its caption. The legend is one row above
-    the axes. Stage names that do not fit side by side can be rotated by ``xtick_rotation``
-    degrees.
+    dashed horizontal reference line at a level, with its caption.
     """
     stages = np.arange(profiles.shape[1])
-    with plt.rc_context(STYLE):
-        fig, ax = new_panel(margins, size, tag)
-        if guide is not None:
-            level, caption = guide
-            ax.hlines(
-                level,
-                stages[0],
-                stages[-1],
-                ls=(0, (4, 3)),
-                color=GREY,
-                lw=1.0,
-                zorder=1,
-            )
-            ax.annotate(
-                caption,
-                (stages[-1], level),
-                textcoords="offset points",
-                xytext=(0, -6),
-                ha="right",
-                va="top",
-                color=GREY,
-                style="italic",
-            )
-        for (name, row), color in zip(
-            profiles.iterrows(), series_colors(len(profiles))
+
+    if guide is not None:
+        level, caption = guide
+        ax.hlines(
+            level,
+            stages[0],
+            stages[-1],
+            ls=(0, (4, 3)),
+            color=GREY,
+            lw=1.0,
+            zorder=1,
+        )
+        ax.annotate(
+            caption,
+            (stages[-1], level),
+            textcoords="offset points",
+            xytext=(0, -6),
+            ha="right",
+            va="top",
+            color=GREY,
+            style="italic",
+        )
+
+    for (name, row), color in zip(profiles.iterrows(), series_colors(len(profiles))):
+        counts = row.to_numpy(dtype=float)
+        ax.plot(
+            stages,
+            counts,
+            "-o",
+            color=color,
+            mec="white",
+            ms=7,
+            lw=1.6,
+            zorder=2,
+            label=label(name),
+        )
+        present = ~np.isnan(counts)
+        shown = (
+            np.ones(len(counts), bool)
+            if labelled is None
+            else labelled.loc[name].to_numpy()
+        )
+        for index, (x, y, show) in enumerate(
+            zip(stages[present], counts[present], shown[present])
         ):
-            counts = row.to_numpy(dtype=float)
-            ax.plot(
-                stages,
-                counts,
-                "-o",
-                color=color,
-                mec="white",
-                ms=7,
-                lw=1.6,
-                zorder=2,
-                label=label(name),
-            )
-            present = ~np.isnan(counts)
-            shown = (
-                np.ones(len(counts), bool)
-                if labelled is None
-                else labelled.loc[name].to_numpy()
-            )
-            for index, (x, y, show) in enumerate(
-                zip(stages[present], counts[present], shown[present])
-            ):
-                if show:
-                    ax.annotate(
-                        compact_count(y),
-                        (x, y),
-                        textcoords="offset points",
-                        color=color,
-                        **(FIRST_LABEL if index == 0 else NEXT_LABEL),
-                    )
-        log_axis(ax, limits)
-        ax.set(
-            xticks=stages,
-            xlim=(stages[0] - 0.5, stages[-1] + 0.85),
-            ylabel=ylabel,
-        )
-        ax.set_xticklabels(
-            profiles.columns,
-            rotation=xtick_rotation,
-            ha="right" if xtick_rotation else "center",
-            rotation_mode="anchor",
-        )
-        ax.legend(
-            loc="lower right",
-            bbox_to_anchor=(1, 1),
-            ncols=min(len(profiles), 4),
-            borderaxespad=1.6,
-        )
-    return fig
+            if show:
+                ax.annotate(
+                    compact_count(y),
+                    (x, y),
+                    textcoords="offset points",
+                    color=color,
+                    **(FIRST_LABEL if index == 0 else NEXT_LABEL),
+                )
+
+    log_axis(ax, limits)
+    ax.set(
+        xticks=stages,
+        xlim=(stages[0] - 0.5, stages[-1] + 0.85),
+        ylabel=ylabel,
+    )
+    ax.set_xticklabels(
+        profiles.columns,
+        rotation=xtick_rotation,
+        ha="right" if xtick_rotation else "center",
+        rotation_mode="anchor",
+    )
+    ax.legend(
+        loc="lower right",
+        bbox_to_anchor=(1, 1.05),
+        ncols=min(len(profiles), 4),
+    )
 
 
-def typst_string(text: str) -> str:
-    """``text`` as a Typst string literal."""
-    escaped = text.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
-    return f'"{escaped}"'
-
-
-def typst_box(fig: Figure, alt: str) -> str:
-    """Typst source for a figure as an inline box, its SVG carried in the source itself."""
-    svg = io.StringIO()
-    with plt.rc_context({"svg.hashsalt": "paper"}):  # same bytes on every render
-        fig.savefig(svg, format="svg", metadata={"Date": None})
-    return f'#box(image(bytes({typst_string(svg.getvalue())}), format: "svg", alt: {typst_string(alt)}))'
-
-
-def qfigure(
-    panels: Sequence[Figure],
+def multipanel(
+    drawers: Sequence[PanelDrawer],
     *,
-    alts: Sequence[str],
-    caption: str,
-    figure_id: str,
-) -> str:
-    """Quarto markup for one captioned figure holding ``panels`` side by side, for ``output: asis``.
+    size: tuple[float, float] | None = None,
+    width_ratios: Sequence[float] | None = None,
+    tags: Sequence[str] | None = None,
+    sharey: bool = False,
+) -> Figure:
+    """Compose panel drawers side by side into one aligned Matplotlib ``Figure``.
 
-    The panels are inline boxes in one Typst paragraph, so the renderer puts them on one line when
-    they fit and wraps them under each other when they do not. The figure is a Quarto figure
-    div, so it is numbered and cross-referenced as ``@figure_id`` and its caption is Quarto
-    markdown (cross-references included). The figures are closed: the document holds them as
-    markup, not as outputs. Typst output only.
+    Uses constrained layout so all panels share exact vertical alignment without clipping
+    rotated axis labels, and leaves global Matplotlib ``rcParams`` untouched.
     """
-    boxes = " ".join(typst_box(fig, alt) for fig, alt in zip(panels, alts))
-    for fig in panels:
-        plt.close(fig)
-    return f"::: {{#{figure_id}}}\n```{{=typst}}\n{boxes}\n```\n\n{caption}\n:::"
+    if not drawers:
+        raise ValueError("multipanel requires at least one panel drawer")
+    if width_ratios is not None and len(width_ratios) != len(drawers):
+        raise ValueError(
+            f"Expected {len(drawers)} width ratios, got {len(width_ratios)}"
+        )
+    if tags is not None and len(tags) != len(drawers):
+        raise ValueError(f"Expected {len(drawers)} panel tags, got {len(tags)}")
+
+    gridspec_kw = {"width_ratios": list(width_ratios)} if width_ratios else None
+    with plt.rc_context(STYLE):
+        fig, axes_raw = plt.subplots(
+            1,
+            len(drawers),
+            figsize=size,
+            sharey=sharey,
+            gridspec_kw=gridspec_kw,
+            layout="constrained",
+        )
+        axes = [axes_raw] if isinstance(axes_raw, Axes) else list(axes_raw)
+        for ax, draw in zip(axes, drawers):
+            draw(ax)
+        if tags is not None:
+            for ax, tag in zip(axes, tags):
+                ax.set_title(
+                    tag,
+                    loc="left",
+                    fontweight="bold",
+                    fontsize=LABEL_SIZE,
+                    pad=12,
+                )
+    return fig

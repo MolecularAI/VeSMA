@@ -210,7 +210,11 @@ print(pt.qtable(table, caption=f"Exhaustive depth-two route recovery for 2,881 t
 The frontier grew from 2,879 unique non-stock molecules to approximately 328,000 after the first expansion and 20.5 million after the second, corresponding to approximately 114- and 63-fold increases, respectively (@fig-frontier-growth a). The second layer alone evaluated 4.6 billion molecule–template pairs and generated approximately 179 million raw precursors before stock filtering and deduplication reduced the output to 20.5 million unique non-stock molecules (@fig-frontier-growth b). Thus, filtering and deduplication substantially reduced the precursor pool, but the surviving frontier still expanded rapidly. Accelerating reaction application therefore addresses only part of the computational burden of exhaustive expansion; the growing molecular frontier must also be managed between successive layers. The extent of this growth is specific to the target set, template collection, stock, and molecular identity criteria used here.
 
 ```{python}
-#| output: asis
+#| label: fig-frontier-growth
+#| fig-cap: "Per-layer workload of the exhaustive route-recovery integration test summarized in @tbl-depth-two. (a) Unique non-stock frontier size recorded at each layer, with observed multipliers annotated. (b) Molecule--rule pairs evaluated, reaction applications, raw precursors generated, and unique non-stock output retained after stock filtering and host-controlled WL-key deduplication. Each layer's unique output equals the next layer's input frontier (dashed line). Exact counts are given in Supplementary Information (SI)."
+#| fig-alt: "Two-panel logarithmic figure: (a) unique non-stock frontier molecules at each expansion layer with consecutive multipliers annotated, and (b) molecule-rule pairs evaluated, reaction applications, precursors generated, and unique output retained per expansion layer, with a dashed guide marking each layer's output as the next layer's input."
+#| fig-dpi: 300
+import matplotlib.pyplot as plt
 
 # `recovery` is the route-recovery table loaded for tbl-depth-two above.
 STAGES = {  # the record's per-layer counters, in pipeline order, and how the axis names them
@@ -234,37 +238,25 @@ limits = figures.decade_limits(totals.to_numpy())  # one y range for both panels
 labelled = pd.DataFrame(True, index=totals.index, columns=totals.columns)
 labelled.iloc[-1, 0] = False
 
-# Panel sizes in inches. Side by side they fit the narrowest text width we print (A4, 5.77 in);
-# on a narrower page the renderer wraps panel (b) under panel (a).
-HEIGHT, WIDTH_A, WIDTH_B = 3.0, 2.3, 3.35
-panels = [
-    figures.trend_panel(
-        sizes, limits=limits, size=(WIDTH_A, HEIGHT), tag="(a)",
-        xlabel="Breadth-first\nexpansion layer", ylabel="Unique non-stock\nfrontier molecules",
-    ),
-    figures.profile_panel(
-        totals.rename(columns=STAGES), limits=limits, size=(WIDTH_B, HEIGHT), tag="(b)",
-        ylabel="Count per expansion layer",
-        label=lambda depth: f"Layer {depth} → {depth + 1}",
-        guide=(output.iloc[0], "output = next\nlayer's input"),
-        labelled=labelled,
-        xtick_rotation=40,
-    ),
-]
-print(figures.qfigure(
-    panels,
-    figure_id="fig-frontier-growth",
-    alts=[
-        "Line plot on a logarithmic axis of the unique non-stock frontier molecules at each expansion layer, with the multiplier between consecutive layers marked.",
-        "Line plot on a logarithmic axis of the molecule-rule pairs evaluated, reaction applications, precursors generated and unique output retained, one line per expansion layer; a dashed line marks each layer's output as the next layer's input.",
+figures.multipanel(
+    [
+        lambda ax: figures.plot_trend(
+            ax, sizes, limits=limits,
+            xlabel="Breadth-first\nexpansion layer",
+            ylabel="Unique non-stock\nfrontier molecules",
+        ),
+        lambda ax: figures.plot_profiles(
+            ax, totals.rename(columns=STAGES), limits=limits,
+            ylabel="Count per expansion layer",
+            label=lambda depth: f"Layer {depth} → {depth + 1}",
+            guide=(output.iloc[0], "output = next\nlayer's input"),
+            labelled=labelled,
+            xtick_rotation=38,
+        ),
     ],
-    caption=(
-        "Per-layer workload of the exhaustive route-recovery integration test summarized in @tbl-depth-two. "
-        "(a) Unique non-stock frontier size recorded at each layer, with observed multipliers annotated. "
-        "(b) Molecule--rule pairs evaluated, reaction applications, raw precursors generated, and unique non-stock output "
-        "retained after stock filtering and host-controlled WL-key deduplication. "
-        "Each layer's unique output equals the next layer's input frontier (dashed line). "
-        "Exact counts are given in Supplimentary Information (SI)."
-    ),
-))
+    size=(6.0, 3.2),
+    width_ratios=(1.45, 2.55),
+    tags=("(a)", "(b)"),
+)
+plt.show()
 ```
