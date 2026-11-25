@@ -48,7 +48,6 @@ def format_cuda_version(value: object) -> str:
 ```
 
 ```{=typst}
-#show table.cell: set align(left)
 #show table.cell: set text(size: 7.5pt)
 ```
 
@@ -501,11 +500,12 @@ for backend_group, selector in backend_groups:
             }
         )
 table = pd.DataFrame(rows).set_index(["Backend", "Comparator"])
-print(pt.qtable_mi(
+print(pt.qtable(
     table,
     caption=f"Template-guided recovery across {route_count:,} PaRoutes n1 routes. Full disagreement indices remain in the retained benchmark records.",
     table_id="tbl-supp-route-replay-summary",
     colwidths=[34, 24, 21, 21],
+    include_index=True,
 ))
 ```
 
@@ -1030,6 +1030,7 @@ print(pt.qtable(
     hardware,
     caption="Hardware used by the retained benchmark records.",
     table_id="tbl-supp-hardware",
+    colwidths=[15, 20, 21, 9, 17, 10, 8],
 ))
 ```
 

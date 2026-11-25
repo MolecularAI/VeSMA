@@ -1,61 +1,92 @@
-"""Render benchmark DataFrames into Typst tables for the paper.
+"""Render benchmark DataFrames into format-agnostic Quarto and Markdown tables.
 
-Extraction lives in :mod:`paperlib.loaders`; this module holds the table renderers
-(`qtable`, `qtable_mi`, `compact_multiindex_rows`), the cell formatters, and backend label
-data. The ``load_*`` loaders are re-exported here so `benchmarks.qmd` keeps calling them as
-`pt.load_*`; the notebook does its own filtering, pivoting, and throughput math on the frames.
+Extraction lives in :mod:`paperlib.loaders`; this module holds the composable table
+rendering mini-library (``TableCell``, ``Table``, ``table_from_dataframe``,
+``list_table``, ``pipe_table``, ``qtable``, ``compact_multiindex_rows``), the cell
+formatters, record validators, and backend label metadata.
+
+Tables render to format-independent Pandoc/Quarto markup rather than backend-specific
+raw blocks: ``list_table`` (default) emits Quarto ``.list-table`` divs supporting
+multi-line cells, row/column spans, multi-level headers, alignments, and relative column
+widths across Typst, LaTeX, and DOCX; ``pipe_table`` emits standard Markdown pipe tables
+for flat single-line tables. Any ``Callable[[Table], str]`` renderer can be injected
+into ``qtable(..., render=...)``.
 """
 
 from __future__ import annotations
 
 import json
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable, Sequence
+from dataclasses import dataclass
+from itertools import groupby
 from math import floor, isfinite, log10
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import pandas as pd
-from pandas.io.formats.style import Styler
-from paperlib.loaders import (
-    explode_records,
-    load_benchmarks,
-    load_json,
-    require_columns,
-)
+from paperlib.loaders import load_benchmarks, require_columns
 
-# Public API: the re-exported loaders plus the renderers/formatters used by benchmarks.qmd.
 __all__ = [
     # loaders (re-exported from paperlib.loaders)
     "load_benchmarks",
-    "explode_records",
-    "load_json",
     "require_columns",
+    # record validation and selection
     "require_agreeing_records",
     "require_one_record",
     "require_unique_records",
-    # rendering / formatting
-    "qtable",
-    "qtable_mi",
-    "compact_multiindex_rows",
+    "select_records",
+    "with_rates",
+    "load_application",
+    # labels and metadata
+    "backend_label",
+    "backend_order",
+    "host_label",
+    # cell formatters
     "fraction_cell",
-    "precursor_audit_agreement_table",
-    "precursor_audit_class_table",
     "format_duration",
     "format_throughput",
     "format_significant",
     "format_microseconds",
-    "with_rates",
-    "select_records",
-    "load_application",
     "scaling_cell",
+    # benchmark table builders
+    "precursor_audit_agreement_table",
+    "precursor_audit_class_table",
     "scaling_table",
-    "style_table",
-    "backend_label",
-    "backend_order",
-    "host_label",
+    "compact_multiindex_rows",
+    # composable table rendering mini-library
+    "Alignment",
+    "TableCell",
+    "Table",
+    "TableRenderer",
+    "cell_text",
+    "parse_alignments",
+    "table_from_dataframe",
+    "list_table",
+    "pipe_table",
+    "qtable",
 ]
 
-TABLE_SIZES = (1, 10, 100, 1000, 2881)
+type Alignment = Literal["l", "c", "r", "d"]
+
+VALID_ALIGNMENTS: dict[str, Alignment] = {
+    "l": "l",
+    "c": "c",
+    "r": "r",
+    "d": "d",
+}
+PIPE_ALIGNMENT_RULES: dict[Alignment, str] = {
+    "l": ":---",
+    "c": ":---:",
+    "r": "---:",
+    "d": "---",
+}
+
+MULTIPLIERS: dict[str, float] = {
+    "": 1,
+    "k": 1e3,
+    "M": 1e6,
+}
+
 # Publication aggregates from the completed full CPU precursor audit at the frozen
 # chemistry boundary. Keeping the small reduction here lets the main article and SI render
 # from one tracked source without turning the 4.6 MB application-level audit into a paper
@@ -69,7 +100,7 @@ PRECURSOR_AUDIT_AGREEMENTS = (
     ("RDKit-RDChiral", 711_864, 11_266, 706_189),
 )
 
-BACKEND_LABELS = {
+BACKEND_LABELS: dict[str, str] = {
     "cpu": "Vesma CPU",
     "cpu-parallel": "Vesma CPU parallel",
     "cpu-serial-gpu-parity": "Vesma CPU serial (GPU parity)",
@@ -92,7 +123,8 @@ BACKEND_LABELS = {
     "rdkit-filtercatalog-rules": "RDKit FilterCatalog",
     "rdkit-substructlibrary-frontier": "RDKit SubstructLibrary",
 }
-BACKEND_ORDER = {
+
+BACKEND_ORDER: dict[str, int] = {
     "rdkit-filtercatalog-rules": 0,
     "rdkit-substructlibrary-frontier": 1,
     "rdkit": 2,
@@ -117,6 +149,11 @@ BACKEND_ORDER = {
 }
 
 
+# --------------------------------------------------------------------------- #
+# Labels and metadata
+# --------------------------------------------------------------------------- #
+
+
 def backend_label(backend: str) -> str:
     return BACKEND_LABELS[backend]
 
@@ -137,6 +174,11 @@ def host_label(record: pd.Series, joiner: str = "plus") -> str:
     if not device or pd.isna(device):
         return cpu
     return f"{cpu} {joiner} {device}"
+
+
+# --------------------------------------------------------------------------- #
+# Record validation and selection
+# --------------------------------------------------------------------------- #
 
 
 def require_one_record(frame: pd.DataFrame, *, context: str) -> pd.Series:
@@ -171,7 +213,6 @@ def require_agreeing_records(
     ignore_nested_keys: frozenset[str] = frozenset(),
 ) -> pd.Series:
     """Return one representative row when all selected result fields agree."""
-
     value_columns = list(columns)
     require_columns(
         frame,
@@ -192,8 +233,9 @@ def require_agreeing_records(
             return [comparable(item) for item in value]
         if isinstance(value, tuple):
             return tuple(comparable(item) for item in value)
-        if hasattr(value, "item"):
-            return value.item()
+        item_fn = getattr(value, "item", None)
+        if callable(item_fn):
+            return item_fn()
         return value
 
     def encoded(value: object) -> str:
@@ -257,296 +299,6 @@ def require_unique_records(
     )
 
 
-def fraction_cell(recovered: Any, total: Any) -> str:
-    """Render a required recovered/total count with its percentage."""
-    if pd.isna(recovered) or pd.isna(total):
-        raise ValueError(
-            "fraction_cell requires non-missing recovered and total values"
-        )
-    recovered = int(recovered)
-    total = int(total)
-    pct = 0.0 if total == 0 else 100.0 * recovered / total
-    return f"{recovered:,}/{total:,}\\\n({pct:.1f}%)"
-
-
-def precursor_audit_agreement_table() -> pd.DataFrame:
-    """Pairwise exact outcome agreement in the completed full precursor audit."""
-    return pd.DataFrame(
-        [
-            {
-                "Comparison": comparison,
-                "All positive pairs": fraction_cell(equal, PRECURSOR_AUDIT_PAIRS),
-                "Comparable pairs": fraction_cell(
-                    equal_comparable,
-                    PRECURSOR_AUDIT_PAIRS - incomparable,
-                ),
-            }
-            for comparison, equal, incomparable, equal_comparable in (
-                PRECURSOR_AUDIT_AGREEMENTS
-            )
-        ]
-    )
-
-
-def precursor_audit_class_table() -> pd.DataFrame:
-    """Major semantic classes retained for interpretation in the SI."""
-
-    def frequency(count: int, total: int, decimals: int = 2) -> str:
-        return f"{count:,}/{total:,}\\\n({100 * count / total:.{decimals}f}%)"
-
-    return pd.DataFrame(
-        [
-            {
-                "Class": "Circuit-relative aromaticity",
-                "Frequency in audit": "Focused regression example",
-                "Chemical or semantic interpretation": (
-                    "VeSMA and RDKit make different explicit graph-model choices for a "
-                    "fused-ring bond. This is a difference between aromaticity models, "
-                    "not a measurement of physical aromaticity."
-                ),
-            },
-            {
-                "Class": "Delocalized bond released from its circuit",
-                "Frequency in audit": frequency(
-                    29_215,
-                    PRECURSOR_AUDIT_VESMA_APPLICATIONS,
-                ),
-                "Chemical or semantic interpretation": (
-                    "VeSMA stores delocalized bonds categorically, without a hidden "
-                    "single or double order to reveal after editing. It therefore refuses "
-                    "an under-specified edit instead of choosing a localization."
-                ),
-            },
-            {
-                "Class": "Other typed chemistry refusal",
-                "Frequency in audit": frequency(
-                    5_218,
-                    PRECURSOR_AUDIT_VESMA_APPLICATIONS,
-                ),
-                "Chemical or semantic interpretation": (
-                    "The edited graph asks for a circuit outside automatic discovery or "
-                    "for an undeclared, incompatible, or invalid closed-shell state. "
-                    "An explicit refusal preserves the model's stated domain."
-                ),
-            },
-            {
-                "Class": "Derived RHS property differs",
-                "Frequency in audit": frequency(
-                    3_936,
-                    PRECURSOR_AUDIT_VESMA_APPLICATIONS,
-                ),
-                "Chemical or semantic interpretation": (
-                    "The RHS is applied as a graph rewrite. Derived SMARTS properties are "
-                    "recomputed from the result, so the record is neutral telemetry rather "
-                    "than a rejection or silent coercion."
-                ),
-            },
-            {
-                "Class": "Component has no RHS atom",
-                "Frequency in audit": frequency(
-                    540,
-                    PRECURSOR_AUDIT_VESMA_APPLICATIONS,
-                    decimals=3,
-                ),
-                "Chemical or semantic interpretation": (
-                    "The template does not anchor that disconnected material on the RHS. "
-                    "VeSMA omits the unanchored component and reports the event instead of "
-                    "inventing its intended role."
-                ),
-            },
-            {
-                "Class": "Multi-component RHS meets a ring",
-                "Frequency in audit": frequency(49_750, PRECURSOR_AUDIT_PAIRS),
-                "Chemical or semantic interpretation": (
-                    "The match lies outside the usual intermolecular reading of the "
-                    "template. VeSMA conserves atoms while opening the ring; RDKit realizes "
-                    "the declared product-component topology. Both are consistent readings "
-                    "of an under-specified ring match."
-                ),
-            },
-            {
-                "Class": "Hydrogen completion after a local edit",
-                "Frequency in audit": frequency(
-                    1_773,
-                    PRECURSOR_AUDIT_VESMA_APPLICATIONS,
-                    decimals=3,
-                ),
-                "Chemical or semantic interpretation": (
-                    "VeSMA completes hydrogen from the atom's preserved closed-shell "
-                    "configuration after a local edit. The event is commoner than a visible "
-                    "outcome difference: only four applications differ solely for it."
-                ),
-            },
-            {
-                "Class": "RDChiral stereochemical suppression",
-                "Frequency in audit": frequency(5_026, PRECURSOR_AUDIT_PAIRS),
-                "Chemical or semantic interpretation": (
-                    "RDChiral applies stereochemical checks that VeSMA deliberately omits. "
-                    "The count reflects different supported semantics, not disagreement on "
-                    "the underlying non-stereochemical graph edit."
-                ),
-            },
-            {
-                "Class": "Outcome outside the shared comparison key",
-                "Frequency in audit": (
-                    "RDKit "
-                    f"{frequency(17_140, PRECURSOR_AUDIT_RDKIT_OUTCOMES)}; "
-                    "VeSMA "
-                    f"{frequency(281, PRECURSOR_AUDIT_VESMA_APPLICATIONS, decimals=3)}"
-                ),
-                "Chemical or semantic interpretation": (
-                    "The shared key requires RDKit sanitization and SMILES serialization. "
-                    "Failure at that exchange boundary makes an outcome incomparable; it is "
-                    "not, by itself, a verdict on the native chemistry result."
-                ),
-            },
-            {
-                "Class": "Open-shell molecule literal",
-                "Frequency in audit": "Not exercised by this audit",
-                "Chemical or semantic interpretation": (
-                    "A bracketed atom in a SMILES literal is read as OpenSMILES "
-                    "specifies, so [N] is atomic nitrogen rather than ammonia and TEMPO "
-                    "is a nitroxide radical. RDKit and RDChiral read it the same way; "
-                    "the divergence is that VeSMA's closed-shell model then refuses the "
-                    "radical by name rather than building it. The audit imports "
-                    "molecules through RDKit and therefore does not exercise the "
-                    "literal path."
-                ),
-            },
-        ]
-    )
-
-
-def format_duration(seconds: float, decimals: int = 1) -> str:
-    """Format a wall-clock duration, auto-scaling to s / ms / µs.
-
-    Used for the per-route and per-target average-time columns, whose values span
-    milliseconds (a GPU or parallel-CPU replay) to hundreds of seconds (a single-target
-    full-library search), so a fixed unit would either lose precision or read awkwardly.
-    """
-    if not isfinite(seconds):
-        return f"{seconds} s"
-    if seconds >= 1:
-        return f"{seconds:.{decimals}f} s"
-    if seconds >= 1e-3:
-        return f"{seconds * 1e3:.{decimals}f} ms"
-    return f"{seconds * 1e6:.{decimals}f} µs"
-
-
-def style_table(df: pd.DataFrame, caption: str) -> Styler:
-    return (
-        df.style.hide(axis="index")
-        .set_caption(caption)
-        .set_properties(**{"text-align": "left"})
-    )
-
-
-def qtable(
-    df: pd.DataFrame,
-    *,
-    caption: str | None = None,
-    table_id: str | None = None,
-    colwidths: list[int] | None = None,
-    aligns: str | None = None,
-) -> str:
-
-    attrs = [".list-table"]
-
-    if table_id:
-        attrs.insert(0, f"#{table_id}")
-
-    if colwidths:
-        attrs.append(f'tbl-colwidths="[{",".join(str(w) for w in colwidths)}]"')
-
-    if aligns:
-        attrs.append(f'aligns="{aligns}"')
-
-    out = [f"::: {{{' '.join(attrs)}}}"]
-
-    if caption:
-        out += [caption, ""]
-
-    def emit_cell(prefix: str, value: object) -> None:
-        text = "" if pd.isna(value) else str(value)
-        lines = text.splitlines() or [""]
-        out.append(prefix + lines[0])
-        for line in lines[1:]:
-            out.append("    " + line)
-
-    # Header
-    columns = [str(c) for c in df.columns]
-    emit_cell("- - ", columns[0])
-    for col in columns[1:]:
-        emit_cell("  - ", col)
-    out.append("")
-
-    # Body
-    for row in df.itertuples(index=False, name=None):
-        emit_cell("- - ", row[0])
-        for value in row[1:]:
-            emit_cell("  - ", value)
-        out.append("")
-
-    out.append(":::")
-    return "\n".join(out)
-
-
-MULTIPLIERS = {
-    "": 1,
-    "k": 1e3,
-    "M": 1e6,
-}
-
-
-def format_throughput(
-    value: float,
-    scale: str = "",
-    unit: str = "",
-    decimals: int = 1,
-) -> str:
-    """
-    Format throughput using a fixed scale, e.g. 3.5M pairs/s.
-
-    For scaled values >= 1, uses `decimals` decimal places.
-    For scaled values < 1, uses enough decimals to avoid displaying 0.0M.
-    """
-
-    if scale not in MULTIPLIERS:
-        raise ValueError(
-            f"Unknown scale {scale!r}. Expected one of {list(MULTIPLIERS)}"
-        )
-
-    if not isfinite(value):
-        return f"{value} {unit}"
-
-    scaled = value / MULTIPLIERS[scale]
-
-    if scaled == 0:
-        text = f"{0:.{decimals}f}"
-    elif abs(scaled) >= 1:
-        text = f"{scaled:.{decimals}f}"
-    else:
-        # enough decimal places to show at least one significant digit
-        extra_decimals = -floor(log10(abs(scaled)))
-        n_decimals = max(decimals, extra_decimals)
-        text = f"{scaled:.{n_decimals}f}"
-
-    return f"{text}{scale} {unit}"
-
-
-def format_significant(value: float, digits: int = 3) -> str:
-    """Round to ``digits`` significant figures, with thousands separators: 6781 -> 6,780."""
-    if value == 0 or not isfinite(value):
-        return f"{value:,}"
-    ndigits = digits - 1 - floor(log10(abs(value)))
-    return f"{round(value, ndigits):,.{max(0, ndigits)}f}"
-
-
-def format_microseconds(seconds: float, decimals: int = 1) -> str:
-    """A duration as a bare number of microseconds, for a column headed with the unit."""
-    return f"{seconds * 1e6:,.{decimals}f}"
-
-
 def with_rates(records: pd.DataFrame) -> pd.DataFrame:
     """Add each record's positive-pair throughput and its time per raw precursor, in seconds."""
     require_columns(
@@ -602,9 +354,9 @@ def load_application(root: Path) -> pd.DataFrame:
 
 
 def select_records(
-    records: pd.DataFrame, keys: Iterable[tuple], columns: list[str]
+    records: pd.DataFrame, keys: Iterable[tuple[Any, ...]], columns: list[str]
 ) -> pd.DataFrame:
-    """The one record for each key, in the order the keys are given.
+    """Return the sole record for each key, in the order the keys are given.
 
     ``keys`` are value tuples for ``columns``. A key matching no record or several raises,
     so a table never silently lacks a row or picks between duplicates.
@@ -621,11 +373,246 @@ def select_records(
     return merged.drop(columns="_merge")
 
 
+# --------------------------------------------------------------------------- #
+# Cell formatters
+# --------------------------------------------------------------------------- #
+
+
+def fraction_cell(recovered: Any, total: Any, decimals: int = 1) -> str:
+    """Render a required recovered/total count with its percentage."""
+    if pd.isna(recovered) or pd.isna(total):
+        raise ValueError(
+            "fraction_cell requires non-missing recovered and total values"
+        )
+    recovered = int(recovered)
+    total = int(total)
+    pct = 0.0 if total == 0 else 100.0 * recovered / total
+    return f"{recovered:,}/{total:,}\\\n({pct:.{decimals}f}%)"
+
+
+def format_duration(seconds: float, decimals: int = 1) -> str:
+    """Format a wall-clock duration, auto-scaling to s / ms / µs.
+
+    Used for the per-route and per-target average-time columns, whose values span
+    milliseconds (a GPU or parallel-CPU replay) to hundreds of seconds (a single-target
+    full-library search), so a fixed unit would either lose precision or read awkwardly.
+    """
+    if not isfinite(seconds):
+        return f"{seconds} s"
+    if seconds >= 1:
+        return f"{seconds:.{decimals}f} s"
+    if seconds >= 1e-3:
+        return f"{seconds * 1e3:.{decimals}f} ms"
+    return f"{seconds * 1e6:.{decimals}f} µs"
+
+
+def format_throughput(
+    value: float,
+    scale: str = "",
+    unit: str = "",
+    decimals: int = 1,
+) -> str:
+    """Format throughput using a fixed scale, e.g. ``3.5M pairs/s``.
+
+    For scaled values >= 1, uses ``decimals`` decimal places.
+    For scaled values < 1, uses enough decimals to avoid displaying ``0.0M``.
+    """
+    if scale not in MULTIPLIERS:
+        raise ValueError(
+            f"Unknown scale {scale!r}. Expected one of {list(MULTIPLIERS)}"
+        )
+
+    if not isfinite(value):
+        return f"{value} {unit}"
+
+    scaled = value / MULTIPLIERS[scale]
+
+    if scaled == 0:
+        text = f"{0:.{decimals}f}"
+    elif abs(scaled) >= 1:
+        text = f"{scaled:.{decimals}f}"
+    else:
+        extra_decimals = -floor(log10(abs(scaled)))
+        n_decimals = max(decimals, extra_decimals)
+        text = f"{scaled:.{n_decimals}f}"
+
+    return f"{text}{scale} {unit}"
+
+
+def format_significant(value: float, digits: int = 3) -> str:
+    """Round to ``digits`` significant figures, with thousands separators: 6781 -> 6,780."""
+    if value == 0 or not isfinite(value):
+        return f"{value:,}"
+    ndigits = digits - 1 - floor(log10(abs(value)))
+    return f"{round(value, ndigits):,.{max(0, ndigits)}f}"
+
+
+def format_microseconds(seconds: float, decimals: int = 1) -> str:
+    """Format a duration as a bare number of microseconds, for a column headed with the unit."""
+    return f"{seconds * 1e6:,.{decimals}f}"
+
+
 def scaling_cell(record: pd.Series) -> str:
     """Wall time over throughput, as one table cell."""
     time = format_duration(float(record["stats.mean"]))
     rate = format_throughput(record["pairs_per_second"], "k", "p.pairs/s")
     return f"{time}\\\n({rate})"
+
+
+# --------------------------------------------------------------------------- #
+# Benchmark table builders
+# --------------------------------------------------------------------------- #
+
+
+def precursor_audit_agreement_table() -> pd.DataFrame:
+    """Pairwise exact outcome agreement in the completed full precursor audit."""
+    return pd.DataFrame(
+        [
+            {
+                "Comparison": comparison,
+                "All positive pairs": fraction_cell(equal, PRECURSOR_AUDIT_PAIRS),
+                "Comparable pairs": fraction_cell(
+                    equal_comparable,
+                    PRECURSOR_AUDIT_PAIRS - incomparable,
+                ),
+            }
+            for comparison, equal, incomparable, equal_comparable in (
+                PRECURSOR_AUDIT_AGREEMENTS
+            )
+        ]
+    )
+
+
+def precursor_audit_class_table() -> pd.DataFrame:
+    """Major semantic classes retained for interpretation in the SI."""
+    return pd.DataFrame(
+        [
+            {
+                "Class": "Circuit-relative aromaticity",
+                "Frequency in audit": "Focused regression example",
+                "Chemical or semantic interpretation": (
+                    "VeSMA and RDKit make different explicit graph-model choices for a "
+                    "fused-ring bond. This is a difference between aromaticity models, "
+                    "not a measurement of physical aromaticity."
+                ),
+            },
+            {
+                "Class": "Delocalized bond released from its circuit",
+                "Frequency in audit": fraction_cell(
+                    29_215,
+                    PRECURSOR_AUDIT_VESMA_APPLICATIONS,
+                    decimals=2,
+                ),
+                "Chemical or semantic interpretation": (
+                    "VeSMA stores delocalized bonds categorically, without a hidden "
+                    "single or double order to reveal after editing. It therefore refuses "
+                    "an under-specified edit instead of choosing a localization."
+                ),
+            },
+            {
+                "Class": "Other typed chemistry refusal",
+                "Frequency in audit": fraction_cell(
+                    5_218,
+                    PRECURSOR_AUDIT_VESMA_APPLICATIONS,
+                    decimals=2,
+                ),
+                "Chemical or semantic interpretation": (
+                    "The edited graph asks for a circuit outside automatic discovery or "
+                    "for an undeclared, incompatible, or invalid closed-shell state. "
+                    "An explicit refusal preserves the model's stated domain."
+                ),
+            },
+            {
+                "Class": "Derived RHS property differs",
+                "Frequency in audit": fraction_cell(
+                    3_936,
+                    PRECURSOR_AUDIT_VESMA_APPLICATIONS,
+                    decimals=2,
+                ),
+                "Chemical or semantic interpretation": (
+                    "The RHS is applied as a graph rewrite. Derived SMARTS properties are "
+                    "recomputed from the result, so the record is neutral telemetry rather "
+                    "than a rejection or silent coercion."
+                ),
+            },
+            {
+                "Class": "Component has no RHS atom",
+                "Frequency in audit": fraction_cell(
+                    540,
+                    PRECURSOR_AUDIT_VESMA_APPLICATIONS,
+                    decimals=3,
+                ),
+                "Chemical or semantic interpretation": (
+                    "The template does not anchor that disconnected material on the RHS. "
+                    "VeSMA omits the unanchored component and reports the event instead of "
+                    "inventing its intended role."
+                ),
+            },
+            {
+                "Class": "Multi-component RHS meets a ring",
+                "Frequency in audit": fraction_cell(
+                    49_750, PRECURSOR_AUDIT_PAIRS, decimals=2
+                ),
+                "Chemical or semantic interpretation": (
+                    "The match lies outside the usual intermolecular reading of the "
+                    "template. VeSMA conserves atoms while opening the ring; RDKit realizes "
+                    "the declared product-component topology. Both are consistent readings "
+                    "of an under-specified ring match."
+                ),
+            },
+            {
+                "Class": "Hydrogen completion after a local edit",
+                "Frequency in audit": fraction_cell(
+                    1_773,
+                    PRECURSOR_AUDIT_VESMA_APPLICATIONS,
+                    decimals=3,
+                ),
+                "Chemical or semantic interpretation": (
+                    "VeSMA completes hydrogen from the atom's preserved closed-shell "
+                    "configuration after a local edit. The event is commoner than a visible "
+                    "outcome difference: only four applications differ solely for it."
+                ),
+            },
+            {
+                "Class": "RDChiral stereochemical suppression",
+                "Frequency in audit": fraction_cell(
+                    5_026, PRECURSOR_AUDIT_PAIRS, decimals=2
+                ),
+                "Chemical or semantic interpretation": (
+                    "RDChiral applies stereochemical checks that VeSMA deliberately omits. "
+                    "The count reflects different supported semantics, not disagreement on "
+                    "the underlying non-stereochemical graph edit."
+                ),
+            },
+            {
+                "Class": "Outcome outside the shared comparison key",
+                "Frequency in audit": (
+                    "RDKit "
+                    f"{fraction_cell(17_140, PRECURSOR_AUDIT_RDKIT_OUTCOMES, decimals=2)}; "
+                    "VeSMA "
+                    f"{fraction_cell(281, PRECURSOR_AUDIT_VESMA_APPLICATIONS, decimals=3)}"
+                ),
+                "Chemical or semantic interpretation": (
+                    "The shared key requires RDKit sanitization and SMILES serialization. "
+                    "Failure at that exchange boundary makes an outcome incomparable; it is "
+                    "not, by itself, a verdict on the native chemistry result."
+                ),
+            },
+            {
+                "Class": "Open-shell molecule literal",
+                "Frequency in audit": "Not exercised by this audit",
+                "Chemical or semantic interpretation": (
+                    "A bracketed atom in a SMILES literal is read as OpenSMILES "
+                    "specifies, so [N] is atomic nitrogen rather than ammonia and TEMPO "
+                    "is a nitroxide radical. RDKit and RDChiral read it the same way; "
+                    "the divergence is that VeSMA's closed-shell model then refuses the "
+                    "radical by name rather than building it. The audit imports "
+                    "molecules through RDKit and therefore does not exercise the "
+                    "literal path."
+                ),
+            },
+        ]
+    )
 
 
 def scaling_table(
@@ -657,202 +644,383 @@ def scaling_table(
     return compact_multiindex_rows(table, index_name=index_name)
 
 
-def qtable_mi(
-    df: pd.DataFrame,
-    *,
-    caption: str | None = None,
-    table_id: str | None = None,
-    colwidths: list[int] | None = None,
-    aligns: str | None = None,
-) -> str:
-    attrs = [".list-table"]
-
-    if table_id:
-        attrs.insert(0, f"#{table_id}")
-
-    if colwidths:
-        attrs.append(f'tbl-colwidths="[{",".join(map(str, colwidths))}]"')
-
-    if aligns:
-        attrs.append(f'aligns="{aligns}"')
-
-    out = [f"::: {{{' '.join(attrs)}}}"]
-
-    if caption:
-        out += [caption, ""]
-
-    def is_missing(value: object) -> bool:
-        if value is None:
-            return True
-        try:
-            result = pd.isna(value)
-            return bool(result) if isinstance(result, (bool, type(pd.NA))) else False
-        except TypeError, ValueError:
-            return False
-
-    def text_of(value: object) -> str:
-        return "" if is_missing(value) else str(value)
-
-    def span_cell(
-        value: object,
-        *,
-        rowspan: int = 1,
-        colspan: int = 1,
-    ) -> str:
-        attrs = []
-        if rowspan > 1:
-            attrs.append(f"rowspan={rowspan}")
-        if colspan > 1:
-            attrs.append(f"colspan={colspan}")
-
-        text = text_of(value)
-
-        if attrs:
-            return f"[]{{{' '.join(attrs)}}} {text}"
-        else:
-            return text
-
-    def emit_cell(prefix: str, value: object) -> None:
-        text = text_of(value)
-        lines = text.splitlines() or [""]
-        out.append(prefix + lines[0])
-        for line in lines[1:]:
-            out.append("    " + line)
-
-    def emit_row(cells: list[object]) -> None:
-        if not cells:
-            return
-
-        emit_cell("- - ", cells[0])
-        for cell in cells[1:]:
-            emit_cell("  - ", cell)
-        out.append("")
-
-    # ---------- normalize axes ----------
-
-    row_index = df.index
-    col_index = df.columns
-
-    col_nlevels = col_index.nlevels
-
-    row_tuples = list(row_index)
-    if not isinstance(row_index, pd.MultiIndex):
-        row_tuples = [(x,) for x in row_tuples]
-
-    col_tuples = list(col_index)
-    if not isinstance(col_index, pd.MultiIndex):
-        col_tuples = [(x,) for x in col_tuples]
-
-    row_names = [name if name is not None else "" for name in row_index.names]
-
-    # ---------- header ----------
-
-    if isinstance(col_index, pd.MultiIndex):
-        for level in range(col_nlevels):
-            cells = []
-
-            # Row-index header cells. They span all column-header rows.
-            if level == 0:
-                for name in row_names:
-                    cells.append(span_cell(name, rowspan=col_nlevels))
-
-            c = 0
-            while c < len(col_tuples):
-                prefix = col_tuples[c][: level + 1]
-                label = col_tuples[c][level]
-
-                j = c + 1
-                while j < len(col_tuples) and col_tuples[j][: level + 1] == prefix:
-                    j += 1
-
-                cells.append(span_cell(label, colspan=j - c))
-                c = j
-
-            emit_row(cells)
-
-    else:
-        cells = row_names + [text_of(c) for c in col_index]
-        emit_row(cells)
-
-    # ---------- body ----------
-
-    values = df.to_numpy(dtype=object)
-
-    for i, idx_tuple in enumerate(row_tuples):
-        cells = []
-
-        for level, label in enumerate(idx_tuple):
-            prefix = idx_tuple[: level + 1]
-
-            previous_same = i > 0 and row_tuples[i - 1][: level + 1] == prefix
-
-            if previous_same:
-                continue
-
-            j = i + 1
-            while j < len(row_tuples) and row_tuples[j][: level + 1] == prefix:
-                j += 1
-
-            cells.append(span_cell(label, rowspan=j - i))
-
-        cells.extend(values[i])
-        emit_row(cells)
-
-    out.append(":::")
-    return "\n".join(out)
-
-
 def compact_multiindex_rows(
     df: pd.DataFrame,
     *,
     index_name: str = "Backend and Machine",
     indent: str = "\u00a0\u00a0\u00a0\u00a0",
 ) -> pd.DataFrame:
-    """
-    Convert a MultiIndex-row dataframe into a normal dataframe where the
-    MultiIndex hierarchy is rendered as an outline in a single first column.
+    """Convert a MultiIndex-row DataFrame into a flat outline in a single first column.
 
-    Parent index rows get blank data cells.
-    Leaf index rows get the actual dataframe values.
+    Parent index rows get blank data cells. Leaf index rows carry the actual DataFrame
+    values, indented by level with non-breaking spaces so indentation survives Markdown,
+    Typst, LaTeX, and DOCX rendering.
     """
     if not isinstance(df.index, pd.MultiIndex):
         out = df.reset_index()
-        out = out.rename(columns={out.columns[0]: index_name})
-        return out
+        return out.rename(columns={out.columns[0]: index_name})
 
     df = df.sort_index()
-
     rows = []
     nlevels = df.index.nlevels
     data_columns = list(df.columns)
-
-    previous_key = None
+    previous_key: tuple[Any, ...] | None = None
 
     for key, values in df.iterrows():
-        if not isinstance(key, tuple):
-            key = (key,)
-
-        # Emit parent levels when they change.
+        key_tuple = key if isinstance(key, tuple) else (key,)
         for level in range(nlevels - 1):
-            prefix = key[: level + 1]
-
+            prefix = key_tuple[: level + 1]
             if previous_key is None or previous_key[: level + 1] != prefix:
                 rows.append(
                     {
-                        index_name: f"{indent * level}{key[level]}",
+                        index_name: f"{indent * level}{key_tuple[level]}",
                         **dict.fromkeys(data_columns, ""),
                     }
                 )
-
-        # Emit leaf row with actual data.
-        leaf_label = key[-1]
         rows.append(
             {
-                index_name: f"{indent * (nlevels - 1)}{leaf_label}",
-                **dict(zip(data_columns, values)),
+                index_name: f"{indent * (nlevels - 1)}{key_tuple[-1]}",
+                **dict(zip(data_columns, values, strict=True)),
             }
         )
-
-        previous_key = key
+        previous_key = key_tuple
 
     return pd.DataFrame(rows)
+
+
+# --------------------------------------------------------------------------- #
+# Composable table rendering mini-library
+# --------------------------------------------------------------------------- #
+
+
+@dataclass(frozen=True)
+class TableCell:
+    """One cell in a normalized table, optionally spanning rows or columns."""
+
+    text: str
+    rowspan: int = 1
+    colspan: int = 1
+
+
+@dataclass(frozen=True)
+class Table:
+    """Format-independent table with validated layout metadata."""
+
+    headers: tuple[tuple[TableCell, ...], ...]
+    rows: tuple[tuple[TableCell, ...], ...]
+    aligns: tuple[Alignment, ...]
+    colwidths: tuple[int | float, ...] | None = None
+    caption: str | None = None
+    table_id: str | None = None
+
+    def __post_init__(self) -> None:
+        if not self.aligns:
+            raise ValueError("Cannot render a table with zero columns")
+        invalid = [a for a in self.aligns if a not in VALID_ALIGNMENTS]
+        if invalid:
+            raise ValueError(
+                f"Unknown alignment specifier(s) {invalid!r}; "
+                f"expected one of {sorted(VALID_ALIGNMENTS)}"
+            )
+        if self.colwidths is not None:
+            if len(self.colwidths) != len(self.aligns):
+                raise ValueError(
+                    f"Expected {len(self.aligns)} column widths, "
+                    f"got {len(self.colwidths)}: {self.colwidths!r}"
+                )
+            for width in self.colwidths:
+                if isinstance(width, bool) or not isfinite(width) or width <= 0:
+                    raise ValueError(
+                        f"Column widths must be finite positive numbers, got {width!r}"
+                    )
+        if self.caption is not None and "\n\n" in self.caption:
+            raise ValueError(
+                "Table captions must be a single paragraph (no blank lines)"
+            )
+        if self.table_id is not None and (
+            not self.table_id
+            or self.table_id.startswith("#")
+            or any(ch.isspace() for ch in self.table_id)
+        ):
+            raise ValueError(
+                "table_id must be a bare identifier without '#' or whitespace, "
+                f"got {self.table_id!r}"
+            )
+
+    @property
+    def column_count(self) -> int:
+        return len(self.aligns)
+
+
+type TableRenderer = Callable[[Table], str]
+
+
+def cell_text(value: object) -> str:
+    """Convert a scalar cell value to text, mapping missing values to an empty string."""
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, bytes):
+        return value.decode("utf-8")
+    missing = pd.isna(value)
+    return "" if isinstance(missing, bool) and missing else str(value)
+
+
+def parse_alignments(
+    aligns: str | Sequence[Alignment] | None,
+    column_count: int,
+) -> tuple[Alignment, ...]:
+    """Validate and normalize column alignment specs, defaulting to left alignment.
+
+    Defaulting to explicit left alignment (``"l"``) keeps Typst, LaTeX, and DOCX output
+    consistent: Pandoc's DOCX writer otherwise centers cells whose alignment is left at
+    ``AlignDefault``.
+    """
+    if aligns is None:
+        return ("l",) * column_count
+
+    if isinstance(aligns, str):
+        raw = (
+            [part.strip() for part in aligns.split(",")]
+            if "," in aligns
+            else list(aligns.strip())
+        )
+    else:
+        raw = list(aligns)
+
+    if len(raw) != column_count:
+        raise ValueError(
+            f"Expected {column_count} column alignments, got {len(raw)}: {aligns!r}"
+        )
+
+    invalid = [token for token in raw if token not in VALID_ALIGNMENTS]
+    if invalid:
+        raise ValueError(
+            f"Unknown alignment specifier(s) {invalid!r}; "
+            f"expected one of {sorted(VALID_ALIGNMENTS)}"
+        )
+    return tuple(VALID_ALIGNMENTS[token] for token in raw)
+
+
+def table_from_dataframe(
+    df: pd.DataFrame,
+    *,
+    caption: str | None = None,
+    table_id: str | None = None,
+    colwidths: Sequence[int | float] | None = None,
+    aligns: str | Sequence[Alignment] | None = None,
+    include_index: bool = False,
+) -> Table:
+    """Build a validated, format-independent ``Table`` from a flat or MultiIndex DataFrame.
+
+    Supports both flat and ``MultiIndex`` columns (emitting ``colspan`` across repeated
+    parent levels) and, when ``include_index=True``, single-level or ``MultiIndex`` row
+    indices (emitting ``rowspan`` across consecutive identical index prefixes).
+    """
+    col_index = df.columns
+    col_nlevels = col_index.nlevels
+    row_index = df.index
+    row_nlevels = row_index.nlevels if include_index else 0
+    column_count = row_nlevels + len(col_index)
+
+    if column_count == 0:
+        raise ValueError("Cannot render a table with zero columns")
+
+    row_names = [cell_text(name) for name in row_index.names] if include_index else []
+
+    if isinstance(col_index, pd.MultiIndex):
+        col_tuples = list(col_index)
+        header_rows: list[tuple[TableCell, ...]] = []
+        for level in range(col_nlevels):
+            cells = (
+                [TableCell(name, rowspan=col_nlevels) for name in row_names]
+                if level == 0
+                else []
+            )
+            cells.extend(
+                TableCell(cell_text(prefix[-1]), colspan=sum(1 for _ in group))
+                for prefix, group in groupby(col_tuples, key=lambda t: t[: level + 1])
+            )
+            header_rows.append(tuple(cells))
+    else:
+        header_rows = [
+            tuple(
+                [TableCell(name) for name in row_names]
+                + [TableCell(cell_text(col)) for col in col_index]
+            )
+        ]
+
+    values = df.to_numpy(dtype=object)
+    if include_index:
+        row_tuples = (
+            list(row_index)
+            if isinstance(row_index, pd.MultiIndex)
+            else [(item,) for item in row_index]
+        )
+        span_starts: list[dict[int, int]] = []
+        for level in range(row_nlevels):
+            starts: dict[int, int] = {}
+            pos = 0
+            for _, group in groupby(row_tuples, key=lambda t: t[: level + 1]):
+                length = sum(1 for _ in group)
+                starts[pos] = length
+                pos += length
+            span_starts.append(starts)
+
+        body_rows = tuple(
+            tuple(
+                [
+                    TableCell(
+                        cell_text(idx_tuple[level]), rowspan=span_starts[level][i]
+                    )
+                    for level in range(row_nlevels)
+                    if i in span_starts[level]
+                ]
+                + [TableCell(cell_text(val)) for val in values[i]]
+            )
+            for i, idx_tuple in enumerate(row_tuples)
+        )
+    else:
+        body_rows = tuple(
+            tuple(TableCell(cell_text(val)) for val in row_values)
+            for row_values in values
+        )
+
+    clean_caption = caption.strip() if caption is not None else None
+    return Table(
+        headers=tuple(header_rows),
+        rows=body_rows,
+        aligns=parse_alignments(aligns, column_count),
+        colwidths=tuple(colwidths) if colwidths is not None else None,
+        caption=clean_caption or None,
+        table_id=table_id or None,
+    )
+
+
+def list_table(table: Table) -> str:
+    """Render a ``Table`` as a Quarto ``.list-table`` fenced div.
+
+    Uses Quarto's native ``list-table`` attributes (``widths``, ``aligns``, and
+    ``header-rows``), which translate into Pandoc AST table metadata honored consistently
+    by Typst, LaTeX, and DOCX writers—including for tables with row/column spans.
+    """
+    attrs: list[str] = []
+    if table.table_id:
+        attrs.append(f"#{table.table_id}")
+    attrs.append(".list-table")
+    if len(table.headers) > 1:
+        attrs.append(f"header-rows={len(table.headers)}")
+    if table.colwidths is not None:
+        widths = ",".join(
+            f"{w:g}" if isinstance(w, float) else str(w) for w in table.colwidths
+        )
+        attrs.append(f'widths="{widths}"')
+    attrs.append(f'aligns="{",".join(table.aligns)}"')
+
+    out = [f"::: {{{' '.join(attrs)}}}"]
+    if table.caption:
+        out.extend([table.caption, ""])
+
+    def emit_cell(prefix: str, cell: TableCell) -> None:
+        span_attrs: list[str] = []
+        if cell.rowspan > 1:
+            span_attrs.append(f"rowspan={cell.rowspan}")
+        if cell.colspan > 1:
+            span_attrs.append(f"colspan={cell.colspan}")
+        span_prefix = f"[]{{{' '.join(span_attrs)}}}" if span_attrs else ""
+        content = f"{span_prefix}{cell.text}"
+        if not content:
+            out.append(prefix.rstrip())
+            return
+        lines = content.splitlines()
+        out.append(prefix + lines[0])
+        for line in lines[1:]:
+            out.append("    " + line if line else "")
+
+    def emit_row(cells: tuple[TableCell, ...]) -> None:
+        if not cells:
+            return
+        emit_cell("- - ", cells[0])
+        for cell in cells[1:]:
+            emit_cell("  - ", cell)
+        out.append("")
+
+    for row in (*table.headers, *table.rows):
+        emit_row(row)
+
+    out.append(":::")
+    return "\n".join(out)
+
+
+def pipe_table(table: Table) -> str:
+    """Render a flat, single-line ``Table`` as a generic Pandoc/Quarto pipe table.
+
+    Fails fast if the table requires multi-row headers, row/column spans, or multi-line
+    cells, which Markdown pipe tables cannot represent portably across Typst, LaTeX, and
+    DOCX.
+    """
+    if len(table.headers) != 1:
+        raise ValueError(
+            "Markdown pipe tables support only a single header row; "
+            "use list_table for MultiIndex columns"
+        )
+
+    def pipe_cell(cell: TableCell) -> str:
+        if cell.rowspan > 1 or cell.colspan > 1:
+            raise ValueError(
+                "Markdown pipe tables do not support rowspan or colspan; use list_table"
+            )
+        if "\n" in cell.text:
+            raise ValueError(
+                "Markdown pipe tables do not support multi-line cells; use list_table"
+            )
+        return cell.text.replace("|", r"\|")
+
+    def format_row(cells: tuple[TableCell, ...]) -> str:
+        return "| " + " | ".join(pipe_cell(cell) for cell in cells) + " |"
+
+    out = [
+        format_row(table.headers[0]),
+        "|" + "|".join(PIPE_ALIGNMENT_RULES[a] for a in table.aligns) + "|",
+        *(format_row(row) for row in table.rows),
+    ]
+
+    attrs: list[str] = []
+    if table.table_id:
+        attrs.append(f"#{table.table_id}")
+    if table.colwidths is not None:
+        widths = ",".join(
+            f"{w:g}" if isinstance(w, float) else str(w) for w in table.colwidths
+        )
+        attrs.append(f'tbl-colwidths="[{widths}]"')
+
+    if table.caption or attrs:
+        attr_block = f" {{{' '.join(attrs)}}}" if attrs else ""
+        caption_body = f" {table.caption}" if table.caption else ""
+        out.extend(["", f":{caption_body}{attr_block}"])
+
+    return "\n".join(out)
+
+
+def qtable(
+    df: pd.DataFrame,
+    *,
+    caption: str | None = None,
+    table_id: str | None = None,
+    colwidths: Sequence[int | float] | None = None,
+    aligns: str | Sequence[Alignment] | None = None,
+    include_index: bool = False,
+    render: TableRenderer = list_table,
+) -> str:
+    """Build a validated ``Table`` from ``df`` and render it with ``render``."""
+    return render(
+        table_from_dataframe(
+            df,
+            caption=caption,
+            table_id=table_id,
+            colwidths=colwidths,
+            aligns=aligns,
+            include_index=include_index,
+        )
+    )

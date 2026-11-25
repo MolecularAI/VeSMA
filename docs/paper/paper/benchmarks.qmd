@@ -14,7 +14,6 @@ pd.set_option("display.max_colwidth", None)
 ```
 
 ```{=typst}
-#show table.cell: set align(left)
 #show table.cell: set text(size: 8pt)
 ```
 
