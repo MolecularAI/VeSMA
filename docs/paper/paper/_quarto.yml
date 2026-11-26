@@ -11,7 +11,12 @@ format:
     toc: false
     template-partials:
       - typst-template.typ
-  docx: default
+  docx:
+    reference-section-title: References
+    filters:
+      - docx-frontmatter.lua
+      - path: docx-table-align.lua
+        at: post-finalize
 
 execute:
   freeze: false
@@ -21,8 +26,8 @@ execute:
 number-sections: true
 
 bibliography: references.bib
-
 csl: springer-basic-brackets.csl
+link-citations: true
 
 project-url: https://github.com/alexvoronov/VeSMA/
 

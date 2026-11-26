@@ -125,7 +125,7 @@ Replay can also reconstruct routes stored with non-readable molecular keys. It s
 The available template and molecular identities determine the comparison, which are summarizied in @tbl-route-replay-and-comparison. As template and molecular constraints are progressively released, route replay approaches the depth-bounded exhaustive expansion.
 
 | Comparison | Templates held fixed | Molecular identities compared | Question addressed |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | Complete route agreement | Yes | Target, intermediates, and stock | Does replay reproduce the complete reference route? |
 | Template-and-stock agreement | Yes | Target and stock | Do the same templates connect the target to the same stock when intermediate identities cannot be compared? |
 | Template-only agreement | Yes | Target | Can the same arrangement of transformations produce a complete route while the generated molecules vary? |

@@ -726,11 +726,12 @@ bench-fanout-depth: bench-fanout-depth-cuda
 # --------------------------------------------------------------------------- #
 # Paper
 # --------------------------------------------------------------------------- #
+PAPER_FORMAT ?= all
 paper-render:
-	HOME="$(QUARTO_HOME)" QUARTO_PYTHON="$(PWD)/$(PYTHON)" /usr/local/bin/quarto render docs/paper/paper/index.qmd --to typst --execute
+	HOME="$(QUARTO_HOME)" QUARTO_PYTHON="$(PWD)/$(PYTHON)" /usr/local/bin/quarto render docs/paper/paper/index.qmd --to $(PAPER_FORMAT) --execute
 
 paper-si-render:
-	HOME="$(QUARTO_HOME)" QUARTO_PYTHON="$(PWD)/$(PYTHON)" /usr/local/bin/quarto render docs/paper/paper/si.qmd --to typst --execute
+	HOME="$(QUARTO_HOME)" QUARTO_PYTHON="$(PWD)/$(PYTHON)" /usr/local/bin/quarto render docs/paper/paper/si.qmd --to $(PAPER_FORMAT) --execute
 
 paper-approval-bundle: paper-render paper-si-render
 	$(PYTHON) docs/paper/package_approval.py

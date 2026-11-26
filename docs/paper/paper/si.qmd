@@ -119,7 +119,7 @@ print(pt.qtable(
 ## Evaluation families
 
 | Evaluation family | Inputs | Role in this study | Interpretation |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | Template compatibility | Unique templates from the named USPTO and PaRoutes collections | Measures parsing and compilation coverage | Language coverage under the declared semantics; rule quality and application are evaluated separately |
 | Positive-pair reaction application | Confirmed molecule--template pairs | Exercises assignment enumeration, graph editing, precursor construction, perception, and raw output generation | Isolates complete application from negative-pair filtering and search |
 | Template-guided route replay | PaRoutes `n1`; reference template identifier at each reaction node | Tests whether generated precursors remain usable along known multistep routes | Isolates successive reaction application from rule selection and frontier growth |
@@ -140,7 +140,7 @@ The Daylight SMARTS specification provides the reference vocabulary for the comp
 ```
 
 | Construct | Representative syntax | CPU | CUDA and Metal | Current behavior |
-|---|---|---|---|---|
+|:---|:---|:---|:---|:---|
 | Elements, atomic number, and wildcard | `C`, `#6`, `*` | Supported | Supported | Exact element masks and unrestricted wildcard |
 | Aromatic and aliphatic atoms | `c`, `a`, `A` | Supported | Supported | Used during matching; precursor aromaticity is reconstructed after editing |
 | Formal charge | `+`, `-`, `+2` | Supported | Supported | Represented by fixed-width charge masks |
@@ -183,7 +183,7 @@ Component grouping is evaluated as a relationship among dot-separated fragments.
 ## Backend data behavior and capacities
 
 | Property | CPU reference | CUDA | Metal |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | `ReactionMatcher.match` output | Raw `CMol` sequence and an indexing `HitArray` | Raw packed device graph batch and an indexing `HitArray` | Raw packed host batch and an indexing `HitArray` |
 | Optional short-ring WL key | Separate CPU keyer | Separate device keyer returns host key values | Separate device keyer returns host key values |
 | Current deduplication decision | Host/caller | Host-controlled; the optional keyed path may retain unique graphs on device | Host/caller |
@@ -229,7 +229,7 @@ The circuit selector is deliberately blind to concrete ring bond orders. Once co
 For each atom in a candidate circuit, the contribution classifier returns zero, one, two, or invalid:
 
 | Case | Contribution |
-|---|---:|
+|:---|---:|
 | Configuration with one π electron and no concrete multiple bond leaving the eligible fused system | 1 |
 | The same one-electron configuration with a concrete multiple bond leaving the eligible fused system | 0 |
 | Supported lone pair in the perpendicular orbital | 2 |
@@ -580,7 +580,7 @@ This table is an overview, not a substitute for the chemistry. The circuit-relat
 
 The main-article reaction-application table shows a higher raw precursor count for RDKit than for {{< meta libname >}} on the same positive pairs used in the audit. The CPU, Metal, and CUDA backends agree on the {{< meta libname >}} count. These are raw precursor multisets: the timed pipeline generates no molecular keys and performs no deduplication. The reported difference therefore reflects precursor construction rather than the collapse of duplicate results.
 
-The difference is exposed by a disconnection template -- one whose right-hand side has two or more components -- when the matched bond lies on a ring. Both backends receive the reaction SMARTS unchanged. A dot "." in a reaction SMARTS right-hand side can either declare two separate product-molecule templates or declare no bond between the two adjacent atoms. The two atoms to the left and right of the dot either can belong to different molecules, or can be considered to belong to the same molecule if joined by "ring closure" syntax elsewhere. RDKit represents an intramolecular outcome only when the components are wrapped in parenthesis as `([A].[B])` [@rdkit_book]. RDKit's `RunReactants` therefore builds one molecule per right-hand-side component and copies each mapped anchor atom's surrounding fragment into its product; when the two anchors are also joined through the rest of a ring, the shared ring atoms are copied into *both* products. {{< meta libname >}} instead applies the bond edit directly to the product graph and returns its connected components. In the ungrouped precursor pattern used here, dot-separated fragments do not require separate output molecules, so breaking one ring bond opens the ring and returns one connected precursor. When a template uses outer component groups, {{< meta libname >}} checks the requested component relationship after graph editing.
+The difference is exposed by a disconnection template -- one whose right-hand side has two or more components -- when the matched bond lies on a ring. Both backends receive the reaction SMARTS unchanged. A dot "." in a reaction SMARTS right-hand side can either declare two separate product-molecule templates or declare no bond between the two adjacent atoms. The two atoms to the left and right of the dot either can belong to different molecules, or can be considered to belong to the same molecule if joined by "ring closure" syntax elsewhere. RDKit represents an intramolecular outcome only when the components are wrapped in parenthesis as `([A].[B])` [@rdkit]. RDKit's `RunReactants` therefore builds one molecule per right-hand-side component and copies each mapped anchor atom's surrounding fragment into its product; when the two anchors are also joined through the rest of a ring, the shared ring atoms are copied into *both* products. {{< meta libname >}} instead applies the bond edit directly to the product graph and returns its connected components. In the ungrouped precursor pattern used here, dot-separated fragments do not require separate output molecules, so breaking one ring bond opens the ring and returns one connected precursor. When a template uses outer component groups, {{< meta libname >}} checks the requested component relationship after graph editing.
 
 @fig-precursor-divergence applies the benchmark template `[C:2]-[CH2;D2;+0:1]-[CH2;D2;+0:3]-[C:4]>>Br-[CH2;D2;+0:1]-[C:2].Br-[CH2;D2;+0:3]-[C:4]` to cyclohexane. RDKit returns two 1-bromobutane molecules -- eight carbons from a six-carbon ring, because the two ring carbons outside the matched path are duplicated into both products -- while {{< meta libname >}} returns one 1,6-dibromohexane, conserving all six carbons. On an acyclic match the two agree exactly: the amide disconnection `[C:1](=[O:2])-[NH1:3]-[C:4]>>[C:1](=[O:2])-[OH].[NH2:3]-[C:4]` on `CCCC(=O)NCc1ccccc1` yields `CCCC(=O)O` and `NCc1ccccc1` under both backends.
 
